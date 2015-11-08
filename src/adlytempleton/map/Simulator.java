@@ -38,14 +38,32 @@ public class Simulator {
 
                 ArrayList<ILocation> nearbySpaces = map.getAdjacentLocations(atom.getLocation());
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
+
                 //Emptyness of resulting space is checked in move function
                 //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
-                map.move(atom, newLocation);
+                if(!willStretchBonds(atom, newLocation)) {
+                    map.move(atom, newLocation);
+                }
             }
         }
 
         //Re-render after components have changed
         map.render();
+    }
+
+    /**
+     * Checks if a movement would stretch bonds beyond capacity
+     * @param atom The atom to be moved
+     * @param newLocation The location to which the atom will be moved
+     * @return True if a movement is invalid, false otherwise
+     */
+    private boolean willStretchBonds(Atom atom, ILocation newLocation) {
+        for(Atom bondedAtom : atom.bonds){
+            if(map.getDistance(newLocation, bondedAtom.getLocation()) > 2){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

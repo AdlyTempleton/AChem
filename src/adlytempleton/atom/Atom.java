@@ -2,6 +2,8 @@ package adlytempleton.atom;
 
 import adlytempleton.map.ILocation;
 
+import java.util.ArrayList;
+
 /**
  * Created by ATempleton on 11/7/2015.
  *
@@ -9,19 +11,25 @@ import adlytempleton.map.ILocation;
  */
 public class Atom {
 
+
     public Atom(EnumType type){
         this.type = type;
     }
+
+    //The location of the atom
     private ILocation location;
-
-    public EnumType type;
-    public int state = 0;
-
     public ILocation getLocation() {
         return location;
     }
-
     public void setLocation(ILocation location) {
         this.location = location;
     }
+
+    //Type and state of the atom
+    public EnumType type;
+    public int state = 0;
+
+    //Bonded atoms
+    public ArrayList<Atom> bonds = new ArrayList<Atom>();
+
 }

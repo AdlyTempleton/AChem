@@ -40,10 +40,31 @@ public class SquareMapPanel extends JPanel{
             g.setColor(Color.BLACK);
 
             //The offset from cornet of the cell
-            int textOffsetX = (cellWidth / 2);
-            int textOffsetY = (cellHeight / 2);
+            int textOffsetX = (cellWidth / 2) - 10;
+            int textOffsetY = (cellHeight / 2) - 10;
             g.drawString("" + atom.state, (int) x* cellWidth + textOffsetX, (int) y * cellHeight + textOffsetY);
+
+            //Bonds
+            int atomX = getCenterX(x, cellWidth);
+            int atomY = getCenterY(y, cellHeight);
+
+            for(Atom bondedAtom : atom.bonds){
+                SquareLocation bondedLocation = (SquareLocation) bondedAtom.getLocation();
+
+                int bondedX = getCenterX(bondedLocation.getX(), cellWidth);
+                int bondedY = getCenterY(bondedLocation.getY(), cellHeight);
+
+                g.drawLine(atomX, atomY, bondedX, bondedY);
+            }
         }
 
+    }
+
+    public int getCenterX(int x, int cellWidth){
+        return x * cellWidth + (cellWidth / 2);
+    }
+
+    public int getCenterY(int y, int cellHeight){
+        return y * cellHeight + (cellHeight / 2);
     }
 }

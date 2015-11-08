@@ -10,9 +10,23 @@ import adlytempleton.map.SquareMap;
 public class Main {
 
     public static void main(String[] args) {
-        SquareMap map = new SquareMap(5);
+        SquareMap map = new SquareMap(8);
 
-        map.addAtom(new SquareLocation(1, 0), new Atom(EnumType.A));
+        //Test data
+        Atom a1 = new Atom(EnumType.A);
+        Atom a2 = new Atom(EnumType.A);
+        Atom a3 = new Atom(EnumType.A);
+
+        a1.bonds.add(a2);
+        a2.bonds.add(a1);
+
+        a2.bonds.add(a3);
+        a3.bonds.add(a2);
+
+        map.addAtom(new SquareLocation(6, 0), a1);
+        map.addAtom(new SquareLocation(6, 1), a2);
+        map.addAtom(new SquareLocation(6, 2), a3);
+
         map.addAtom(new SquareLocation(1, 1), new Atom(EnumType.B));
         map.addAtom(new SquareLocation(1, 2), new Atom(EnumType.C));
         map.addAtom(new SquareLocation(1, 3), new Atom(EnumType.D));

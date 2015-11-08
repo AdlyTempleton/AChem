@@ -43,5 +43,9 @@ public class Simulator {
                 map.move(atom, newLocation);
             }
         }
+
+        //Re-render after components have changed
+        map.render();
     }
+
 }

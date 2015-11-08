@@ -24,7 +24,6 @@ public class Main {
         while(true){
 
             simulator.tick();
-            map.render();
 
             try {
                 Thread.sleep(1000);

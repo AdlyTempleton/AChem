@@ -1,10 +1,10 @@
 package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
-import adlytempleton.graphics.GLIGraphics;
+import adlytempleton.gui.SquareMapFrame;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -15,12 +15,16 @@ public class SquareMap extends AbstractMap {
 
     private int size;
 
+    private SquareMapFrame renderer;
+
     //The main HashMap that stores locations of all atoms.
     //If an atom is not present at an location, the location should not be a key in the hashmap.
     private HashMap<SquareLocation, Atom> atomMap = new HashMap<SquareLocation, Atom>();
 
     public SquareMap(int size){
         this.size = size;
+
+        renderer = new SquareMapFrame(this);
     }
 
     @Override
@@ -117,11 +121,6 @@ public class SquareMap extends AbstractMap {
     }
 
     @Override
-    public void render() {
-        GLIGraphics.render(this);
-    }
-
-    @Override
     public boolean addAtom(ILocation location, Atom atom) {
 
         assert location instanceof SquareLocation;
@@ -134,6 +133,11 @@ public class SquareMap extends AbstractMap {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public void render() {
+        renderer.repaint();
     }
 
     public int getSize() {

@@ -2,7 +2,6 @@ package adlytempleton;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
-import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareLocation;
 import adlytempleton.map.SquareMap;
@@ -35,7 +34,7 @@ public class Main {
 
         Simulator simulator = new Simulator(map);
 
-        while(true){
+        while (true) {
 
             simulator.tick();
 

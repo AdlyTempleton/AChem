@@ -3,12 +3,14 @@ package adlytempleton.map;
 import adlytempleton.atom.Atom;
 import adlytempleton.gui.SquareMapFrame;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by ATempleton on 11/7/2015.
- *
+ * <p>
  * Basic implementation of ILocation on a square grid
  */
 public class SquareMap extends AbstractMap {
@@ -21,18 +23,18 @@ public class SquareMap extends AbstractMap {
     //If an atom is not present at an location, the location should not be a key in the hashmap.
     private HashMap<SquareLocation, Atom> atomMap = new HashMap<SquareLocation, Atom>();
 
-    public SquareMap(int size){
+    public SquareMap(int size) {
         this.size = size;
 
         renderer = new SquareMapFrame(this);
     }
 
     @Override
-    public boolean move(Atom atom, ILocation newLocation){
+    public boolean move(Atom atom, ILocation newLocation) {
         assert newLocation instanceof SquareLocation;
 
 
-        if(!atomMap.containsKey(newLocation)) {
+        if (!atomMap.containsKey(newLocation)) {
 
 
             //Remove the atom from the current map
@@ -44,7 +46,7 @@ public class SquareMap extends AbstractMap {
             //Insert the atom in it's new location
             atomMap.put((SquareLocation) newLocation, atom);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -82,8 +84,8 @@ public class SquareMap extends AbstractMap {
 
         //Check that all these locations lie within the boundaries of the grid
         Iterator iter = result.iterator();
-        while(iter.hasNext()){
-            if(!isOnGrid((ILocation) iter.next())){
+        while (iter.hasNext()) {
+            if (!isOnGrid((ILocation) iter.next())) {
                 iter.remove();
             }
         }
@@ -96,6 +98,7 @@ public class SquareMap extends AbstractMap {
      * Implementation of getDistance based on distance
      * For this calculation, one unit distance is defined as:
      * One square horizontally, vertically, and diagonally at a 45-degree
+     * This choice is made for certain purposes - particuarily the calculation of Morre neighborhoods for bonds
      */
     public int getDistance(ILocation loc1, ILocation loc2) {
 
@@ -116,8 +119,9 @@ public class SquareMap extends AbstractMap {
     @Override
     public boolean isOnGrid(ILocation location) {
         assert location instanceof SquareLocation;
-        return ((SquareLocation)location).getX() < size && ((SquareLocation)location).getX() > -1
-                && ((SquareLocation)location).getY() < size && ((SquareLocation)location).getY() > -1;
+
+        return ((SquareLocation) location).getX() < size && ((SquareLocation) location).getX() > -1
+                && ((SquareLocation) location).getY() < size && ((SquareLocation) location).getY() > -1;
     }
 
     @Override
@@ -125,12 +129,11 @@ public class SquareMap extends AbstractMap {
 
         assert location instanceof SquareLocation;
 
-        if(!atomMap.containsKey(location)) {
-
+        if (!atomMap.containsKey(location)) {
             atom.setLocation(location);
             atomMap.put((SquareLocation) location, atom);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

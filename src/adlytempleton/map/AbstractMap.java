@@ -3,12 +3,11 @@ package adlytempleton.map;
 import adlytempleton.atom.Atom;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by ATempleton on 11/7/2015.
- *
+ * <p>
  * An abstract class that represents the main map cells are placed on
  */
 public abstract class AbstractMap {
@@ -19,7 +18,6 @@ public abstract class AbstractMap {
     public abstract Class<? extends ILocation> getLocationType();
 
     /**
-     *
      * @param location An AbstactLocation object present on this grid of type getLocationType()
      * @return Atom object present at particular location
      */
@@ -38,14 +36,13 @@ public abstract class AbstractMap {
      * Moves an atom from one location to another. This should both update the location in the map and in the Atom itself.
      * If an atom already exists at this location, the movement should be canceled
      *
-     * @param atom The atom to be moved
+     * @param atom        The atom to be moved
      * @param newLocation The new location to move it to (of type getLocationType)
      * @return True if movement succeeeded, false otherwise
      */
     public abstract boolean move(Atom atom, ILocation newLocation);
 
     /**
-     *
      * @param location1 First AbstactLocation of type getLocationType()
      * @param location2 Second ILocation of type getLocationType()
      * @return The distance between the two locations on the grid. Calculated via whatever metric is suitable for this grid type
@@ -62,7 +59,7 @@ public abstract class AbstractMap {
 
     /**
      * Checks if a given location is valid.
-     *
+     * <p>
      * On a square grid, this checks if the location is within the boundaries of the grid.
      * In more complex grids, this is used to check if the combination of coordinates itself combines to a valid position
      *
@@ -79,8 +76,9 @@ public abstract class AbstractMap {
 
     /**
      * Adds an Atom to the map. Also update's the Atom's stored location information. Will fail if the space is occupied
+     *
      * @param location Place to add the atom.
-     * @param atom The atom to place
+     * @param atom     The atom to place
      * @return True if the operation succeeded, false otherwise
      */
     public abstract boolean addAtom(ILocation location, Atom atom);

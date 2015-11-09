@@ -4,7 +4,7 @@ import java.awt.*;
 
 /**
  * Created by ATempleton on 11/7/2015.
- *
+ * <p>
  * Represents the types of atom a-f
  * Contains some information useful for rendering
  */
@@ -15,7 +15,7 @@ public enum EnumType {
     public char symbol;
     public Color color;
 
-    EnumType(char symbol, Color color){
+    EnumType(char symbol, Color color) {
         this.symbol = symbol;
         this.color = color;
     }

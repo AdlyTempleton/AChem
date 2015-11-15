@@ -1,6 +1,7 @@
 package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
+import adlytempleton.reaction.ReactionManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +21,10 @@ public class Simulator {
 
     AbstractMap map;
 
+    //Stores Locations which have been updated by a reaction
+    //And should be reachecked next tick
+    public ArrayList<ILocation> updatedLocations = new ArrayList<>();
+
     /**
      * Constructs a new map
      *
@@ -36,6 +41,15 @@ public class Simulator {
 
         Random rand = new Random();
 
+        //Update all atoms which have changed
+        //We want to add in more locations while this check is ongoing
+        //Which wont be processed until the next tick
+        ArrayList<ILocation> updatedLocationsCopy = (ArrayList<ILocation>) updatedLocations.clone();
+        updatedLocations.clear();
+        for (ILocation location : updatedLocationsCopy){
+            reactAround(location);
+        }
+
         //Move all atoms
         for (Atom atom : map.getAllAtoms()) {
             if (rand.nextDouble() < MOVEMENT_CHANCE) {
@@ -46,6 +60,7 @@ public class Simulator {
                 //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
                 if (!willStretchBonds(atom, newLocation)) {
                     map.move(atom, newLocation);
+                    reactAround(newLocation);
                 }
             }
         }
@@ -68,6 +83,29 @@ public class Simulator {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks all atoms adjacent to the given location
+     * For reactions
+     *
+     * @param centralLocation Location of the main atom
+     */
+    public void reactAround(ILocation centralLocation){
+        Atom centralAtom = map.getAtomAtLocation(centralLocation);
+
+        for(ILocation location : map.getAdjacentLocations(centralLocation)){
+            Atom atom = map.getAtomAtLocation(location);
+
+            if(atom != null && centralAtom != null){
+                if(ReactionManager.react(atom, centralAtom)){
+                    //Because the state has changed, we must check atoms around to propagate reactions
+                    //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
+                    updatedLocations.add(location);
+                    updatedLocations.add(centralLocation);
+                }
+            }
+        }
     }
 
 }

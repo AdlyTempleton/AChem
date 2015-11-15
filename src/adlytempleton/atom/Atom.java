@@ -32,4 +32,37 @@ public class Atom {
         this.location = location;
     }
 
+    /**
+     * Breaks the bond between two atoms, if they are bonded
+     * @param atom The atom to unbond from
+     */
+    public void unbond(Atom atom){
+        if(isBondedTo(atom)){
+            bonds.remove(atom);
+            atom.bonds.remove(this);
+        }
+    }
+
+    /**
+     * Bonds this atom to another atom, if they are not already bonded
+     *
+     * @param atom Other atom
+     */
+    public void bond(Atom atom){
+
+        if(!isBondedTo(atom)) {
+            bonds.add(atom);
+            atom.bonds.add(this);
+        }
+    }
+
+    /**
+     * Checks if this Atom is bonded to a specific other atom
+     *
+     * @param otherAtom The other atom to check
+     * @return True if the atoms are bonded
+     */
+    public boolean isBondedTo(Atom otherAtom){
+        return bonds.contains(otherAtom);
+    }
 }

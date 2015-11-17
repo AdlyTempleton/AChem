@@ -24,10 +24,11 @@ public class ReactionManager {
         //For testing purposes, this ReactionData is hardcoded in
         ArrayList<ReactionData> reactions = new ArrayList<>();
         reactions.add(new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 2, false, true));
+        reactions.add(new ReactionData(EnumType.X, EnumType.Y, 1, 1, 3, 3, false, true));
 
 
         for(ReactionData reactionData : reactions)
-        if(reactionData.matchesPair(atom1, atom2)){
+        if(reactionData.matches(atom1, atom2)){
 
             atom1.state = reactionData.postState1;
             atom2.state = reactionData.postState2;

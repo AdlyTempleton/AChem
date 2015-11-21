@@ -58,7 +58,7 @@ public class Simulator {
 
                 //Emptyness of resulting space is checked in move function
                 //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
-                if (!willStretchBonds(atom, newLocation)) {
+                if (!willStretchBonds(atom, newLocation) && !willCrossBonds(atom, newLocation)) {
                     map.move(atom, newLocation);
                     reactAround(newLocation);
                 }
@@ -84,6 +84,33 @@ public class Simulator {
         }
         return false;
     }
+
+    private boolean willCrossBonds(Atom atom, ILocation newLocation){
+        for(Atom bondedAtom : atom.bonds){
+
+            //We want to look at all atoms adjacent to one of the components
+            ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(newLocation);
+            nearbyAtoms.addAll(map.getAdjacentAtoms(bondedAtom.getLocation()));
+            //We remove the original atom twice as we are searching around the new location, not the current one
+            nearbyAtoms.remove(atom);
+            nearbyAtoms.remove(atom);
+            nearbyAtoms.remove(bondedAtom);
+
+            //Cycle through all atoms bonded to these
+            //This is inefficient by a factor of two
+            //But this shouldn't be a performance intensive step
+            for(Atom nearbyAtom : nearbyAtoms){
+                for(Atom nearbyBondedAtom : nearbyAtom.bonds){
+                    if(nearbyBondedAtom != atom && nearbyBondedAtom != bondedAtom && map.crossed(newLocation, bondedAtom.getLocation(), nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 
     /**
      * Checks all atoms adjacent to the given location

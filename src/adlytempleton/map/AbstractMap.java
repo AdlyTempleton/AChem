@@ -33,6 +33,37 @@ public abstract class AbstractMap {
     public abstract ArrayList<ILocation> getAdjacentLocations(ILocation location);
 
     /**
+     * Finds all locations adjacent to a given location (not including itself) that contains an atom
+     *
+     * @param location An AbstactLocation on the grid of type getLocationType()
+     * @return An ArrayList of all atoms adjacent to this location. Calculated via whatever metric is suitable for this grid type
+     */
+    public ArrayList<Atom> getAdjacentAtoms(ILocation location){
+
+        ArrayList<ILocation> locations = getAdjacentLocations(location);
+        ArrayList<Atom> result = new ArrayList<Atom>();
+
+        for(ILocation nearbyLocation : locations){
+            if(getAtomAtLocation(nearbyLocation) != null){
+                result.add(getAtomAtLocation(nearbyLocation));
+            }
+        }
+
+        return result;
+
+    }
+
+    /**
+     * Checks if four locations are crossed on the grid geometry
+     * @param loc11 First atom of first bond
+     * @param loc12 Second atom of first bond
+     * @param loc21 First atom of second bond
+     * @param loc22 Second atom of second bond
+     * @return True if the two bonds described are crossed
+     */
+    public abstract boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22);
+
+    /**
      * Moves an atom from one location to another. This should both update the location in the map and in the Atom itself.
      * If an atom already exists at this location, the movement should be canceled
      *

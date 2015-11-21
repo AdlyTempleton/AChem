@@ -93,6 +93,52 @@ public class SquareMap extends AbstractMap {
         return result;
     }
 
+
+    @Override
+    public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
+        /**
+         * Two bonds are crossed if their coordinates are interwoven.
+         */
+
+        //Convert ILocations
+        SquareLocation sq11 = (SquareLocation) loc11;
+        SquareLocation sq12 = (SquareLocation) loc12;
+        SquareLocation sq21 = (SquareLocation) loc21;
+        SquareLocation sq22 = (SquareLocation) loc22;
+
+        boolean xInterwoven = numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
+        boolean yInterwoven = numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY());
+
+        return xInterwoven && yInterwoven;
+    }
+
+    /**
+     * Helper method to determine if four coordinates are crodded on one axis
+     *
+     * @param a1 First coord of first atom
+     * @param a2 Second coord of first atom
+     * @param b1 First coord of second atom
+     * @param b2 Second coord of second atom
+     * @return
+     */
+    private boolean numbersInterwoven(int a1, int a2, int b1, int b2){
+
+        //Ensure that all the coords are in the proper order
+        if(a1 > a2){
+            int c = a2;
+            a2 = a1;
+            a1 = c;
+        }
+
+        if(b1 > b2) {
+            int c = b2;
+            b2 = b1;
+            b1 = c;
+        }
+
+        return !(a2 < b1 || a1 > b2);
+    }
+
     @Override
     /**
      * Implementation of getDistance based on distance

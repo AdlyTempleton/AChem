@@ -27,9 +27,6 @@ public class ReactionManager {
         //For testing purposes, this ReactionData is hardcoded in
         Set<ReactionData> reactions = map.enzymes.keySet();
 
-        System.out.println(new ReactionData(EnumType.X, EnumType.Y, 1, 1, 3, 3, false, true));
-
-
         for(ReactionData reactionData : reactions) {
             if (reactionData.matchesPair(atom1, atom2)) {
                 if(enzymeNearby(atom1, atom2, reactionData, map)) {

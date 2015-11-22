@@ -1,6 +1,10 @@
 package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
+import adlytempleton.reaction.ReactionData;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +15,18 @@ import java.util.List;
  * An abstract class that represents the main map cells are placed on
  */
 public abstract class AbstractMap {
+
+    /**
+     * Maps ReactionData to Atoms which catalyze that reaction
+     * The null reaction is not mapped to anything
+     * This does not need to be updated when an atom moves (As the link is to an atom, not a location
+     * However, when a reaction data is changed, or when an atom is added or removed (by unusual means), this must be updated
+     * Methods which change reaction data are responsible for maintaining this map
+     *
+     * This is used to quickly calculate reactions
+     * TODO: Performance optimizations by defining initial values for multimap parameters based on actual data
+     */
+    public HashMultimap<ReactionData, Atom> enzymes = HashMultimap.create();
 
     /**
      * @return The subclass of ILocation used by this type of map

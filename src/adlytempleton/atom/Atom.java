@@ -1,6 +1,7 @@
 package adlytempleton.atom;
 
 import adlytempleton.map.ILocation;
+import adlytempleton.reaction.ReactionData;
 
 import java.util.ArrayList;
 
@@ -20,8 +21,21 @@ public class Atom {
     //The location of the atom
     private ILocation location;
 
+    private ReactionData reaction;
+
     public Atom(EnumType type) {
         this.type = type;
+    }
+
+    public Atom(EnumType type, int state) {
+        this.type = type;
+        this.state = state;
+    }
+
+    public Atom(EnumType type, int state, ReactionData rxn) {
+        this.type = type;
+        this.state = state;
+        this.reaction = rxn;
     }
 
     public ILocation getLocation() {
@@ -64,5 +78,13 @@ public class Atom {
      */
     public boolean isBondedTo(Atom otherAtom){
         return bonds.contains(otherAtom);
+    }
+
+    public ReactionData getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(ReactionData reaction) {
+        this.reaction = reaction;
     }
 }

@@ -178,6 +178,11 @@ public class SquareMap extends AbstractMap {
         if (!atomMap.containsKey(location)) {
             atom.setLocation(location);
             atomMap.put((SquareLocation) location, atom);
+
+            //Add to enzyme map
+            if(atom.getReaction() != null){
+                enzymes.put(atom.getReaction(), atom);
+            }
             return true;
         } else {
             return false;

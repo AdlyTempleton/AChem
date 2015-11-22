@@ -19,6 +19,39 @@ public class ReactionData {
     boolean preBonded;
     boolean postBonded;
 
+    @Override
+    public String toString() {
+        return String.format("%c%d %c %c%d -> %d %c %d", type1.symbol, preState1, preBonded ? '-' : '+' , type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2);
+    }
+
+    /**
+     * This implementation is based around use in a HashMap
+     * Does not include wildcard matching
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof ReactionData)){
+            return false;
+        }
+
+        ReactionData rxn = (ReactionData) obj;
+        return toString().equals(rxn.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 13;
+        result = result * 37 + type1.ordinal();
+        result = result * 37 + type2.ordinal();
+        result = result * 37 + preState1;
+        result = result * 37 + preState2;
+        result = result * 37 + postState1;
+        result = result * 37 + postState2;
+        result = result * 37 + (preBonded ? 0 : 1);
+        result = result * 37 + (postBonded ? 0 : 1);
+        return result;
+    }
+
     /**
      * Constructs a reaction from all component elements
      *

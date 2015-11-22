@@ -2,6 +2,7 @@ package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.reaction.ReactionManager;
+import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,10 +15,6 @@ import java.util.Random;
 public class Simulator {
 
     //Constants of simulation
-
-    //The chance that an atom will attempt to move at a given simulation step
-    //The actual chance of movement is lessened by 'collisions' with neighboring atoms
-    public final double MOVEMENT_CHANCE = .5;
 
     AbstractMap map;
 
@@ -52,7 +49,7 @@ public class Simulator {
 
         //Move all atoms
         for (Atom atom : map.getAllAtoms()) {
-            if (rand.nextDouble() < MOVEMENT_CHANCE) {
+            if (rand.nextDouble() < SimulatorConstants.MOVEMENT_CHANCE) {
                 ArrayList<ILocation> nearbySpaces = map.getAdjacentLocations(atom.getLocation());
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
@@ -125,7 +122,7 @@ public class Simulator {
             Atom atom = map.getAtomAtLocation(location);
 
             if(atom != null && centralAtom != null){
-                if(ReactionManager.react(atom, centralAtom)){
+                if(ReactionManager.react(atom, centralAtom, map)){
                     //Because the state has changed, we must check atoms around to propagate reactions
                     //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
                     updatedLocations.add(location);

@@ -2,6 +2,7 @@ package adlytempleton.atom;
 
 import adlytempleton.map.ILocation;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class Atom {
     //The location of the atom
     private ILocation location;
 
-    private ReactionData reaction;
+    private ReactionData[] reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
 
     public Atom(EnumType type) {
         this.type = type;
@@ -32,10 +33,10 @@ public class Atom {
         this.state = state;
     }
 
-    public Atom(EnumType type, int state, ReactionData rxn) {
+    public Atom(EnumType type, int state, ReactionData[] rxn) {
         this.type = type;
         this.state = state;
-        this.reaction = rxn;
+        this.reactions = rxn;
     }
 
     public ILocation getLocation() {
@@ -80,11 +81,11 @@ public class Atom {
         return bonds.contains(otherAtom);
     }
 
-    public ReactionData getReaction() {
-        return reaction;
+    public ReactionData[] getReactions() {
+        return reactions;
     }
 
-    public void setReaction(ReactionData reaction) {
-        this.reaction = reaction;
+    public void setReactions(ReactionData[] reactions) {
+        this.reactions = reactions;
     }
 }

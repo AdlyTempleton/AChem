@@ -10,4 +10,7 @@ public class SimulatorConstants {
 
     //Range in which an enzyme can catalyze a reaction
     public static final int ENZYME_RANGE = 5;
+
+    //Reactions per enzyme
+    public static final int ENZYME_CAPACITY = 10;
 }

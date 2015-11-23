@@ -10,7 +10,7 @@ import adlytempleton.reaction.ReactionData;
 public class Main {
 
     public static void main(String[] args) {
-        SquareMap map = new SquareMap(15);
+        SquareMap map = new SquareMap(10);
 
         //Test data
         Atom a1 = new Atom(EnumType.A);
@@ -25,7 +25,13 @@ public class Main {
         map.addAtom(new SquareLocation(1, 2), new Atom(EnumType.B));
         map.addAtom(new SquareLocation(1, 3), new Atom(EnumType.B));
 
-        map.addAtom(new SquareLocation(15, 15), new Atom(EnumType.E, 5, new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 1, false, true)));
+        map.addAtom(new SquareLocation(10, 10), new Atom(EnumType.E, 5, new ReactionData[]{
+                new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 2, false, true),
+                new ReactionData(EnumType.X, EnumType.Y, 2, 2, 3, 3, false, true),
+                new ReactionData(EnumType.X, EnumType.Y, 1, 1, 4, 4, false, true),
+                new ReactionData(EnumType.X, EnumType.Y, 4, 3, 5, 5, true, true),
+        }));
+
         Simulator simulator = new Simulator(map);
 
         while (true) {

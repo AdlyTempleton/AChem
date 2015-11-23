@@ -2,6 +2,7 @@ package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.gui.SquareMapFrame;
+import adlytempleton.reaction.ReactionData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,8 +181,12 @@ public class SquareMap extends AbstractMap {
             atomMap.put((SquareLocation) location, atom);
 
             //Add to enzyme map
-            if(atom.getReaction() != null){
-                enzymes.put(atom.getReaction(), atom);
+            if(atom.getReactions() != null){
+                for(ReactionData rxn : atom.getReactions()){
+                    if(rxn != null){
+                        enzymes.put(rxn, atom);
+                    }
+                }
             }
             return true;
         } else {

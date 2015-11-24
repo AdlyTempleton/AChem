@@ -19,49 +19,16 @@ public class ReactionData {
     boolean preBonded;
     boolean postBonded;
 
-    @Override
-    public String toString() {
-        return String.format("%c%d %c %c%d -> %d %c %d", type1.symbol, preState1, preBonded ? '-' : '+' , type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2);
-    }
-
-    /**
-     * This implementation is based around use in a HashMap
-     * Does not include wildcard matching
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if(!(obj instanceof ReactionData)){
-            return false;
-        }
-
-        ReactionData rxn = (ReactionData) obj;
-        return toString().equals(rxn.toString());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 13;
-        result = result * 37 + type1.ordinal();
-        result = result * 37 + type2.ordinal();
-        result = result * 37 + preState1;
-        result = result * 37 + preState2;
-        result = result * 37 + postState1;
-        result = result * 37 + postState2;
-        result = result * 37 + (preBonded ? 0 : 1);
-        result = result * 37 + (postBonded ? 0 : 1);
-        return result;
-    }
-
     /**
      * Constructs a reaction from all component elements
      *
-     * @param type1 Type of atom 1
-     * @param type2 Type of atom 2
-     * @param preState1 State of atom 1 before reaction
-     * @param preState2 State of atom 2 before reaction
+     * @param type1      Type of atom 1
+     * @param type2      Type of atom 2
+     * @param preState1  State of atom 1 before reaction
+     * @param preState2  State of atom 2 before reaction
      * @param postState1 State of atom 1 after reaction
      * @param postState2 State of atom 2 after reaction
-     * @param preBonded Are atoms bonded before reaction
+     * @param preBonded  Are atoms bonded before reaction
      * @param postBonded Are atoms bonded after reaction
      */
     public ReactionData(EnumType type1, EnumType type2, int preState1, int preState2, int postState1, int postState2, boolean preBonded, boolean postBonded) {
@@ -75,23 +42,61 @@ public class ReactionData {
         this.postBonded = postBonded;
     }
 
+    @Override
+    public String toString() {
+        //Forms a representative string for a reaction
+        return String.format("%c%d %c %c%d -> %d %c %d", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2);
+    }
+
+    /**
+     * This implementation is based around use in a HashMap
+     * Does not include wildcard matching
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ReactionData)) {
+            return false;
+        }
+
+        //Simple check on the representative string
+        ReactionData rxn = (ReactionData) obj;
+        return toString().equals(rxn.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        //Each integer that defines the atom is multiplied by 37 to some power
+        int result = 13;
+        result = result * 37 + type1.ordinal();
+        result = result * 37 + type2.ordinal();
+        result = result * 37 + preState1;
+        result = result * 37 + preState2;
+        result = result * 37 + postState1;
+        result = result * 37 + postState2;
+        result = result * 37 + (preBonded ? 0 : 1);
+        result = result * 37 + (postBonded ? 0 : 1);
+        return result;
+    }
+
     /**
      * Checks if a ReactionData is applicable to a given pair of atoms. This is order-independent
+     *
      * @param a1 One Atom
      * @param a2 Another Atom
      * @return True if this reaction describes a reaction between those atoms
      */
-    public boolean matches(Atom a1, Atom a2){
+    public boolean matches(Atom a1, Atom a2) {
         return matchesPair(a1, a2) || matchesPair(a2, a1);
     }
 
     /**
      * Checks if a ReactionData is applicable to a given pair of atoms. This is order-specific
+     *
      * @param a1 First Atom
      * @param a2 Second Atom
      * @return True if atom is valid
      */
-    public boolean matchesPair(Atom a1, Atom a2){
+    public boolean matchesPair(Atom a1, Atom a2) {
 
         //If the reaction applies to any two atoms of the same type
         boolean sameTypes = type1.isFlexible() && type1 == type2;

@@ -23,7 +23,7 @@ public enum EnumType {
     public Color color;
 
     //If a type can be applied to any other type
-    //As in X/Y
+    //As in X/Y symbols
     private boolean flexible;
 
     EnumType(char symbol, Color color) {
@@ -31,7 +31,7 @@ public enum EnumType {
         this.color = color;
     }
 
-    EnumType(char symbol, Color color, boolean flexible){
+    EnumType(char symbol, Color color, boolean flexible) {
         this(symbol, color);
         this.flexible = flexible;
     }
@@ -40,7 +40,15 @@ public enum EnumType {
         return flexible;
     }
 
-    public boolean matches(EnumType type){
+    /**
+     * Check if the types match
+     * In a way useful for matching reaction rules to products
+     * Checks for an exact match or wildcard
+     *
+     * @param type The other type
+     * @return True if the two match or are accessible via wildcard
+     */
+    public boolean matches(EnumType type) {
         return this == type || this.isFlexible() || type.isFlexible();
     }
 }

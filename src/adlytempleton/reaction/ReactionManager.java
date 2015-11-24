@@ -1,11 +1,9 @@
 package adlytempleton.reaction;
 
 import adlytempleton.atom.Atom;
-import adlytempleton.atom.EnumType;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.simulator.SimulatorConstants;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -19,17 +17,16 @@ public class ReactionManager {
      *
      * @param atom1 First Atom
      * @param atom2 Second Atom
-     *
      * @return True if a reaction took place
      */
-    public static boolean react(Atom atom1, Atom atom2, AbstractMap map){
+    public static boolean react(Atom atom1, Atom atom2, AbstractMap map) {
 
         //For testing purposes, this ReactionData is hardcoded in
         Set<ReactionData> reactions = map.enzymes.keySet();
 
-        for(ReactionData reactionData : reactions) {
+        for (ReactionData reactionData : reactions) {
             if (reactionData.matchesPair(atom1, atom2)) {
-                if(enzymeNearby(atom1, atom2, reactionData, map)) {
+                if (enzymeNearby(atom1, atom2, reactionData, map)) {
 
                     atom1.state = reactionData.postState1;
                     atom2.state = reactionData.postState2;
@@ -54,16 +51,19 @@ public class ReactionManager {
     /**
      * Given a reaction and a pair of two atoms
      * Determines whether an appropriate enzyme is nearby
-     * @param atom1 First atom in reaction
-     * @param atom2 Second atom in reaction
+     *
+     * @param atom1    First atom in reaction
+     * @param atom2    Second atom in reaction
      * @param reaction The reaction between the atoms. Note that this isn't determined exclusively by atom1 and atom2. Wildcard values are not taken into account
-     * @param map The map on which this reaction takes place
+     * @param map      The map on which this reaction takes place
      * @return True if an appropriate enzyme is nearby
      */
-    public static boolean enzymeNearby(Atom atom1, Atom atom2, ReactionData reaction, AbstractMap map){
-        for(Atom enzyme : map.enzymes.get(reaction)){
-            if(map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
-                    map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE){
+    public static boolean enzymeNearby(Atom atom1, Atom atom2, ReactionData reaction, AbstractMap map) {
+        //Cycle through all enzymes which contain a given reaction
+        for (Atom enzyme : map.enzymes.get(reaction)) {
+            //We want to check the distance to either product
+            if (map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
+                    map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE) {
                 return true;
             }
         }

@@ -16,11 +16,10 @@ public class Simulator {
 
     //Constants of simulation
 
-    AbstractMap map;
-
     //Stores Locations which have been updated by a reaction
     //And should be reachecked next tick
     public ArrayList<ILocation> updatedLocations = new ArrayList<>();
+    AbstractMap map;
 
     /**
      * Constructs a new map
@@ -43,7 +42,7 @@ public class Simulator {
         //Which wont be processed until the next tick
         ArrayList<ILocation> updatedLocationsCopy = (ArrayList<ILocation>) updatedLocations.clone();
         updatedLocations.clear();
-        for (ILocation location : updatedLocationsCopy){
+        for (ILocation location : updatedLocationsCopy) {
             reactAround(location);
         }
 
@@ -82,8 +81,15 @@ public class Simulator {
         return false;
     }
 
-    private boolean willCrossBonds(Atom atom, ILocation newLocation){
-        for(Atom bondedAtom : atom.bonds){
+    /**
+     * Checks if a movement will cross a bond
+     *
+     * @param atom        The atom to be moved
+     * @param newLocation The location in which the atom will be moved
+     * @return True if the movement is invalid
+     */
+    private boolean willCrossBonds(Atom atom, ILocation newLocation) {
+        for (Atom bondedAtom : atom.bonds) {
 
             //We want to look at all atoms adjacent to one of the components
             ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(newLocation);
@@ -96,9 +102,9 @@ public class Simulator {
             //Cycle through all atoms bonded to these
             //This is inefficient by a factor of two
             //But this shouldn't be a performance intensive step
-            for(Atom nearbyAtom : nearbyAtoms){
-                for(Atom nearbyBondedAtom : nearbyAtom.bonds){
-                    if(nearbyBondedAtom != atom && nearbyBondedAtom != bondedAtom && map.crossed(newLocation, bondedAtom.getLocation(), nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())){
+            for (Atom nearbyAtom : nearbyAtoms) {
+                for (Atom nearbyBondedAtom : nearbyAtom.bonds) {
+                    if (nearbyBondedAtom != atom && nearbyBondedAtom != bondedAtom && map.crossed(newLocation, bondedAtom.getLocation(), nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())) {
                         return true;
                     }
                 }
@@ -108,21 +114,20 @@ public class Simulator {
     }
 
 
-
     /**
      * Checks all atoms adjacent to the given location
      * For reactions
      *
      * @param centralLocation Location of the main atom
      */
-    public void reactAround(ILocation centralLocation){
+    public void reactAround(ILocation centralLocation) {
         Atom centralAtom = map.getAtomAtLocation(centralLocation);
 
-        for(ILocation location : map.getAdjacentLocations(centralLocation)){
+        for (ILocation location : map.getAdjacentLocations(centralLocation)) {
             Atom atom = map.getAtomAtLocation(location);
 
-            if(atom != null && centralAtom != null){
-                if(ReactionManager.react(atom, centralAtom, map)){
+            if (atom != null && centralAtom != null) {
+                if (ReactionManager.react(atom, centralAtom, map)) {
                     //Because the state has changed, we must check atoms around to propagate reactions
                     //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
                     updatedLocations.add(location);

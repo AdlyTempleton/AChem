@@ -3,8 +3,6 @@ package adlytempleton.map;
 import adlytempleton.atom.Atom;
 import adlytempleton.reaction.ReactionData;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.MultimapBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public abstract class AbstractMap {
      * This does not need to be updated when an atom moves (As the link is to an atom, not a location
      * However, when a reaction data is changed, or when an atom is added or removed (by unusual means), this must be updated
      * Methods which change reaction data are responsible for maintaining this map
-     *
+     * <p>
      * This is used to quickly calculate reactions
      * TODO: Performance optimizations by defining initial values for multimap parameters based on actual data
      */
@@ -54,13 +52,13 @@ public abstract class AbstractMap {
      * @param location An AbstactLocation on the grid of type getLocationType()
      * @return An ArrayList of all atoms adjacent to this location. Calculated via whatever metric is suitable for this grid type
      */
-    public ArrayList<Atom> getAdjacentAtoms(ILocation location){
+    public ArrayList<Atom> getAdjacentAtoms(ILocation location) {
 
         ArrayList<ILocation> locations = getAdjacentLocations(location);
         ArrayList<Atom> result = new ArrayList<Atom>();
 
-        for(ILocation nearbyLocation : locations){
-            if(getAtomAtLocation(nearbyLocation) != null){
+        for (ILocation nearbyLocation : locations) {
+            if (getAtomAtLocation(nearbyLocation) != null) {
                 result.add(getAtomAtLocation(nearbyLocation));
             }
         }
@@ -71,6 +69,7 @@ public abstract class AbstractMap {
 
     /**
      * Checks if four locations are crossed on the grid geometry
+     *
      * @param loc11 First atom of first bond
      * @param loc12 Second atom of first bond
      * @param loc21 First atom of second bond

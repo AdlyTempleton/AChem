@@ -74,6 +74,7 @@ public class SquareMap extends AbstractMap {
 
         ArrayList<ILocation> result = new ArrayList<ILocation>();
 
+        //A constant 'table' of nearby positions is used
         result.add(new SquareLocation(x - 1, y));
         result.add(new SquareLocation(x + 1, y));
         result.add(new SquareLocation(x, y - 1));
@@ -122,21 +123,26 @@ public class SquareMap extends AbstractMap {
      * @param b2 Second coord of second atom
      * @return
      */
-    private boolean numbersInterwoven(int a1, int a2, int b1, int b2){
+    private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
 
         //Ensure that all the coords are in the proper order
-        if(a1 > a2){
+        //ie. That a1 <= a2, and that b1 <= b2
+        if (a1 > a2) {
             int c = a2;
             a2 = a1;
             a1 = c;
         }
 
-        if(b1 > b2) {
+        if (b1 > b2) {
             int c = b2;
             b2 = b1;
             b1 = c;
         }
 
+        /**
+         * If the atoms are not interwoven
+         * The lower value of one is more than the highest value of the other, or vice-versa
+         */
         return !(a2 < b1 || a1 > b2);
     }
 
@@ -181,9 +187,9 @@ public class SquareMap extends AbstractMap {
             atomMap.put((SquareLocation) location, atom);
 
             //Add to enzyme map
-            if(atom.getReactions() != null){
-                for(ReactionData rxn : atom.getReactions()){
-                    if(rxn != null){
+            if (atom.getReactions() != null) {
+                for (ReactionData rxn : atom.getReactions()) {
+                    if (rxn != null) {
                         enzymes.put(rxn, atom);
                     }
                 }

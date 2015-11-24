@@ -22,6 +22,7 @@ public class Atom {
     //The location of the atom
     private ILocation location;
 
+    //Stores a fixed-length array of all Reactions this atom acts as an enzyme for
     private ReactionData[] reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
 
     public Atom(EnumType type) {
@@ -49,10 +50,11 @@ public class Atom {
 
     /**
      * Breaks the bond between two atoms, if they are bonded
+     *
      * @param atom The atom to unbond from
      */
-    public void unbond(Atom atom){
-        if(isBondedTo(atom)){
+    public void unbond(Atom atom) {
+        if (isBondedTo(atom)) {
             bonds.remove(atom);
             atom.bonds.remove(this);
         }
@@ -63,9 +65,9 @@ public class Atom {
      *
      * @param atom Other atom
      */
-    public void bond(Atom atom){
+    public void bond(Atom atom) {
 
-        if(!isBondedTo(atom)) {
+        if (!isBondedTo(atom)) {
             bonds.add(atom);
             atom.bonds.add(this);
         }
@@ -77,7 +79,7 @@ public class Atom {
      * @param otherAtom The other atom to check
      * @return True if the atoms are bonded
      */
-    public boolean isBondedTo(Atom otherAtom){
+    public boolean isBondedTo(Atom otherAtom) {
         return bonds.contains(otherAtom);
     }
 

@@ -14,7 +14,7 @@ public class SquareMapFrame extends JFrame {
     public SquareMapFrame(SquareMap map) {
 
         setTitle("Artifical Chemistry");
-        setSize(500, 500);
+        setSize(1500, 1500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

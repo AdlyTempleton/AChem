@@ -83,7 +83,7 @@ public class Simulator {
      * To perform all potential reactions
      * On the next tick. Uses updatedLocations as a queue
      */
-    private void updateReactions(ILocation start, ILocation end){
+    public void updateReactions(ILocation start, ILocation end){
         updatedLocations.addAll(map.newlyInRange(start, end, SimulatorConstants.ENZYME_RANGE));
     }
 
@@ -149,7 +149,7 @@ public class Simulator {
             Atom atom = map.getAtomAtLocation(location);
 
             if (atom != null && centralAtom != null) {
-                if (ReactionManager.react(atom, centralAtom, map)) {
+                if (ReactionManager.react(atom, centralAtom, map, this)) {
                     //Because the state has changed, we must check atoms around to propagate reactions
                     //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
                     updatedLocations.add(location);

@@ -2,8 +2,10 @@ package adlytempleton.reaction;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.map.AbstractMap;
+import adlytempleton.map.Simulator;
 import adlytempleton.simulator.SimulatorConstants;
 
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -19,7 +21,7 @@ public class ReactionManager {
      * @param atom2 Second Atom
      * @return True if a reaction took place
      */
-    public static boolean react(Atom atom1, Atom atom2, AbstractMap map) {
+    public static boolean react(Atom atom1, Atom atom2, AbstractMap map, Simulator simulator) {
 
         //For testing purposes, this ReactionData is hardcoded in
         Set<ReactionData> reactions = map.enzymes.keySet();
@@ -37,11 +39,22 @@ public class ReactionManager {
                     } else {
                         atom2.unbond(atom1);
                     }
+
+                    //Copies over reaction data
+                    if(reactionData.copiesReaction){
+
+                        //Note that getReactions returns a shallow clone
+                        map.updateEnzymes(atom2, atom1.getReactions());
+
+                        atom2.setReactions(atom1.getReactions());
+
+                        simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
+                    }
                     return true;
                 }
             } else if (reactionData.matchesPair(atom2, atom1)) {
                 //Recursion to switch positions of atoms
-                return react(atom2, atom1, map);
+                return react(atom2, atom1, map, simulator);
             }
         }
 

@@ -23,6 +23,7 @@ public class Atom {
     private ILocation location;
 
     //Stores a fixed-length array of all Reactions this atom acts as an enzyme for
+    //
     private ReactionData[] reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
 
     public Atom(EnumType type) {
@@ -84,8 +85,11 @@ public class Atom {
         return bonds.contains(otherAtom);
     }
 
+    /**
+     * @return A shallow clone of reactions. The shallowness of the clone is safe, as ReactionData is final.
+     */
     public ReactionData[] getReactions() {
-        return reactions;
+        return reactions.clone();
     }
 
     public void setReactions(ReactionData[] reactions) {

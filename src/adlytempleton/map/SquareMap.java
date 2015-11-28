@@ -223,6 +223,23 @@ public class SquareMap extends AbstractMap {
     }
 
     @Override
+    public void updateEnzymes(Atom atom, ReactionData[] newReaction) {
+        //First, take it out of all current enzyme mappings
+        for(ReactionData rxn : atom.getReactions()){
+            if(rxn != null) {
+                enzymes.remove(rxn, atom);
+            }
+        }
+
+        //Then, add the new ones
+        for(ReactionData rxn : newReaction){
+            if(rxn != null){
+                enzymes.put(rxn, atom);
+            }
+        }
+    }
+
+    @Override
     public boolean addAtom(ILocation location, Atom atom) {
 
         assert location instanceof SquareLocation;

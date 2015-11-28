@@ -132,6 +132,13 @@ public abstract class AbstractMap {
 
 
     /**
+     * This should be called whenever the ReactionData of an atom is changed. This must be called before the actual change is made
+     * @param atom The atom that is being changed. Responsible for updating enzyme maps, if applicable.
+     * @param newReaction The new reaction data
+     */
+    public abstract void updateEnzymes(Atom atom, ReactionData[] newReaction);
+
+    /**
      * Renders the map on-screen in whatever method is appropriate
      */
     public abstract void render();

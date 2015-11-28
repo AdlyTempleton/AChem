@@ -8,16 +8,18 @@ import adlytempleton.atom.EnumType;
  */
 public class ReactionData {
 
-    EnumType type1;
-    EnumType type2;
+    final EnumType type1;
+    final EnumType type2;
 
-    int preState1;
-    int preState2;
-    int postState1;
-    int postState2;
+    final int preState1;
+    final int preState2;
+    final int postState1;
+    final int postState2;
 
-    boolean preBonded;
-    boolean postBonded;
+    final boolean preBonded;
+    final boolean postBonded;
+
+    final boolean copiesReaction;
 
     /**
      * Constructs a reaction from all component elements
@@ -31,7 +33,7 @@ public class ReactionData {
      * @param preBonded  Are atoms bonded before reaction
      * @param postBonded Are atoms bonded after reaction
      */
-    public ReactionData(EnumType type1, EnumType type2, int preState1, int preState2, int postState1, int postState2, boolean preBonded, boolean postBonded) {
+    public ReactionData(EnumType type1, EnumType type2, int preState1, int preState2, int postState1, int postState2, boolean preBonded, boolean postBonded, boolean copiesReaction) {
         this.type1 = type1;
         this.type2 = type2;
         this.preState1 = preState1;
@@ -40,12 +42,20 @@ public class ReactionData {
         this.postState2 = postState2;
         this.preBonded = preBonded;
         this.postBonded = postBonded;
+        this.copiesReaction = copiesReaction;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
+    }
+
+    
 
     @Override
     public String toString() {
         //Forms a representative string for a reaction
-        return String.format("%c%d %c %c%d -> %d %c %d", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2);
+        return String.format("%c%d %c %c%d -> %d %c %d %s", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2, copiesReaction ? "(cpy)" : "");
     }
 
     /**

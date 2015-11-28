@@ -50,7 +50,7 @@ public class ReactionData {
         return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
     }
 
-    
+
 
     @Override
     public String toString() {
@@ -115,7 +115,7 @@ public class ReactionData {
         boolean typesMatch = (sameTypes && a1.type == a2.type) || (!sameTypes && a1.type.matches(type1) && a2.type.matches(type2));
 
         //States of atoms are valid
-        boolean statesMatch = a1.state == preState1 && a2.state == preState1;
+        boolean statesMatch = a1.state == preState1 && a2.state == preState2;
 
         boolean bondsMatch = a1.bonds.contains(a2) == preBonded;
 

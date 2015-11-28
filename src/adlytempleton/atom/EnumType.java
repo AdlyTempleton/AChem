@@ -18,6 +18,20 @@ public enum EnumType {
     X('X', Color.BLACK, true),
     Y('Y', Color.BLACK, true);
 
+    /**
+     * Returns the EnumType that correponds to a given character
+     */
+    public static EnumType fromChar(char c){
+
+        for(EnumType type: values()){
+            if(type.symbol == c){
+                return type;
+            }
+        }
+
+        return null;
+    }
+
 
     public char symbol;
     public Color color;

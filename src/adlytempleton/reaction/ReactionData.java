@@ -50,12 +50,75 @@ public class ReactionData {
         return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
     }
 
+    public static ReactionData fromString(String s){
 
+        //Preprocess for sanity
+        s = s.replaceAll(" ", "");
+
+        //Find type1
+        EnumType type1 = EnumType.fromChar(s.charAt(0));
+        s = s.substring(1);
+
+        //Find preState1
+        String n = digitSubstring(s);
+        int preState1 = Integer.parseInt(n);
+        s = s.replaceFirst(n, "");
+
+        //Find preBonded
+        boolean preBonded = s.startsWith("-");
+        s = s.substring(1);
+
+        //Find type2
+        EnumType type2 = EnumType.fromChar(s.charAt(0));
+        s = s.substring(1);
+
+        //Find preState2
+        n = digitSubstring(s);
+        int preState2 = Integer.parseInt(n);
+        s = s.replaceFirst(n, "");
+
+        //Remove arrow
+        s = s.substring(2);
+
+        //Find postState1
+        n = digitSubstring(s);
+        int postState1 = Integer.parseInt(n);
+        s = s.replaceFirst(n, "");
+
+        //Find postBonded
+        boolean postBonded = s.startsWith("-");
+        s = s.substring(1);
+
+        //Find postState2
+        n = digitSubstring(s);
+        int postState2 = Integer.parseInt(n);
+        s = s.replaceFirst(n, "");
+
+        boolean copiesReaction = s.equals("(cpy)");
+
+        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
+
+    }
+
+    /**
+     * Helper method for fromString
+     * Starting from the beginning of the string, this method will return the initial string of digits
+     */
+    private static String digitSubstring(String s){
+        String result = "";
+
+        while(s.length() > 0 && Character.isDigit(s.charAt(0))){
+            result = result + s.charAt(0);
+            s = s.substring(1);
+        }
+
+        return result;
+    }
 
     @Override
     public String toString() {
         //Forms a representative string for a reaction
-        return String.format("%c%d %c %c%d -> %d %c %d %s", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : 'X', postState2, copiesReaction ? "(cpy)" : "");
+        return String.format("%c%d %c %c%d -> %d %c %d %s", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : '+', postState2, copiesReaction ? "(cpy)" : "");
     }
 
     /**

@@ -35,6 +35,19 @@ public class Main {
                 new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
         }));
 
+
+        ReactionData[] rxns = new ReactionData[]{
+                new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 2, false, true, false),
+                new ReactionData(EnumType.X, EnumType.Y, 2, 2, 3, 3, false, true, false),
+                new ReactionData(EnumType.X, EnumType.Y, 1, 1, 4, 4, false, true, false),
+                new ReactionData(EnumType.X, EnumType.Y, 4, 3, 5, 5, true, true, false),
+                new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
+        };
+
+        for(ReactionData rxn : rxns) {
+            System.out.println(rxn.toString().equals(ReactionData.fromString(rxn.toString()).toString()));
+        }
+
         Simulator simulator = new Simulator(map);
 
         while (true) {

@@ -24,7 +24,23 @@ public abstract class AbstractMap {
      * This is used to quickly calculate reactions
      * TODO: Performance optimizations by defining initial values for multimap parameters based on actual data
      */
-    public HashMultimap<ReactionData, Atom> enzymes = HashMultimap.create();
+    transient public HashMultimap<ReactionData, Atom> enzymes = HashMultimap.create();
+
+    /**
+     * Reforms the enzymes list
+     * Used when reading from a file
+     */
+    public void updateAllEnzymes(){
+        enzymes.clear();
+
+        for(Atom atom : getAllAtoms()){
+            for(ReactionData rxn : atom.getReactions()){
+                if(rxn != null){
+                    enzymes.put(rxn, atom);
+                }
+            }
+        }
+    }
 
     /**
      * @return The subclass of ILocation used by this type of map
@@ -119,13 +135,13 @@ public abstract class AbstractMap {
      * For a movement (ie. of an enzyme) from start to end
      * This method returns all ILocations which are now within the range of the enzyme
      * But were not so before.
-     *
+     * <p>
      * This is only valid for movements of one unit distance
-     *
+     * <p>
      * The list will be empty if either the movement is zero or if the range falls outside the grid
      *
      * @param start The location before the movement
-     * @param end The location after the movement
+     * @param end   The location after the movement
      * @param range The range to check (Usually SimulatorConstants.ENZYME_RANGE)
      */
     public abstract List<ILocation> newlyInRange(ILocation start, ILocation end, int range);
@@ -133,7 +149,8 @@ public abstract class AbstractMap {
 
     /**
      * This should be called whenever the ReactionData of an atom is changed. This must be called before the actual change is made
-     * @param atom The atom that is being changed. Responsible for updating enzyme maps, if applicable.
+     *
+     * @param atom        The atom that is being changed. Responsible for updating enzyme maps, if applicable.
      * @param newReaction The new reaction data
      */
     public abstract void updateEnzymes(Atom atom, ReactionData[] newReaction);

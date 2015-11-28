@@ -6,17 +6,21 @@ import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareLocation;
 import adlytempleton.map.SquareMap;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.simulator.Serialization;
+import adlytempleton.simulator.SimulatorConstants;
 
 public class Main {
 
     public static void main(String[] args) {
-        SquareMap map = new SquareMap(10);
+
+        /**
+        SquareMap map = new SquareMap(SimulatorConstants.MAP_SIZE);
 
         //Test data
+
         Atom a1 = new Atom(EnumType.A);
         Atom a2 = new Atom(EnumType.A);
         Atom a3 = new Atom(EnumType.A);
-
 
 
         map.addAtom(new SquareLocation(6, 0), a1);
@@ -35,18 +39,11 @@ public class Main {
                 new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
         }));
 
+        Serialization.toFile("maps/map.json", map);
 
-        ReactionData[] rxns = new ReactionData[]{
-                new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 2, false, true, false),
-                new ReactionData(EnumType.X, EnumType.Y, 2, 2, 3, 3, false, true, false),
-                new ReactionData(EnumType.X, EnumType.Y, 1, 1, 4, 4, false, true, false),
-                new ReactionData(EnumType.X, EnumType.Y, 4, 3, 5, 5, true, true, false),
-                new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
-        };
+        **/
 
-        for(ReactionData rxn : rxns) {
-            System.out.println(rxn.toString().equals(ReactionData.fromString(rxn.toString()).toString()));
-        }
+        SquareMap map = Serialization.fromFile("maps/map.json");
 
         Simulator simulator = new Simulator(map);
 

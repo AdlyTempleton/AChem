@@ -15,6 +15,10 @@ public class SquareLocation implements ILocation {
         this.x = x;
     }
 
+    public SquareLocation(){
+        this(0,0);
+    }
+
     @Override
     public int hashCode() {
         return 1023 * getX() + getY();

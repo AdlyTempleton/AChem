@@ -13,4 +13,6 @@ public class SimulatorConstants {
 
     //Reactions per enzyme
     public static final int ENZYME_CAPACITY = 10;
+
+    public static final int MAP_SIZE = 10;
 }

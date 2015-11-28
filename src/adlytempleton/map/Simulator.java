@@ -5,7 +5,6 @@ import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -54,7 +53,6 @@ public class Simulator {
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
 
-
                 //Emptyness of resulting space is checked in move function
                 //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
                 if (!willStretchBonds(atom, newLocation) && !willCrossBonds(atom, newLocation)) {
@@ -62,7 +60,7 @@ public class Simulator {
                     //Checks if the atom is an enzyme
                     //if it is, mark all cells for update which are now in it's range
                     //Note that this is only marking them for future use - so we call this before we move the enzyme
-                    if(atom.isEnzyme()){
+                    if (atom.isEnzyme()) {
                         updateReactions(atom.getLocation(), newLocation);
                     }
 
@@ -83,7 +81,7 @@ public class Simulator {
      * To perform all potential reactions
      * On the next tick. Uses updatedLocations as a queue
      */
-    public void updateReactions(ILocation start, ILocation end){
+    public void updateReactions(ILocation start, ILocation end) {
         updatedLocations.addAll(map.newlyInRange(start, end, SimulatorConstants.ENZYME_RANGE));
     }
 
@@ -112,26 +110,39 @@ public class Simulator {
      */
     private boolean willCrossBonds(Atom atom, ILocation newLocation) {
         for (Atom bondedAtom : atom.bonds) {
+            if (doesBondCross(atom, newLocation, bondedAtom, bondedAtom.getLocation())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-            //We want to look at all atoms adjacent to one of the components
-            ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(newLocation);
-            nearbyAtoms.addAll(map.getAdjacentAtoms(bondedAtom.getLocation()));
-            //We remove the original atom twice as we are searching around the new location, not the current one
-            nearbyAtoms.remove(atom);
-            nearbyAtoms.remove(atom);
-            nearbyAtoms.remove(bondedAtom);
+    /**
+     * Determines if a bond between two atoms crosses any other bonds
+     * The two locations may or may not map to the actual locations of the atom
+     */
+    public boolean doesBondCross(Atom atom1, ILocation loc1, Atom atom2, ILocation loc2) {
+        //We want to look at all atoms adjacent to one of the components
+        ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc1);
+        nearbyAtoms.addAll(map.getAdjacentAtoms(loc2));
 
-            //Cycle through all atoms bonded to these
-            //This is inefficient by a factor of two
-            //But this shouldn't be a performance intensive step
-            for (Atom nearbyAtom : nearbyAtoms) {
-                for (Atom nearbyBondedAtom : nearbyAtom.bonds) {
-                    if (nearbyBondedAtom != atom && nearbyBondedAtom != bondedAtom && map.crossed(newLocation, bondedAtom.getLocation(), nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())) {
-                        return true;
-                    }
+        //We remove the atoms twice as we are searching around the new location, not the current one
+        nearbyAtoms.remove(atom1);
+        nearbyAtoms.remove(atom1);
+        nearbyAtoms.remove(atom2);
+        nearbyAtoms.remove(atom2);
+
+        //Cycle through all atoms bonded to these
+        //This is inefficient by a factor of two
+        //But this shouldn't be a performance intensive step
+        for (Atom nearbyAtom : nearbyAtoms) {
+            for (Atom nearbyBondedAtom : nearbyAtom.bonds) {
+                if (nearbyBondedAtom != atom1 && nearbyBondedAtom != atom2 && map.crossed(loc1, loc2, nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())) {
+                    return true;
                 }
             }
         }
+
         return false;
     }
 

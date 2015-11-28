@@ -100,9 +100,9 @@ public class Atom {
      * Determines whether this atom is an enzyme
      * ie. Whether getReactions() contains any non-null elements
      */
-    public boolean isEnzyme(){
-        for(ReactionData rxn : reactions){
-            if(rxn != null){
+    public boolean isEnzyme() {
+        for (ReactionData rxn : reactions) {
+            if (rxn != null) {
                 return true;
             }
         }

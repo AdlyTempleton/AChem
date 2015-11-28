@@ -3,6 +3,7 @@ package adlytempleton.map;
 import adlytempleton.atom.Atom;
 import adlytempleton.gui.SquareMapFrame;
 import adlytempleton.reaction.ReactionData;
+import com.google.gson.annotations.Expose;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class SquareMap extends AbstractMap {
 
     private int size;
 
-    private SquareMapFrame renderer;
+    private transient SquareMapFrame renderer;
 
     //The main HashMap that stores locations of all atoms.
     //If an atom is not present at an location, the location should not be a key in the hashmap.
@@ -190,31 +191,31 @@ public class SquareMap extends AbstractMap {
         //We want a line of length 2*range + 1
         //This line is the edge of all cells contained within the range
         //If we shift in multiple dimensions, we simply take the union
-        if(deltaX != 0){
+        if (deltaX != 0) {
             //deltaX is used as the sign
             int x = end.getX() + range * deltaX;
-            for(int y = end.getY() - range; y <= end.getY() + range; y++){
+            for (int y = end.getY() - range; y <= end.getY() + range; y++) {
                 result.add(new SquareLocation(x, y));
             }
         }
 
         //Same calculations as above
-        if(deltaY != 0){
+        if (deltaY != 0) {
             int y = end.getY() + range * deltaY;
-            for(int x = end.getX() - range; x <= end.getX() + range; x++){
+            for (int x = end.getX() - range; x <= end.getX() + range; x++) {
                 result.add(new SquareLocation(x, y));
             }
         }
 
         //Remove the overlap
-        if(deltaX != 0 && deltaY != 0){
+        if (deltaX != 0 && deltaY != 0) {
             result.remove(new SquareLocation(end.getX() + deltaX * range, end.getY() + deltaY * range));
         }
 
         //Check to make sure that all elements are contained in the list
         Iterator iter = result.iterator();
-        while(iter.hasNext()){
-            if(!isOnGrid((ILocation) iter.next())){
+        while (iter.hasNext()) {
+            if (!isOnGrid((ILocation) iter.next())) {
                 iter.remove();
             }
         }
@@ -225,15 +226,15 @@ public class SquareMap extends AbstractMap {
     @Override
     public void updateEnzymes(Atom atom, ReactionData[] newReaction) {
         //First, take it out of all current enzyme mappings
-        for(ReactionData rxn : atom.getReactions()){
-            if(rxn != null) {
+        for (ReactionData rxn : atom.getReactions()) {
+            if (rxn != null) {
                 enzymes.remove(rxn, atom);
             }
         }
 
         //Then, add the new ones
-        for(ReactionData rxn : newReaction){
-            if(rxn != null){
+        for (ReactionData rxn : newReaction) {
+            if (rxn != null) {
                 enzymes.put(rxn, atom);
             }
         }

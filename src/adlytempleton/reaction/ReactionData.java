@@ -45,12 +45,7 @@ public class ReactionData {
         this.copiesReaction = copiesReaction;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
-    }
-
-    public static ReactionData fromString(String s){
+    public static ReactionData fromString(String s) {
 
         //Preprocess for sanity
         s = s.replaceAll(" ", "");
@@ -104,15 +99,20 @@ public class ReactionData {
      * Helper method for fromString
      * Starting from the beginning of the string, this method will return the initial string of digits
      */
-    private static String digitSubstring(String s){
+    private static String digitSubstring(String s) {
         String result = "";
 
-        while(s.length() > 0 && Character.isDigit(s.charAt(0))){
+        while (s.length() > 0 && Character.isDigit(s.charAt(0))) {
             result = result + s.charAt(0);
             s = s.substring(1);
         }
 
         return result;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
     }
 
     @Override

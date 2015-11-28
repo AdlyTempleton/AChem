@@ -18,24 +18,8 @@ public enum EnumType {
     X('X', Color.BLACK, true),
     Y('Y', Color.BLACK, true);
 
-    /**
-     * Returns the EnumType that correponds to a given character
-     */
-    public static EnumType fromChar(char c){
-
-        for(EnumType type: values()){
-            if(type.symbol == c){
-                return type;
-            }
-        }
-
-        return null;
-    }
-
-
     public char symbol;
     public Color color;
-
     //If a type can be applied to any other type
     //As in X/Y symbols
     private boolean flexible;
@@ -48,6 +32,20 @@ public enum EnumType {
     EnumType(char symbol, Color color, boolean flexible) {
         this(symbol, color);
         this.flexible = flexible;
+    }
+
+    /**
+     * Returns the EnumType that correponds to a given character
+     */
+    public static EnumType fromChar(char c) {
+
+        for (EnumType type : values()) {
+            if (type.symbol == c) {
+                return type;
+            }
+        }
+
+        return null;
     }
 
     public boolean isFlexible() {

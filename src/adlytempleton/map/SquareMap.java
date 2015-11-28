@@ -4,10 +4,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.gui.SquareMapFrame;
 import adlytempleton.reaction.ReactionData;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -178,6 +175,54 @@ public class SquareMap extends AbstractMap {
     }
 
     @Override
+    public List<ILocation> newlyInRange(ILocation startLoc, ILocation endLoc, int range) {
+        assert endLoc instanceof SquareLocation;
+        assert startLoc instanceof SquareLocation;
+
+        SquareLocation end = (SquareLocation) endLoc;
+        SquareLocation start = (SquareLocation) startLoc;
+
+        int deltaX = end.getX() - start.getX();
+        int deltaY = end.getY() - start.getY();
+
+        LinkedList<ILocation> result = new LinkedList<>();
+
+        //We want a line of length 2*range + 1
+        //This line is the edge of all cells contained within the range
+        //If we shift in multiple dimensions, we simply take the union
+        if(deltaX != 0){
+            //deltaX is used as the sign
+            int x = end.getX() + range * deltaX;
+            for(int y = end.getY() - range; y <= end.getY() + range; y++){
+                result.add(new SquareLocation(x, y));
+            }
+        }
+
+        //Same calculations as above
+        if(deltaY != 0){
+            int y = end.getY() + range * deltaY;
+            for(int x = end.getX() - range; x <= end.getX() + range; x++){
+                result.add(new SquareLocation(x, y));
+            }
+        }
+
+        //Remove the overlap
+        if(deltaX != 0 && deltaY != 0){
+            result.remove(new SquareLocation(end.getX() + deltaX * range, end.getY() + deltaY * range));
+        }
+
+        //Check to make sure that all elements are contained in the list
+        Iterator iter = result.iterator();
+        while(iter.hasNext()){
+            if(!isOnGrid((ILocation) iter.next())){
+                iter.remove();
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean addAtom(ILocation location, Atom atom) {
 
         assert location instanceof SquareLocation;
@@ -187,7 +232,7 @@ public class SquareMap extends AbstractMap {
             atomMap.put((SquareLocation) location, atom);
 
             //Add to enzyme map
-            if (atom.getReactions() != null) {
+            if (atom.isEnzyme()) {
                 for (ReactionData rxn : atom.getReactions()) {
                     if (rxn != null) {
                         enzymes.put(rxn, atom);

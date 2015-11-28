@@ -32,6 +32,7 @@ public class Atom {
     public Atom(EnumType type, int state) {
         this.type = type;
         this.state = state;
+        this.reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
     }
 
     public Atom(EnumType type, int state, ReactionData[] rxn) {
@@ -89,5 +90,18 @@ public class Atom {
 
     public void setReactions(ReactionData[] reactions) {
         this.reactions = reactions;
+    }
+
+    /**
+     * Determines whether this atom is an enzyme
+     * ie. Whether getReactions() contains any non-null elements
+     */
+    public boolean isEnzyme(){
+        for(ReactionData rxn : reactions){
+            if(rxn != null){
+                return true;
+            }
+        }
+        return false;
     }
 }

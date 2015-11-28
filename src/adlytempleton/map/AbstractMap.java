@@ -116,6 +116,22 @@ public abstract class AbstractMap {
 
 
     /**
+     * For a movement (ie. of an enzyme) from start to end
+     * This method returns all ILocations which are now within the range of the enzyme
+     * But were not so before.
+     *
+     * This is only valid for movements of one unit distance
+     *
+     * The list will be empty if either the movement is zero or if the range falls outside the grid
+     *
+     * @param start The location before the movement
+     * @param end The location after the movement
+     * @param range The range to check (Usually SimulatorConstants.ENZYME_RANGE)
+     */
+    public abstract List<ILocation> newlyInRange(ILocation start, ILocation end, int range);
+
+
+    /**
      * Renders the map on-screen in whatever method is appropriate
      */
     public abstract void render();

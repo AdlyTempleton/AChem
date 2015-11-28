@@ -5,6 +5,7 @@ import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -16,7 +17,7 @@ public class Simulator {
 
     //Constants of simulation
 
-    //Stores Locations which have been updated by a reaction
+    //Stores Locations which have been updated by a reaction or movement
     //And should be reachecked next tick
     public ArrayList<ILocation> updatedLocations = new ArrayList<>();
     AbstractMap map;
@@ -52,17 +53,38 @@ public class Simulator {
                 ArrayList<ILocation> nearbySpaces = map.getAdjacentLocations(atom.getLocation());
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
+
+
                 //Emptyness of resulting space is checked in move function
                 //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
                 if (!willStretchBonds(atom, newLocation) && !willCrossBonds(atom, newLocation)) {
+
+                    //Checks if the atom is an enzyme
+                    //if it is, mark all cells for update which are now in it's range
+                    //Note that this is only marking them for future use - so we call this before we move the enzyme
+                    if(atom.isEnzyme()){
+                        updateReactions(atom.getLocation(), newLocation);
+                    }
+
                     map.move(atom, newLocation);
                     reactAround(newLocation);
                 }
+
+
             }
         }
 
         //Re-render after components have changed
         map.render();
+    }
+
+    /**
+     * Uses the result of AbstractMap.newlyInRange
+     * To perform all potential reactions
+     * On the next tick. Uses updatedLocations as a queue
+     */
+    private void updateReactions(ILocation start, ILocation end){
+        updatedLocations.addAll(map.newlyInRange(start, end, SimulatorConstants.ENZYME_RANGE));
     }
 
     /**

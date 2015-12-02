@@ -118,7 +118,7 @@ public class ReactionData {
     @Override
     public String toString() {
         //Forms a representative string for a reaction
-        return String.format("%c%d %c %c%d -> %d %c %d %s", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : '+', postState2, copiesReaction ? "(cpy)" : "");
+        return String.format("%c%d %c %c%d to %d %c %d %s", type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, postState1, postBonded ? '-' : '+', postState2, copiesReaction ? "(cpy)" : "");
     }
 
     /**

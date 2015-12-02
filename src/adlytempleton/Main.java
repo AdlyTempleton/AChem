@@ -13,11 +13,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /**
+
+        
         SquareMap map = new SquareMap(SimulatorConstants.MAP_SIZE);
 
         //Test data
-
         Atom a1 = new Atom(EnumType.A);
         Atom a2 = new Atom(EnumType.A);
         Atom a3 = new Atom(EnumType.A);
@@ -41,21 +41,24 @@ public class Main {
 
         Serialization.toFile("maps/map.json", map);
 
-        **/
-
-        SquareMap map = Serialization.fromFile("maps/map.json");
+        //SquareMap map = Serialization.fromFile("maps/state.json");
 
         Simulator simulator = new Simulator(map);
 
         while (true) {
 
-            simulator.tick();
+            for(int i = 0; i < 100; i++){
+                simulator.tick();
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+
+                }
             }
+
+            Serialization.toFile("maps/state.json", map);
         }
     }
 }

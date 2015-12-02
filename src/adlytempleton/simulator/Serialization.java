@@ -4,6 +4,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.map.ILocation;
 import adlytempleton.map.SquareLocation;
 import adlytempleton.map.SquareMap;
+import adlytempleton.reaction.ReactionData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
@@ -48,6 +49,11 @@ public class Serialization {
                 map.addAtom(atom.getLocation(), atom);
             }
 
+            //Reform bond data
+            for(Atom atom : map.getAllAtoms()){
+                atom.reconstructBondList(map);
+            }
+
             //Update enzyme mappings
             map.updateAllEnzymes();
         } catch (FileNotFoundException e) {
@@ -59,14 +65,22 @@ public class Serialization {
         return map;
     }
 
+    /**
+     * Creates and configures a GSON object
+     * @return Gson object
+     */
     private static Gson getGson() {
         GsonBuilder builder = new GsonBuilder();
+        //Splits data across multiple lines
         builder.setPrettyPrinting();
+
         //Allows circular refrences
-        new GraphAdapterBuilder().addType(Atom.class).registerOn(builder);
+        //new GraphAdapterBuilder().addType(Atom.class).registerOn(builder);
 
         //Fix interface issues
         builder.registerTypeAdapter(ILocation.class, new LocationAdapter());
+        //Condensed reaction notation
+        builder.registerTypeAdapter(ReactionData.class, new ReactionAdapter());
 
         return builder.create();
     }
@@ -83,6 +97,12 @@ public class Serialization {
                 file.createNewFile();
             }
 
+            //Collapse the bond data into refrences to locations
+            for(Atom atom : map.getAllAtoms()){
+                atom.updateBondLocationList();
+            }
+
+            //Write to file
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(gson.toJson(map.getAllAtoms()));
@@ -95,13 +115,20 @@ public class Serialization {
         }
     }
 
+    /**
+     * This is a helper class that reads/writes SquareLocation data
+     * Both simplifies the display of location data
+     * And prevents interface issues
+     */
     public static class LocationAdapter extends TypeAdapter<ILocation> {
 
         public ILocation read(JsonReader reader) throws IOException {
+            //Boilerplate
             if (reader.peek() == JsonToken.NULL) {
                 reader.nextNull();
                 return null;
             }
+
             String xy = reader.nextString();
             String[] parts = xy.split(",");
             int x = Integer.parseInt(parts[0]);
@@ -110,6 +137,7 @@ public class Serialization {
         }
 
         public void write(JsonWriter writer, ILocation value) throws IOException {
+            //Boilerplate
             if (value == null) {
                 writer.nullValue();
                 return;
@@ -117,6 +145,31 @@ public class Serialization {
             SquareLocation sqLoc = (SquareLocation) value;
             String xy = sqLoc.getX() + "," + sqLoc.getY();
             writer.value(xy);
+        }
+    }
+
+    /**
+     * This allows a condensed notation for ReactionData
+     */
+    public static class ReactionAdapter extends TypeAdapter<ReactionData>{
+
+        public ReactionData read(JsonReader reader) throws IOException {
+            //Boilerplate
+            if (reader.peek() == JsonToken.NULL) {
+                reader.nextNull();
+                return null;
+            }
+
+            return ReactionData.fromString(reader.nextString());
+        }
+
+        public void write(JsonWriter writer, ReactionData value) throws IOException {
+            //Boilerplate
+            if (value == null) {
+                writer.nullValue();
+                return;
+            }
+            writer.value(value.toString());
         }
     }
 

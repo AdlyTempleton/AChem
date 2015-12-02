@@ -1,5 +1,6 @@
 package adlytempleton.atom;
 
+import adlytempleton.map.AbstractMap;
 import adlytempleton.map.ILocation;
 import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
@@ -18,7 +19,40 @@ public class Atom {
     public EnumType type;
     public int state = 0;
     //Bonded atoms
-    public ArrayList<Atom> bonds = new ArrayList<Atom>();
+    public transient ArrayList<Atom> bonds = new ArrayList<Atom>();
+
+    /**
+     * This is used when loading from json
+     * To store the locations of all bonded atoms
+     * This eliminates circular refrences
+     * And allows the state to be saved and loaded
+     */
+    public ArrayList<ILocation> bondsLocation = new ArrayList<>();
+
+    /**
+     * Constructs bonds from bondsLocation
+     * Used when loading from json
+     */
+    public void reconstructBondList(AbstractMap map){
+        bonds.clear();
+        for(ILocation location : bondsLocation){
+            bonds.add(map.getAtomAtLocation(location));
+        }
+    }
+
+    /**
+     * Constructs bondsLocation data from bonds
+     * Used when saving to json
+     */
+    public void updateBondLocationList(){
+        bondsLocation.clear();
+        for(Atom bondedAtom : bonds){
+            bondsLocation.add(bondedAtom.getLocation());
+        }
+    }
+
+
+
     //The location of the atom
     private ILocation location;
 

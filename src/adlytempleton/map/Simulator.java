@@ -101,7 +101,7 @@ public class Simulator {
         return false;
     }
 
-    /**
+    /**n
      * Checks if a movement will cross a bond
      *
      * @param atom        The atom to be moved

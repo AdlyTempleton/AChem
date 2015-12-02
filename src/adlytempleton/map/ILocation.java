@@ -10,4 +10,16 @@ package adlytempleton.map;
  * Must implement equals() and hashCode()
  */
 public interface ILocation {
+
+    /*
+        Returns this location offset by other (treated as a vector)
+     */
+    public ILocation add(ILocation other);
+
+    /**
+        Returns the offset that must be added to other to get this location
+        ie. other location - this location
+
+     **/
+    public ILocation subtract(ILocation other);
 }

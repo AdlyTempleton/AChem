@@ -26,6 +26,8 @@ public class Atom {
      * To store the locations of all bonded atoms
      * This eliminates circular refrences
      * And allows the state to be saved and loaded
+     *
+     * This contains relative locations, which should be reconstructed with ILocation.add
      */
     public ArrayList<ILocation> bondsLocation = new ArrayList<>();
 
@@ -34,9 +36,9 @@ public class Atom {
      * Used when loading from json
      */
     public void reconstructBondList(AbstractMap map){
-        bonds.clear();
+        bonds = new ArrayList<>();
         for(ILocation location : bondsLocation){
-            bonds.add(map.getAtomAtLocation(location));
+            bonds.add(map.getAtomAtLocation(getLocation().add(location)));
         }
     }
 
@@ -45,9 +47,9 @@ public class Atom {
      * Used when saving to json
      */
     public void updateBondLocationList(){
-        bondsLocation.clear();
+        bondsLocation = new ArrayList<>();
         for(Atom bondedAtom : bonds){
-            bondsLocation.add(bondedAtom.getLocation());
+            bondsLocation.add(bondedAtom.getLocation().subtract(getLocation()));
         }
     }
 

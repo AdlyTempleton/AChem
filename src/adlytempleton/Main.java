@@ -14,7 +14,8 @@ public class Main {
     public static void main(String[] args) {
 
 
-        
+
+        /**
         SquareMap map = new SquareMap(SimulatorConstants.MAP_SIZE);
 
         //Test data
@@ -39,9 +40,12 @@ public class Main {
                 new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
         }));
 
-        Serialization.toFile("maps/map.json", map);
 
-        //SquareMap map = Serialization.fromFile("maps/state.json");
+         Serialization.toFile("maps/state.json", map);
+         **/
+
+
+        SquareMap map = Serialization.fromFile("maps/cell.json");
 
         Simulator simulator = new Simulator(map);
 

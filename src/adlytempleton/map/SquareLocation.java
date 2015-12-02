@@ -20,6 +20,19 @@ public class SquareLocation implements ILocation {
     }
 
     @Override
+    public ILocation add(ILocation other) {
+        assert other instanceof SquareLocation;
+
+        return new SquareLocation(((SquareLocation) other).x + x, ((SquareLocation)other).y + y);
+    }
+
+    @Override
+    public ILocation subtract(ILocation other) {
+        assert other instanceof SquareLocation;
+        return new SquareLocation(((SquareLocation) other).x - x, ((SquareLocation)other).y - y);
+    }
+
+    @Override
     public int hashCode() {
         return 1023 * getX() + getY();
     }

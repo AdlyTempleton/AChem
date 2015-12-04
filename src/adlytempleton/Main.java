@@ -49,13 +49,15 @@ public class Main {
 
         Simulator simulator = new Simulator(map);
 
+        simulator.populateFood(map);
+
         while (true) {
 
             for(int i = 0; i < 100; i++){
                 simulator.tick();
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
 

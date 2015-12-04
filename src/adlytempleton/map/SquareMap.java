@@ -6,6 +6,7 @@ import adlytempleton.reaction.ReactionData;
 import com.google.gson.annotations.Expose;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -20,7 +21,7 @@ public class SquareMap extends AbstractMap {
 
     //The main HashMap that stores locations of all atoms.
     //If an atom is not present at an location, the location should not be a key in the hashmap.
-    private HashMap<SquareLocation, Atom> atomMap = new HashMap<SquareLocation, Atom>();
+    private ConcurrentHashMap<SquareLocation, Atom> atomMap = new ConcurrentHashMap<SquareLocation, Atom>();
 
     public SquareMap(int size) {
         this.size = size;
@@ -98,6 +99,7 @@ public class SquareMap extends AbstractMap {
     public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
         /**
          * Two bonds are crossed if their coordinates are interwoven.
+         * And they are not parallel
          */
 
         //Convert ILocations
@@ -109,16 +111,23 @@ public class SquareMap extends AbstractMap {
         boolean xInterwoven = numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
         boolean yInterwoven = numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY());
 
-        return xInterwoven && yInterwoven;
+        //Check if lines are parallel
+        //The ternary operator is user as a zero check
+        double slope1 = sq11.getY() == sq12.getY() ? Double.MAX_VALUE : (sq11.getX() - sq12.getX()) / (sq11.getY() - sq12.getY());
+
+        double slope2 = sq21.getY() == sq22.getY() ? Double.MAX_VALUE : (sq21.getX() - sq22.getX()) / (sq21.getY() - sq22.getY());
+        boolean parallel = slope1 == slope2;
+
+        return (xInterwoven && yInterwoven) && !parallel;
     }
 
     /**
-     * Helper method to determine if four coordinates are crodded on one axis
+     * Helper method to determine if four coordinates are crossed on one axis
      *
-     * @param a1 First coord of first atom
-     * @param a2 Second coord of first atom
-     * @param b1 First coord of second atom
-     * @param b2 Second coord of second atom
+     * @param a1 First coord of first bond
+     * @param a2 Second coord of first bond
+     * @param b1 First coord of second bond
+     * @param b2 Second coord of second bond
      * @return
      */
     private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
@@ -220,6 +229,18 @@ public class SquareMap extends AbstractMap {
             }
         }
 
+        return result;
+    }
+
+    @Override
+    public ArrayList<ILocation> getAllLocations() {
+        ArrayList result = new ArrayList();
+
+        for(int x = 0; x < size; x ++){
+            for(int y = 0; y < size; y ++){
+                result.add(new SquareLocation(x, y));
+            }
+        }
         return result;
     }
 

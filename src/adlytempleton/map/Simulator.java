@@ -1,10 +1,13 @@
 package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
+import adlytempleton.atom.EnumType;
 import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -144,6 +147,31 @@ public class Simulator {
         }
 
         return false;
+    }
+
+    /**
+     * Spawns food particles randomly distributed
+     */
+    public void populateFood(AbstractMap map){
+        ArrayList<ILocation> cells = map.getAllLocations();
+
+        //Pick the first 30% of the list, after shuffling
+        Collections.shuffle(cells);
+        Random r = new Random();
+
+        for(int i = 0; i < cells.size() * .3F; i ++){
+
+            ILocation loc = cells.get(i);
+
+            if(map.getAtomAtLocation(loc) == null){
+                //Pick a random state
+                EnumType state = EnumType.values()[r.nextInt(6)];
+                Atom atom = new Atom(state, 0);
+                map.addAtom(loc, atom);
+            }
+
+        }
+
     }
 
 

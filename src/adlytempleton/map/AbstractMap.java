@@ -53,6 +53,12 @@ public abstract class AbstractMap {
      */
     public abstract Atom getAtomAtLocation(ILocation location);
 
+    /**
+     * Returns all locations present on a grid
+     *
+     * @return An arraylist containing all valid ILocations
+     */
+    public abstract ArrayList<ILocation> getAllLocations();
 
     /**
      * Finds all locations adjacent to a given location (not including itself)

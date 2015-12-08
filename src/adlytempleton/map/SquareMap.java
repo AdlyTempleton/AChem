@@ -98,7 +98,6 @@ public class SquareMap extends AbstractMap {
     public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
         /**
          * Two bonds are crossed if their coordinates are interwoven.
-         * And they are not parallel
          */
 
         //Convert ILocations
@@ -110,54 +109,19 @@ public class SquareMap extends AbstractMap {
         boolean xInterwoven = numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
         boolean yInterwoven = numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY());
 
-        //Check if lines are parallel
-        //The ternary operator is user as a zero check
-        double slope1 = sq11.getX() == sq12.getX() ? Double.MAX_VALUE : (sq11.getY() - sq12.getY()) / (sq11.getX() - sq12.getX());
-        double slope2 = sq21.getX() == sq22.getX() ? Double.MAX_VALUE : (sq21.getY() - sq22.getY()) / (sq21.getX() - sq22.getX());
-
-        //Compute y-intersection
-        double b1 = sq11.getY() - sq11.getX() * slope1;
-        double b2 = sq21.getY() - sq21.getX() * slope2;
-
-        /**
-         * Derived formula:
-         * y = m1x + b1 = xm2 + b2
-         * m1x + b1 = m2x + b2
-         * m1x - m2x = b2 - b1
-         * x(m1 - m2) = b2 - b1
-         x = (b2 - b1) / (m1 - m2)
-         */
-
-        //Find the x of the intersection
-
-        //If the lines are parallel
-        if(slope1 == slope2){
-            //Then the lines intersect if and only if
-            //The y-intercepts are the same and they are on the same line
-        }
-        double x = (b2 - b1) / (slope1 - slope2);
-
-        //Find the y values of both lines that correspond to this x value
-        double y = x * slope1 + b1;
-
-        //Now we have the intersection point of the two lines
-        //But we must determine if this intersection point is contained in both segments
-        boolean withinLine1 = sq11.getX()
-
-
-
-        return (xInterwoven && yInterwoven) && !parallel;
+        return xInterwoven && yInterwoven;
     }
 
     /**
-     * Helper method to determine if a double value is between two integer values
+     * Helper method to determine if four coordinates are crodded on one axis
      *
-     * @param a1 First coord of first bond
-     * @param a2 Second coord of first bond
-     * @param middle Coordinate in the middle
+     * @param a1 First coord of first atom
+     * @param a2 Second coord of first atom
+     * @param b1 First coord of second atom
+     * @param b2 Second coord of second atom
      * @return
      */
-    private boolean numbersInterwoven(int a1, int a2, double middle) {
+    private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
 
         //Ensure that all the coords are in the proper order
         //ie. That a1 <= a2, and that b1 <= b2
@@ -167,11 +131,17 @@ public class SquareMap extends AbstractMap {
             a1 = c;
         }
 
+        if (b1 > b2) {
+            int c = b2;
+            b2 = b1;
+            b1 = c;
+        }
+
         /**
          * If the atoms are not interwoven
          * The lower value of one is more than the highest value of the other, or vice-versa
          */
-        return !(a2 < middle || a1 > b2);
+        return !(a2 < b1 || a1 > b2);
     }
 
     @Override

@@ -54,10 +54,20 @@ public class Main {
         while (true) {
 
             for(int i = 0; i < 100; i++){
-                simulator.tick();
+
+                //Check if paused
+                if(SimulatorConstants.simulationSpeed != -1) {
+                    simulator.tick();
+                }
 
                 try {
-                    Thread.sleep(1);
+                    //Sanity check - this value is -1 if the simulation is paused
+
+                    if(SimulatorConstants.simulationSpeed >= 0) {
+                        Thread.sleep(SimulatorConstants.simulationSpeed);
+                    }else{
+                        Thread.sleep(100);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
 

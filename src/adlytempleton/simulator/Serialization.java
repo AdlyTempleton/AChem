@@ -108,8 +108,6 @@ public class Serialization {
             bw.write(gson.toJson(map.getAllAtoms()));
             bw.close();
 
-            System.out.println("Done");
-
         } catch (IOException e) {
             e.printStackTrace();
         }

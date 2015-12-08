@@ -48,7 +48,7 @@ public class SquareMapPanel extends JPanel {
 
             //The offset from cornet of the cell
             int textOffsetX = (cellWidth / 2) - 10;
-            int textOffsetY = (cellHeight / 2) - 10;
+            int textOffsetY = (cellHeight / 2) - 5;
             g.drawString("" + atom.state, (int) x * cellWidth + textOffsetX, (int) y * cellHeight + textOffsetY);
 
             //Bonds

@@ -14,7 +14,7 @@ public class SimulatorConstants {
     //Reactions per enzyme
     public static final int ENZYME_CAPACITY = 10;
 
-    public static final int MAP_SIZE = 25;
+    public static final int MAP_SIZE = 30;
 
     //The delay, in ms, between ticks
     //-1 pauses the simulation
@@ -22,12 +22,12 @@ public class SimulatorConstants {
 
 
     //The range which atoms will search to find reaction partners
-    public static int REACTION_RANGE = 1;
+    public static int REACTION_RANGE = 2;
 
 
     //The abundance of zero-state 'food' particles
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
-    public static final float FOOT_ABUNDANCE = .1F;
+    public static final float FOOT_ABUNDANCE = .25F;
 }

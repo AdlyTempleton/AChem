@@ -57,7 +57,9 @@ public class Main {
 
                 //Check if paused
                 if(SimulatorConstants.simulationSpeed != -1) {
+                    long start = System.currentTimeMillis();
                     simulator.tick();
+                    System.out.println(System.currentTimeMillis() - start);
                 }
 
                 try {

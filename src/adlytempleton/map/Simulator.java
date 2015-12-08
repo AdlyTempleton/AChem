@@ -5,7 +5,6 @@ import adlytempleton.atom.EnumType;
 import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -52,7 +51,7 @@ public class Simulator {
         //Move all atoms
         for (Atom atom : map.getAllAtoms()) {
             if (rand.nextDouble() < SimulatorConstants.MOVEMENT_CHANCE) {
-                ArrayList<ILocation> nearbySpaces = map.getAdjacentLocations(atom.getLocation());
+                ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
 
@@ -159,7 +158,7 @@ public class Simulator {
         Collections.shuffle(cells);
         Random r = new Random();
 
-        for(int i = 0; i < cells.size() * .3F; i ++){
+        for(int i = 0; i < cells.size() * .1F; i ++){
 
             ILocation loc = cells.get(i);
 
@@ -184,7 +183,7 @@ public class Simulator {
     public void reactAround(ILocation centralLocation) {
         Atom centralAtom = map.getAtomAtLocation(centralLocation);
 
-        for (ILocation location : map.getAdjacentLocations(centralLocation)) {
+        for (ILocation location : map.getLocationsWithinRange(centralLocation, SimulatorConstants.REACTION_RANGE)) {
             Atom atom = map.getAtomAtLocation(location);
 
             if (atom != null && centralAtom != null) {

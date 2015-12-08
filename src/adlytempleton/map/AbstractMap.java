@@ -61,12 +61,14 @@ public abstract class AbstractMap {
     public abstract ArrayList<ILocation> getAllLocations();
 
     /**
-     * Finds all locations adjacent to a given location (not including itself)
+     * Finds all locations in a specified distance from a given location (not including itself)
+     *
      *
      * @param location An AbstactLocation on the grid of type getLocationType()
+     * @param range Integer distance measured in whatever distance metric used in this map
      * @return An ArrayList of all locations adjacent to this location. Calculated via whatever metric is suitable for this grid type
      */
-    public abstract ArrayList<ILocation> getAdjacentLocations(ILocation location);
+    public abstract ArrayList<ILocation> getLocationsWithinRange(ILocation location, int range);
 
     /**
      * Finds all locations adjacent to a given location (not including itself) that contains an atom
@@ -76,7 +78,7 @@ public abstract class AbstractMap {
      */
     public ArrayList<Atom> getAdjacentAtoms(ILocation location) {
 
-        ArrayList<ILocation> locations = getAdjacentLocations(location);
+        ArrayList<ILocation> locations = getLocationsWithinRange(location, 1);
         ArrayList<Atom> result = new ArrayList<Atom>();
 
         for (ILocation nearbyLocation : locations) {

@@ -93,56 +93,54 @@ public class SquareMap extends AbstractMap {
         return result;
     }
 
-
+    /**
+     * @param loc11 First coord of first line
+     * @param loc12 Second coord of first line
+     * @param loc21 First coord of second line
+     * @param loc22 Second coord of second line
+     * @return
+     */
     @Override
     public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
         /**
-         * Two bonds are crossed if their coordinates are interwoven.
-         */
+         * Cross-product-based algorithm
+         * Take the vector representing one line and the vector representing the third point to one of the endpoints of that line
+         * Calculate the magnitude cross product of the angle
+         * determines which side of the line a point falls on
+         * Iff both points of one line fall on the same side of the other
+         * And vice-versa
+         * The lines cross.
+         **/
 
-        //Convert ILocations
         SquareLocation sq11 = (SquareLocation) loc11;
         SquareLocation sq12 = (SquareLocation) loc12;
         SquareLocation sq21 = (SquareLocation) loc21;
         SquareLocation sq22 = (SquareLocation) loc22;
 
-        boolean xInterwoven = numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
-        boolean yInterwoven = numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY());
+        double crossLoc11 = crossProduct(sq21, sq22, sq11);
+        double crossLoc12 = crossProduct(sq21, sq22, sq11);
+        double crossLoc21 = crossProduct(sq11, sq12, sq21);
+        double crossLoc22 = crossProduct(sq11, sq12, sq22);
 
-        return xInterwoven && yInterwoven;
+        boolean line1Matches = Math.copySign(1, crossLoc11) == Math.copySign(1, crossLoc12);
+        boolean line2Matches = Math.copySign(1, crossLoc21) == Math.copySign(1, crossLoc22);
+
+        return !line1Matches && !line2Matches;
     }
 
     /**
-     * Helper method to determine if four coordinates are crodded on one axis
+     * Computes the magnitude of the cross product
+     * between the vectors endpoint1 - endpoint2
+     * and endpoint1 - point
      *
-     * @param a1 First coord of first atom
-     * @param a2 Second coord of first atom
-     * @param b1 First coord of second atom
-     * @param b2 Second coord of second atom
-     * @return
-     */
-    private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
-
-        //Ensure that all the coords are in the proper order
-        //ie. That a1 <= a2, and that b1 <= b2
-        if (a1 > a2) {
-            int c = a2;
-            a2 = a1;
-            a1 = c;
-        }
-
-        if (b1 > b2) {
-            int c = b2;
-            b2 = b1;
-            b1 = c;
-        }
-
-        /**
-         * If the atoms are not interwoven
-         * The lower value of one is more than the highest value of the other, or vice-versa
-         */
-        return !(a2 < b1 || a1 > b2);
+     * @param endpoint1
+     * @param endpoint2
+     * @param point
+     **/
+    public double crossProduct(SquareLocation endpoint1, SquareLocation endpoint2, SquareLocation point){
+        return (endpoint1.getX() - endpoint2.getX()) * (point.getY() - endpoint1.getX()) - (endpoint1.getY() - endpoint2.getY() * (point.getY() - endpoint1.getY()));
     }
+
 
     @Override
     /**

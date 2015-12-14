@@ -93,52 +93,125 @@ public class SquareMap extends AbstractMap {
         return result;
     }
 
-    /**
-     * @param loc11 First coord of first line
-     * @param loc12 Second coord of first line
-     * @param loc21 First coord of second line
-     * @param loc22 Second coord of second line
-     * @return
-     */
     @Override
     public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
         /**
-         * Cross-product-based algorithm
-         * Take the vector representing one line and the vector representing the third point to one of the endpoints of that line
-         * Calculate the magnitude cross product of the angle
-         * determines which side of the line a point falls on
-         * Iff both points of one line fall on the same side of the other
-         * And vice-versa
-         * The lines cross.
-         **/
+         * Two bonds are crossed if their coordinates are interwoven.
+         * And they are not parallel
+         */
 
+        //Convert ILocations
         SquareLocation sq11 = (SquareLocation) loc11;
         SquareLocation sq12 = (SquareLocation) loc12;
         SquareLocation sq21 = (SquareLocation) loc21;
         SquareLocation sq22 = (SquareLocation) loc22;
 
-        double crossLoc11 = crossProduct(sq21, sq22, sq11);
-        double crossLoc12 = crossProduct(sq21, sq22, sq11);
-        double crossLoc21 = crossProduct(sq11, sq12, sq21);
-        double crossLoc22 = crossProduct(sq11, sq12, sq22);
+        //Check if lines are parallel
+        //The ternary operator is user as a zero check
+        double slope1 = sq11.getX() == sq12.getX() ? Double.MAX_VALUE : (sq11.getY() - sq12.getY()) / (double)(sq11.getX() - sq12.getX());
+        double slope2 = sq21.getX() == sq22.getX() ? Double.MAX_VALUE : (sq21.getY() - sq22.getY()) / (double)(sq21.getX() - sq22.getX());
 
-        boolean line1Matches = Math.copySign(1, crossLoc11) == Math.copySign(1, crossLoc12);
-        boolean line2Matches = Math.copySign(1, crossLoc21) == Math.copySign(1, crossLoc22);
+        //Compute y-intersection
+        double b1 = sq11.getY() - sq11.getX() * slope1;
+        double b2 = sq21.getY() - sq21.getX() * slope2;
 
-        return !line1Matches && !line2Matches;
+        /**
+         * Derived formula:
+         * y = m1x + b1 = xm2 + b2
+         * m1x + b1 = m2x + b2
+         * m1x - m2x = b2 - b1
+         * x(m1 - m2) = b2 - b1
+         x = (b2 - b1) / (m1 - m2)
+         */
+
+        //Find the x of the intersection
+
+        //If the lines are parallel
+        if(slope1 == slope2){
+            //Then the lines intersect if and only if
+            //the four numbers are interwoven
+            return true;
+
+        }
+
+        double x;
+        double y;
+        //Check for infinite slopes
+        //If we have one infinite slope, x is on the verticle line
+        if(slope1 == Double.MAX_VALUE && slope2 != Double.MAX_VALUE){
+            x = sq11.getX();
+            y = x * slope2 + b2;
+        }else if(slope2 == Double.MAX_VALUE && slope1 != Double.MAX_VALUE){
+            x = sq21.getX();
+            y = x * slope1 + b1;
+        }else if(slope1 == Double.MAX_VALUE && slope2 == Double.MAX_VALUE){
+            //These intersect if and only if x coordinates are the same
+            //AND the four numbers are interwoven
+            return (sq11.getX() == sq21.getX() && numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY()));
+        }else{
+            x = (b2 - b1) / (slope1 - slope2);
+            y = x * slope1 + b1;
+        }
+
+        //Now we have the intersection point of the two lines
+        //But we must determine if this intersection point is contained in both segments
+        boolean withinLine1 = numbersInterwoven(sq11.getX(), sq12.getX(), x) && numbersInterwoven(sq11.getY(), sq12.getY(), y);
+        boolean withinLine2 = numbersInterwoven(sq21.getX(), sq22.getX(), x) && numbersInterwoven(sq21.getY(), sq22.getY(), y);
+
+        return (withinLine1 && withinLine2);
     }
 
     /**
-     * Computes the magnitude of the cross product
-     * between the vectors endpoint1 - endpoint2
-     * and endpoint1 - point
+     * Helper method to determine if four coordinates are crodded on one axis
      *
-     * @param endpoint1
-     * @param endpoint2
-     * @param point
-     **/
-    public double crossProduct(SquareLocation endpoint1, SquareLocation endpoint2, SquareLocation point){
-        return (endpoint1.getX() - endpoint2.getX()) * (point.getY() - endpoint1.getX()) - (endpoint1.getY() - endpoint2.getY() * (point.getY() - endpoint1.getY()));
+     * @param a1 First coord of first atom
+     * @param a2 Second coord of first atom
+     * @param b1 First coord of second atom
+     * @param b2 Second coord of second atom
+     */
+    private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
+
+        //Ensure that all the coords are in the proper order
+        //ie. That a1 <= a2, and that b1 <= b2
+        if (a1 > a2) {
+            int c = a2;
+            a2 = a1;
+            a1 = c;
+        }
+
+        if (b1 > b2) {
+            int c = b2;
+            b2 = b1;
+            b1 = c;
+        }
+
+        /**
+         * If the atoms are not interwoven
+         * The lower value of one is more than the highest value of the other, or vice-versa
+         */
+        return !(a2 < b1 || a1 > b2);
+    }
+
+
+    /**
+     * Helper method to determine if four coordinates are crodded on one axis
+     *
+     * @param a1 First coord of first atom
+     * @param a2 Second coord of first atom
+     * @param b Third point
+     * @return
+     */
+    private boolean numbersInterwoven(int a1, int a2, double b) {
+
+        //Ensure that all the coords are in the proper order
+        //ie. That a1 <= a2, and that b1 <= b2
+        if (a1 > a2) {
+            int c = a2;
+            a2 = a1;
+            a1 = c;
+        }
+
+        return a1 <= b && b <= a2;
     }
 
 

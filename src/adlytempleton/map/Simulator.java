@@ -125,8 +125,9 @@ public class Simulator {
      */
     public boolean doesBondCross(Atom atom1, ILocation loc1, Atom atom2, ILocation loc2) {
         //We want to look at all atoms adjacent to one of the components
-        ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc1);
-        nearbyAtoms.addAll(map.getAdjacentAtoms(loc2));
+        //Plus prevent X bonds
+        ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc1, 1);
+        nearbyAtoms.addAll(map.getAdjacentAtoms(loc2, 1));
 
         //We remove the atoms twice as we are searching around the new location, not the current one
         nearbyAtoms.remove(atom1);

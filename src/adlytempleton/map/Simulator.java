@@ -7,6 +7,7 @@ import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -52,12 +53,18 @@ public class Simulator {
         for (Atom atom : map.getAllAtoms()) {
             if (rand.nextDouble() < SimulatorConstants.MOVEMENT_CHANCE) {
                 ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);
-                ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
+                Iterator iter = nearbySpaces.iterator();
+                while (iter.hasNext()) {
+                    ILocation location = (ILocation) iter.next();
+                    if (willStretchBonds(atom, location) || willCrossBonds(atom, location) || map.getAtomAtLocation(location) != null) {
+                        iter.remove();
+                    }
+                }
 
-                //Emptyness of resulting space is checked in move function
-                //Note that this means that the actial chance of movement is significantly less that MOVEMENT_CHANCE
-                if (!willStretchBonds(atom, newLocation) && !willCrossBonds(atom, newLocation)) {
+                if (nearbySpaces.size() > 0) {
+
+                    ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
                     //Checks if the atom is an enzyme
                     //if it is, mark all cells for update which are now in it's range
@@ -69,9 +76,10 @@ public class Simulator {
                     map.move(atom, newLocation);
                     reactAround(newLocation);
                 }
-
-
             }
+
+
+
         }
 
         //Re-render after components have changed
@@ -128,6 +136,14 @@ public class Simulator {
         //Plus prevent X bonds
         ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc1, 1);
         nearbyAtoms.addAll(map.getAdjacentAtoms(loc2, 1));
+
+        //Prevent X-bonds
+        for(SquareLocation loc : new SquareLocation[]{new SquareLocation(0, -2), new SquareLocation(-2, 0), new SquareLocation(2, 0), new SquareLocation(0, 2)}) {
+            Atom atom = map.getAtomAtLocation(loc1.add(loc));
+            if(atom != null){
+                nearbyAtoms.add(atom);
+            }
+        }
 
         //We remove the atoms twice as we are searching around the new location, not the current one
         nearbyAtoms.remove(atom1);

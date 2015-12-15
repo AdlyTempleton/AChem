@@ -57,7 +57,7 @@ public class Simulator {
                 Iterator iter = nearbySpaces.iterator();
                 while (iter.hasNext()) {
                     ILocation location = (ILocation) iter.next();
-                    if (willStretchBonds(atom, location) || willCrossBonds(atom, location) || map.getAtomAtLocation(location) != null) {
+                    if (map.getAtomAtLocation(location) != null || willStretchBonds(atom, location) || willCrossBonds(atom, location)) {
                         iter.remove();
                     }
                 }

@@ -130,7 +130,8 @@ public class SquareMap extends AbstractMap {
         if(slope1 == slope2){
             //Then the lines intersect if and only if
             //the four numbers are interwoven
-            return true;
+            //And the y-intercepts are equal
+            return b1 == b2 && numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
 
         }
 

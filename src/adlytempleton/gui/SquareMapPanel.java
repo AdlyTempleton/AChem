@@ -30,6 +30,16 @@ public class SquareMapPanel extends JPanel {
         int cellWidth = getWidth() / map.getSize();
         int cellHeight = getWidth() / map.getSize();
 
+        //Set mouseover text
+        if(getMousePosition() != null) {
+            int mouseX = getMousePosition().x;
+            int mouseY = getMousePosition().y;
+
+            int mouseCellX = mouseX / cellWidth;
+            int mouseCellY = mouseY / cellHeight;
+            setToolTipText(String.format("(%d,%d)", mouseCellX, mouseCellY));
+        }
+
         //Draw each atom onto the map
         for (Atom atom : map.getAllAtoms()) {
 

@@ -45,7 +45,7 @@ public class Main {
          **/
 
 
-        SquareMap map = Serialization.fromFile("maps/cell.json");
+        SquareMap map = Serialization.fromFile("cell.json");
 
         Simulator simulator = new Simulator(map);
 

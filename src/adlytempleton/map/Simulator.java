@@ -75,6 +75,7 @@ public class Simulator {
 
                     map.move(atom, newLocation);
                     reactAround(newLocation);
+                    addToMembrane(atom);
                 }
             }
 
@@ -84,6 +85,47 @@ public class Simulator {
 
         //Re-render after components have changed
         map.render();
+    }
+
+    /**
+     * After an atom moves, will add the atom to an enzyme if applicable
+     */
+    public void addToMembrane(Atom atom){
+
+        Random random = new Random();
+
+        if(atom.type == EnumType.A && atom.state == 0){
+            Atom atomUp = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, 1)));
+            Atom atomDown = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, -1)));
+            Atom atomLeft = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, 0)));
+            Atom atomRight = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, 0)));
+
+            if(atomUp != null && atomDown != null){
+                if(atomUp.state == 36 && atomDown.state == 36 && atomUp.type == EnumType.A && atomDown.type == EnumType.A){
+                    if(atomUp.isBondedTo(atomDown)){
+                        if(random.nextFloat() < .5F) {
+                            atomUp.unbond(atomDown);
+                            atomUp.bond(atom);
+                            atomDown.bond(atom);
+                            atom.state = 36;
+                        }
+                    }
+                }
+            }
+
+            if(atomLeft != null && atomRight != null){
+                if(atomLeft.state == 36 && atomLeft.state == 36 && atomLeft.type == EnumType.A && atomRight.type == EnumType.A){
+                    if(atomLeft.isBondedTo(atomRight)){
+                        if(random.nextFloat() < .5F) {
+                            atomLeft.unbond(atomRight);
+                            atomLeft.bond(atom);
+                            atomRight.bond(atom);
+                            atom.state = 36;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**

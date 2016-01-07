@@ -156,7 +156,7 @@ public class Simulator {
         //But this shouldn't be a performance intensive step
         for (Atom nearbyAtom : nearbyAtoms) {
             for (Atom nearbyBondedAtom : nearbyAtom.bonds) {
-                if (nearbyBondedAtom != atom1 && nearbyBondedAtom != atom2 && map.crossed(loc1, loc2, nearbyAtom.getLocation(), nearbyBondedAtom.getLocation())) {
+                if (nearbyBondedAtom != atom1 && nearbyBondedAtom != atom2 && map.crossed(loc1, loc2, nearbyAtom.getLocation(), nearbyBondedAtom.getLocation(), false)) {
                     return true;
                 }
             }

@@ -94,11 +94,7 @@ public class SquareMap extends AbstractMap {
     }
 
     @Override
-    public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22) {
-        /**
-         * Two bonds are crossed if their coordinates are interwoven.
-         * And they are not parallel
-         */
+    public boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22, boolean strict) {
 
         //Convert ILocations
         SquareLocation sq11 = (SquareLocation) loc11;
@@ -112,6 +108,7 @@ public class SquareMap extends AbstractMap {
         double slope2 = sq21.getX() == sq22.getX() ? Double.MAX_VALUE : (sq21.getY() - sq22.getY()) / (double)(sq21.getX() - sq22.getX());
 
         //Compute y-intersection
+        //The results must be discarded for vertical or horizontal lines
         double b1 = sq11.getY() - sq11.getX() * slope1;
         double b2 = sq21.getY() - sq21.getX() * slope2;
 
@@ -121,7 +118,7 @@ public class SquareMap extends AbstractMap {
          * m1x + b1 = m2x + b2
          * m1x - m2x = b2 - b1
          * x(m1 - m2) = b2 - b1
-         x = (b2 - b1) / (m1 - m2)
+         * x = (b2 - b1) / (m1 - m2)
          */
 
         //Find the x of the intersection
@@ -135,23 +132,39 @@ public class SquareMap extends AbstractMap {
 
         }
 
+
         double x;
         double y;
         //Check for infinite slopes
         //If we have one infinite slope, x is on the verticle line
-        if(slope1 == Double.MAX_VALUE && slope2 != Double.MAX_VALUE){
+        //Note that both values can not be the same (or the function would have returned above
+        if(slope1 == Double.MAX_VALUE){
             x = sq11.getX();
             y = x * slope2 + b2;
-        }else if(slope2 == Double.MAX_VALUE && slope1 != Double.MAX_VALUE){
+        }else if(slope2 == Double.MAX_VALUE){
             x = sq21.getX();
             y = x * slope1 + b1;
-        }else if(slope1 == Double.MAX_VALUE && slope2 == Double.MAX_VALUE){
-            //These intersect if and only if x coordinates are the same
-            //AND the four numbers are interwoven
-            return (sq11.getX() == sq21.getX() && numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY()));
+        }else if (slope1 == 0) {
+            y = sq11.getY();
+            x = (y - b2) / slope2;
+        }else if (slope2 == 0) {
+            y = sq21.getY();
+            x = (y - b1) / slope1;
         }else{
             x = (b2 - b1) / (slope1 - slope2);
             y = x * slope1 + b1;
+        }
+
+        //Given the intersection point of the lines (determined above)
+        //In strict mode, we now check if the intersection is equal to one of the endpoints
+        if(strict){
+            //If the intersection is not an integer point, it can not be equal to any of the endpoints
+            if(x == Math.floor(x) && y == Math.floor(y)) {
+                SquareLocation intersection = new SquareLocation((int)x, (int)y);
+                if(intersection.equals(sq11) || intersection.equals(sq12) || intersection.equals(sq21) || intersection.equals(sq22)) {
+                    return true;
+                }
+            }
         }
 
         //Now we have the intersection point of the two lines
@@ -162,8 +175,85 @@ public class SquareMap extends AbstractMap {
         return (withinLine1 && withinLine2);
     }
 
+    @Override
     /**
-     * Helper method to determine if four coordinates are crodded on one axis
+     * Finds a psuedo-rectangle approximatelt 3 blocks wide, with one side the axis between loc1 and loc2
+     * The axis extends two units in each direction
+     * This rectangle will contain at least one atom of any bonds which cross a line drawn between loc1 and loc2
+     */
+    public HashSet<ILocation> getCrossedZone(ILocation loc1, ILocation loc2) {
+        assert loc1 instanceof SquareLocation;
+        assert loc2 instanceof SquareLocation;
+
+        HashSet<ILocation> result = new HashSet<>();
+
+        SquareLocation sq1 = (SquareLocation) loc1;
+        SquareLocation sq2 = (SquareLocation) loc2;
+
+        //Ensure that sq1 is left of sq2
+        if(sq1.getX() > sq2.getX()){
+            SquareLocation t = sq1;
+            sq1 = sq2;
+            sq2 = t;
+        }
+
+
+
+        double slope = (sq1.getX() == sq2.getX()) ? Double.MAX_VALUE : (double) ((sq1.getY() - sq2.getY()) / ((double) (sq1.getX() - sq2.getX())));
+        double b = sq1.getY() - slope * sq1.getX();
+
+        //A vertical line
+        if(slope == Double.MAX_VALUE){
+            int minY = Math.min(sq1.getY(), sq2.getY()) - 2;
+            int maxY = Math.max(sq1.getY(), sq2.getY()) + 2;
+
+            for (int y = minY; y <= maxY; y++) {
+                for (int x = sq1.getX(); x <= sq1.getX() + 2; x++) {
+                    result.add(new SquareLocation(x, y));
+                }
+
+            }
+            //A horizontal line
+        }else if(slope == 0){
+            //The order along the x-axis was guaranteed
+            int minX = sq1.getX() - 2;
+            int maxX = sq2.getX() + 2;
+            for (int y = sq1.getY(); y <= sq1.getY() + 2; y++){
+                for(int x = minX; x <= maxX; x++){
+                    result.add(new SquareLocation(x, y));
+                }
+            }
+        }else {
+
+            //At extreme slopes, either method leads to gaps. Therefore, we double up the methods
+            //Removing duplicates implicitly with the HashSet
+            for (int x = sq1.getX() - 2; x <= sq2.getX() + 2; x++) {
+                //Find the initial line
+                int y = (int) Math.floor(b + x * slope);
+                //And shift two grid squares along that line
+                for(int yi = y; yi <= y + 3; yi++){
+                    result.add(new SquareLocation(x, yi));
+                }
+            }
+            int minY = Math.min(sq1.getY(), sq2.getY()) - 2;
+            int maxY = Math.max(sq1.getY(), sq2.getY()) + 2;
+
+            for (int y = minY; y <= maxY; y++) {
+                //Find the initial line
+                int x = (int) Math.floor((y - b) / slope);
+                //And shift two grid squares along that line
+                for (int xi = x; xi <= x + 3; xi++) {
+                    result.add(new SquareLocation(xi, y));
+                }
+
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Helper method to determine if four coordinates are crossed on one axis
      *
      * @param a1 First coord of first atom
      * @param a2 Second coord of first atom

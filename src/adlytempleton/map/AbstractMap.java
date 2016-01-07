@@ -5,6 +5,7 @@ import adlytempleton.reaction.ReactionData;
 import com.google.common.collect.HashMultimap;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -99,13 +100,16 @@ public abstract class AbstractMap {
     /**
      * Checks if four locations are crossed on the grid geometry
      *
+     * In strict mode, this function will return true if one of the endpoints of one line lies along the second line
+     *
      * @param loc11 First atom of first bond
      * @param loc12 Second atom of first bond
      * @param loc21 First atom of second bond
      * @param loc22 Second atom of second bond
+     * @param strict Determines the behavior of this function. Explained above
      * @return True if the two bonds described are crossed
      */
-    public abstract boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22);
+    public abstract boolean crossed(ILocation loc11, ILocation loc12, ILocation loc21, ILocation loc22, boolean strict);
 
     /**
      * Moves an atom from one location to another. This should both update the location in the map and in the Atom itself.
@@ -130,6 +134,16 @@ public abstract class AbstractMap {
      * @return A List containing all Atoms
      */
     public abstract List<Atom> getAllAtoms();
+
+    /**
+     * Draw a line between loc1 and loc2
+     * Collect all points on the
+     * Then draw a 'rectangle' extending two points to the right and collect all points on that rectangle
+     * Every bond between atoms which crosses the line between loc1 and loc2
+     * Must contain one atom in this set of points
+     * @return
+     */
+    public abstract HashSet<ILocation> getCrossedZone(ILocation loc1, ILocation loc2);
 
 
     /**

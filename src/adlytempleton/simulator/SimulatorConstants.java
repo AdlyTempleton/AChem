@@ -18,7 +18,7 @@ public class SimulatorConstants {
 
     //The delay, in ms, between ticks
     //-1 pauses the simulation
-    public static int simulationSpeed = 0;
+    public static int simulationSpeed = 500;
 
 
     //The range which atoms will search to find reaction partners

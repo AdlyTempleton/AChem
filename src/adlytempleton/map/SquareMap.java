@@ -157,20 +157,25 @@ public class SquareMap extends AbstractMap {
 
         //Given the intersection point of the lines (determined above)
         //In strict mode, we now check if the intersection is equal to one of the endpoints
-        if(strict){
-            //If the intersection is not an integer point, it can not be equal to any of the endpoints
-            if(x == Math.floor(x) && y == Math.floor(y)) {
-                SquareLocation intersection = new SquareLocation((int)x, (int)y);
-                if(intersection.equals(sq11) || intersection.equals(sq12) || intersection.equals(sq21) || intersection.equals(sq22)) {
-                    return true;
-                }
-            }
-        }
+
 
         //Now we have the intersection point of the two lines
         //But we must determine if this intersection point is contained in both segments
         boolean withinLine1 = numbersInterwoven(sq11.getX(), sq12.getX(), x) && numbersInterwoven(sq11.getY(), sq12.getY(), y);
         boolean withinLine2 = numbersInterwoven(sq21.getX(), sq22.getX(), x) && numbersInterwoven(sq21.getY(), sq22.getY(), y);
+
+        if(strict){
+            //If the intersection is not an integer point, it can not be equal to any of the endpoints
+            if(x == Math.floor(x) && y == Math.floor(y)) {
+                SquareLocation intersection = new SquareLocation((int)x, (int)y);
+                if((intersection.equals(sq11) || intersection.equals(sq12)) && withinLine2) {
+                    return true;
+                }
+                if((intersection.equals(sq21) || intersection.equals(sq22)) && withinLine1) {
+                    return true;
+                }
+            }
+        }
 
         return (withinLine1 && withinLine2);
     }

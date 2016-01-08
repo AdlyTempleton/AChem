@@ -16,6 +16,9 @@ public class SimulatorConstants {
 
     public static final int MAP_SIZE = 50;
 
+    //Whether actions of enzymes are blocked by membranes
+    public static final boolean MEMBRANE_BLOCKIGN = false;
+
     //The delay, in ms, between ticks
     //-1 pauses the simulation
     public static int simulationSpeed = 500;
@@ -29,5 +32,5 @@ public class SimulatorConstants {
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
-    public static final float FOOT_ABUNDANCE = .25F;
+    public static final float FOOT_ABUNDANCE = .4F;
 }

@@ -17,7 +17,7 @@ public class SimulatorConstants {
     public static final int MAP_SIZE = 50;
 
     //Whether actions of enzymes are blocked by membranes
-    public static final boolean MEMBRANE_BLOCKIGN = false;
+    public static final boolean MEMBRANE_BLOCKING = false;
 
     //The delay, in ms, between ticks
     //-1 pauses the simulation

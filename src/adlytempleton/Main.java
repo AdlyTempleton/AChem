@@ -67,8 +67,6 @@ public class Main {
 
                     if(SimulatorConstants.simulationSpeed >= 0) {
                         Thread.sleep(SimulatorConstants.simulationSpeed);
-                    }else{
-                        Thread.sleep(100);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

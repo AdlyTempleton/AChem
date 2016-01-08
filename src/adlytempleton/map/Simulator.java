@@ -102,12 +102,15 @@ public class Simulator {
 
             if(atomUp != null && atomDown != null){
                 if(atomUp.state == 36 && atomDown.state == 36 && atomUp.type == EnumType.A && atomDown.type == EnumType.A){
-                    if(atomUp.isBondedTo(atomDown)){
-                        if(random.nextFloat() < .5F) {
-                            atomUp.unbond(atomDown);
-                            atomUp.bond(atom);
-                            atomDown.bond(atom);
-                            atom.state = 36;
+                    //Check that no atom in the membrane is bonded to something else
+                    if(atomUp.bonds.size() == 2 && atomDown.bonds.size() == 2){
+                        if(atomUp.isBondedTo(atomDown)) {
+                            if (random.nextFloat() < .000000005F) {
+                                atomUp.unbond(atomDown);
+                                atomUp.bond(atom);
+                                atomDown.bond(atom);
+                                atom.state = 36;
+                            }
                         }
                     }
                 }
@@ -198,7 +201,7 @@ public class Simulator {
         //But this shouldn't be a performance intensive step
         for (Atom nearbyAtom : nearbyAtoms) {
             for (Atom nearbyBondedAtom : nearbyAtom.bonds) {
-                if (nearbyBondedAtom != atom1 && nearbyBondedAtom != atom2 && map.crossed(loc1, loc2, nearbyAtom.getLocation(), nearbyBondedAtom.getLocation(), false)) {
+                if (nearbyBondedAtom != atom1 && nearbyBondedAtom != atom2 && map.crossed(loc1, loc2, nearbyAtom.getLocation(), nearbyBondedAtom.getLocation(), true)) {
                     return true;
                 }
             }
@@ -211,6 +214,7 @@ public class Simulator {
      * Spawns food particles randomly distributed
      */
     public void populateFood(AbstractMap map){
+        ArrayList<EnumType> foodWeights = EnumType.weightedFoodMap();
         ArrayList<ILocation> cells = map.getAllLocations();
 
         //Pick the first 30% of the list, after shuffling
@@ -222,8 +226,9 @@ public class Simulator {
             ILocation loc = cells.get(i);
 
             if(map.getAtomAtLocation(loc) == null){
+
                 //Pick a random state
-                EnumType state = EnumType.values()[r.nextInt(6)];
+                EnumType state = foodWeights.get(r.nextInt(foodWeights.size()));
                 Atom atom = new Atom(state, 0);
                 map.addAtom(loc, atom);
             }

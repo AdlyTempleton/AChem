@@ -27,6 +27,14 @@ public class SquareLocation implements ILocation {
     }
 
     @Override
+    public int distance(ILocation other) {
+        assert other instanceof SquareLocation;
+        SquareLocation otherLoc = (SquareLocation) other;
+
+        return Math.max(Math.abs(otherLoc.getX() - getX()), Math.abs(otherLoc.getY() - getY()));
+    }
+
+    @Override
     public ILocation subtract(ILocation other) {
         assert other instanceof SquareLocation;
         return new SquareLocation(((SquareLocation) other).x - x, ((SquareLocation)other).y - y);

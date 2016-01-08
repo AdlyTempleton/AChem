@@ -11,6 +11,12 @@ package adlytempleton.map;
  */
 public interface ILocation {
 
+    /**
+     * @param other Another ILocation of the same type
+     * @return The distance between this location and other(via the appropriate metric for the grid type)
+     */
+    public int distance(ILocation other);
+
     /*
         Returns this location offset by other (treated as a vector)
      */

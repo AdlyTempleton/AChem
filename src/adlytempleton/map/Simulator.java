@@ -76,6 +76,7 @@ public class Simulator {
                     map.move(atom, newLocation);
                     reactAround(newLocation);
                     addToMembrane(atom);
+                    pinchMembrane(atom);
                 }
             }
 
@@ -88,6 +89,44 @@ public class Simulator {
     }
 
     /**
+     * After an atom moves, will expel it from the membrane if conditions are met
+     */
+    public void pinchMembrane(Atom atom) {
+        if (atom.type == EnumType.A && atom.state == 36) {
+            //Check bonded atoms
+            if (atom.bonds.size() == 2) {
+                Atom atom1 = atom.bonds.get(0);
+                Atom atom2 = atom.bonds.get(1);
+                if (atom1.state == 36 && atom1.type == EnumType.A &&
+                        atom2.state == 36 && atom2.type == EnumType.A) {
+                    //Check that atoms are adjacent
+                    if (atom1.getLocation().distance(atom2.getLocation()) == 1) {
+                        //Checkk that this membrane atom to be ejected is clumped
+                        //This slows down the security of the pinching
+                        if(atom1.getLocation().distance(atom.getLocation()) == 1 && atom2.getLocation().distance(atom.getLocation()) == 1)
+                        if (!doesBondCross(atom1, atom2)) {
+                            //Enzymes cannot leave the membrane
+                            if (!atom.isEnzyme()) {
+
+                                //Stitch the membrane
+                                atom1.bond(atom2);
+
+                                //Unbond from other atoms
+                                atom.unbond(atom2);
+                                atom.unbond(atom1);
+
+                                //Become food
+                                atom.state = 0;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
      * After an atom moves, will add the atom to an enzyme if applicable
      */
     public void addToMembrane(Atom atom){
@@ -95,35 +134,28 @@ public class Simulator {
         Random random = new Random();
 
         if(atom.type == EnumType.A && atom.state == 0){
-            Atom atomUp = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, 1)));
-            Atom atomDown = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, -1)));
-            Atom atomLeft = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, 0)));
-            Atom atomRight = map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, 0)));
 
-            if(atomUp != null && atomDown != null){
-                if(atomUp.state == 36 && atomDown.state == 36 && atomUp.type == EnumType.A && atomDown.type == EnumType.A){
-                    //Check that no atom in the membrane is bonded to something else
-                    if(atomUp.bonds.size() == 2 && atomDown.bonds.size() == 2){
-                        if(atomUp.isBondedTo(atomDown)) {
-                            if (random.nextFloat() < .000000005F) {
-                                atomUp.unbond(atomDown);
-                                atomUp.bond(atom);
-                                atomDown.bond(atom);
+            //A 2D array containing pairs of opposing atoms
+            Atom[][] atomPairs = new Atom[][]{
+                    {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, 1))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(0, -1)))},
+                    {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, 0))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, 0)))},
+                    {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, -1))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, 1)))},
+                    {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, 1))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, -1)))}
+            };
+            for(Atom[] pair : atomPairs) {
+                Atom atom1 = pair[0];
+                Atom atom2 = pair[1];
+                if (atom1 != null && atom2 != null) {
+                    if (atom1.state == 36 && atom2.state == 36 && atom1.type == EnumType.A && atom2.type == EnumType.A) {
+                        //Check that no atom in the membrane is bonded to something else
+                        if (atom1.bonds.size() == 2 && atom2.bonds.size() == 2) {
+                            if (atom2.isBondedTo(atom1)) {
+                                atom1.unbond(atom2);
+                                atom1.bond(atom);
+                                atom2.bond(atom);
                                 atom.state = 36;
-                            }
-                        }
-                    }
-                }
-            }
 
-            if(atomLeft != null && atomRight != null){
-                if(atomLeft.state == 36 && atomLeft.state == 36 && atomLeft.type == EnumType.A && atomRight.type == EnumType.A){
-                    if(atomLeft.isBondedTo(atomRight)){
-                        if(random.nextFloat() < .5F) {
-                            atomLeft.unbond(atomRight);
-                            atomLeft.bond(atom);
-                            atomRight.bond(atom);
-                            atom.state = 36;
+                            }
                         }
                     }
                 }
@@ -172,8 +204,16 @@ public class Simulator {
         return false;
     }
 
+
     /**
-     * Determines if a bond between two atoms crosses any other bonds
+     * Version of doesBondCross that uses the actual location of the atoms
+     */
+    public boolean doesBondCross(Atom atom1, Atom atom2) {
+        return doesBondCross(atom1, atom1.getLocation(), atom2, atom2.getLocation());
+    }
+
+    /**
+     * Determines if a (hypothetical) bond between two atoms crosses any other bonds
      * The two locations may or may not map to the actual locations of the atom
      */
     public boolean doesBondCross(Atom atom1, ILocation loc1, Atom atom2, ILocation loc2) {

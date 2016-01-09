@@ -5,10 +5,7 @@ import adlytempleton.atom.EnumType;
 import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -104,21 +101,21 @@ public class Simulator {
                         //Checkk that this membrane atom to be ejected is clumped
                         //This slows down the security of the pinching
                         if(atom1.getLocation().distance(atom.getLocation()) == 1 && atom2.getLocation().distance(atom.getLocation()) == 1)
-                        if (!doesBondCross(atom1, atom2)) {
-                            //Enzymes cannot leave the membrane
-                            if (!atom.isEnzyme()) {
+                            if (!doesBondCross(atom1, atom2)) {
+                                //Enzymes cannot leave the membrane
+                                if (!atom.isEnzyme()) {
 
-                                //Stitch the membrane
-                                atom1.bond(atom2);
+                                    //Stitch the membrane
+                                    atom1.bond(atom2);
 
-                                //Unbond from other atoms
-                                atom.unbond(atom2);
-                                atom.unbond(atom1);
+                                    //Unbond from other atoms
+                                    atom.unbond(atom2);
+                                    atom.unbond(atom1);
 
-                                //Become food
-                                atom.state = 0;
+                                    //Become food
+                                    atom.state = 0;
+                                }
                             }
-                        }
                     }
                 }
 
@@ -196,11 +193,25 @@ public class Simulator {
      * @return True if the movement is invalid
      */
     private boolean willCrossBonds(Atom atom, ILocation newLocation) {
+        //Checks if the new location will result in any crossed bonds
         for (Atom bondedAtom : atom.bonds) {
             if (doesBondCross(atom, newLocation, bondedAtom, bondedAtom.getLocation())) {
                 return true;
             }
         }
+
+        if(!atom.bonds.isEmpty()){
+            for(Atom nearbyAtom : map.getAdjacentAtoms(atom.getLocation())){
+                if(!nearbyAtom.isBondedTo(atom)) {
+                    for (Atom bondedAtom : nearbyAtom.bonds) {
+                        if (map.crossed(atom.getLocation(), newLocation, nearbyAtom.getLocation(), bondedAtom.getLocation(), false)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
@@ -217,24 +228,16 @@ public class Simulator {
      * The two locations may or may not map to the actual locations of the atom
      */
     public boolean doesBondCross(Atom atom1, ILocation loc1, Atom atom2, ILocation loc2) {
-        //We want to look at all atoms adjacent to one of the components
-        //Plus prevent X bonds
-        ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc1, 1);
-        nearbyAtoms.addAll(map.getAdjacentAtoms(loc2, 1));
+        ArrayList<Atom> nearbyAtoms = getNearbyAtomsForCrossCheck(atom1, loc1);
+        nearbyAtoms.addAll(getNearbyAtomsForCrossCheck(atom2, loc2));
 
-        //Prevent X-bonds
-        for(SquareLocation loc : new SquareLocation[]{new SquareLocation(0, -2), new SquareLocation(-2, 0), new SquareLocation(2, 0), new SquareLocation(0, 2)}) {
-            Atom atom = map.getAtomAtLocation(loc1.add(loc));
-            if(atom != null){
-                nearbyAtoms.add(atom);
-            }
-        }
+        //Remove duplicates
+        nearbyAtoms = new ArrayList<>(new HashSet<>(nearbyAtoms));
 
-        //We remove the atoms twice as we are searching around the new location, not the current one
-        nearbyAtoms.remove(atom1);
+        //Remove original atoms
         nearbyAtoms.remove(atom1);
         nearbyAtoms.remove(atom2);
-        nearbyAtoms.remove(atom2);
+
 
         //Cycle through all atoms bonded to these
         //This is inefficient by a factor of two
@@ -248,6 +251,27 @@ public class Simulator {
         }
 
         return false;
+    }
+
+    /**
+     * Returns a lsit of all Atoms which might cross with an atom if it were at a given location
+     */
+    private ArrayList<Atom> getNearbyAtomsForCrossCheck(Atom atom, ILocation loc) {
+        //We want to look at all atoms adjacent to one of the components
+        //Plus prevent X bonds
+        ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc, 1);
+
+        //Prevent X-bonds
+        for(SquareLocation xLoc : new SquareLocation[]{new SquareLocation(0, -2), new SquareLocation(-2, 0), new SquareLocation(2, 0), new SquareLocation(0, 2)}) {
+            Atom xAtom = map.getAtomAtLocation(loc.add(xLoc));
+            if(xAtom != null){
+                nearbyAtoms.add(xAtom);
+            }
+        }
+
+        nearbyAtoms.remove(atom);
+
+        return nearbyAtoms;
     }
 
     /**

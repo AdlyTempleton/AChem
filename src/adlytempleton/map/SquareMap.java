@@ -128,7 +128,12 @@ public class SquareMap extends AbstractMap {
             //Then the lines intersect if and only if
             //the four numbers are interwoven
             //And the y-intercepts are equal
-            return b1 == b2 && numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX());
+
+            //Note that checking one dimension is not sufficient for vertical/horizontal lines
+
+            //If the lines are colinear. This is the y-intercept, or x-intercept for vertical lines
+            boolean sameAxis = slope1 == Double.MAX_VALUE ? sq11.getX() == sq21.getX() : b1 == b2;
+            return sameAxis && (numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY()) &&  numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX()));
 
         }
 

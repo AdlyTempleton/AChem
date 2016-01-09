@@ -68,7 +68,7 @@ public class SquareMapFrame extends JFrame implements ActionListener{
                 break;
 
             case "Medium":
-                SimulatorConstants.simulationSpeed = 10;
+                SimulatorConstants.simulationSpeed = 100;
                 break;
             case "Fast":
                 SimulatorConstants.simulationSpeed = 0;

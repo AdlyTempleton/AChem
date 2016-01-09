@@ -115,7 +115,7 @@ public class ReactionManager {
             //We want to check the distance to either product
             if (map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
                     map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE) {
-                 if(!SimulatorConstants.MEMBRANE_BLOCKING || canEnzymeReach(map, enzyme, atom1, atom2)){
+                if(!SimulatorConstants.MEMBRANE_BLOCKING || canEnzymeReach(map, enzyme, atom1, atom2)){
                     return true;
                 }
             }

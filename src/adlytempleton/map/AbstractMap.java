@@ -31,12 +31,12 @@ public abstract class AbstractMap {
      * Reforms the enzymes list
      * Used when reading from a file
      */
-    public void updateAllEnzymes(){
+    public void updateAllEnzymes() {
         enzymes.clear();
 
-        for(Atom atom : getAllAtoms()){
-            for(ReactionData rxn : atom.getReactions()){
-                if(rxn != null){
+        for (Atom atom : getAllAtoms()) {
+            for (ReactionData rxn : atom.getReactions()) {
+                if (rxn != null) {
                     enzymes.put(rxn, atom);
                 }
             }
@@ -64,9 +64,8 @@ public abstract class AbstractMap {
     /**
      * Finds all locations in a specified distance from a given location (not including itself)
      *
-     *
      * @param location An AbstactLocation on the grid of type getLocationType()
-     * @param range Integer distance measured in whatever distance metric used in this map
+     * @param range    Integer distance measured in whatever distance metric used in this map
      * @return An ArrayList of all locations adjacent to this location. Calculated via whatever metric is suitable for this grid type
      */
     public abstract ArrayList<ILocation> getLocationsWithinRange(ILocation location, int range);
@@ -99,13 +98,13 @@ public abstract class AbstractMap {
 
     /**
      * Checks if four locations are crossed on the grid geometry
-     *
+     * <p>
      * In strict mode, this function will return true if one of the endpoints of one line lies along the second line
      *
-     * @param loc11 First atom of first bond
-     * @param loc12 Second atom of first bond
-     * @param loc21 First atom of second bond
-     * @param loc22 Second atom of second bond
+     * @param loc11  First atom of first bond
+     * @param loc12  Second atom of first bond
+     * @param loc21  First atom of second bond
+     * @param loc22  Second atom of second bond
      * @param strict Determines the behavior of this function. Explained above
      * @return True if the two bonds described are crossed
      */
@@ -141,6 +140,7 @@ public abstract class AbstractMap {
      * Then draw a 'rectangle' extending two points to the right and collect all points on that rectangle
      * Every bond between atoms which crosses the line between loc1 and loc2
      * Must contain one atom in this set of points
+     *
      * @return
      */
     public abstract HashSet<ILocation> getCrossedZone(ILocation loc1, ILocation loc2);

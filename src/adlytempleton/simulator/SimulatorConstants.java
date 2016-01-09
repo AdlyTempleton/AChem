@@ -18,19 +18,14 @@ public class SimulatorConstants {
 
     //Whether actions of enzymes are blocked by membranes
     public static final boolean MEMBRANE_BLOCKING = false;
-
-    //The delay, in ms, between ticks
-    //-1 pauses the simulation
-    public static int simulationSpeed = 500;
-
-
-    //The range which atoms will search to find reaction partners
-    public static int REACTION_RANGE = 2;
-
-
     //The abundance of zero-state 'food' particles
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
     public static final float FOOT_ABUNDANCE = .4F;
+    //The delay, in ms, between ticks
+    //-1 pauses the simulation
+    public static int simulationSpeed = 500;
+    //The range which atoms will search to find reaction partners
+    public static int REACTION_RANGE = 2;
 }

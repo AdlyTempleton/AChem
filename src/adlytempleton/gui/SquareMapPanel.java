@@ -31,7 +31,7 @@ public class SquareMapPanel extends JPanel {
         int cellHeight = getWidth() / map.getSize();
 
         //Set mouseover text
-        if(getMousePosition() != null) {
+        if (getMousePosition() != null) {
             int mouseX = getMousePosition().x;
             int mouseY = getMousePosition().y;
 
@@ -49,10 +49,10 @@ public class SquareMapPanel extends JPanel {
 
             //render each type of atom with a different color
             g.setColor(atom.type.color);
-            if(atom.state == 0 && atom.bonds.isEmpty()) {
+            if (atom.state == 0 && atom.bonds.isEmpty()) {
 
                 g.fillOval(cellWidth * x, cellHeight * y, 6, 6);
-            }else{
+            } else {
 
                 g.fillOval(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
             }
@@ -65,8 +65,8 @@ public class SquareMapPanel extends JPanel {
             //The offset from cornet of the cell
             int textOffsetX = (cellWidth / 2);
             int textOffsetY = (cellHeight / 2);
-            if(atom.state != 0) {
-                g.drawString("" + atom.state, (int) x * cellWidth + textOffsetX, (int) y * cellHeight + textOffsetY);
+            if (atom.state != 0) {
+                g.drawString("" + atom.state, x * cellWidth + textOffsetX, y * cellHeight + textOffsetY);
             }
 
             //Bonds

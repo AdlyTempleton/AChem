@@ -27,21 +27,6 @@ public enum EnumType {
     //As in X/Y symbols
     private boolean flexible;
 
-    /**
-     * Returns a list of EnumTypes, weighted by their weight value
-     * Used for food generation
-     */
-    public static ArrayList<EnumType> weightedFoodMap(){
-        ArrayList result = new ArrayList();
-        for(EnumType type : EnumType.values()){
-            for(int i = 0; i < type.weight; i++){
-                result.add(type);
-            }
-        }
-
-        return result;
-    }
-
     EnumType(char symbol, Color color) {
         this.symbol = symbol;
         this.color = color;
@@ -55,6 +40,21 @@ public enum EnumType {
     EnumType(char symbol, Color color, boolean flexible) {
         this(symbol, color);
         this.flexible = flexible;
+    }
+
+    /**
+     * Returns a list of EnumTypes, weighted by their weight value
+     * Used for food generation
+     */
+    public static ArrayList<EnumType> weightedFoodMap() {
+        ArrayList result = new ArrayList();
+        for (EnumType type : EnumType.values()) {
+            for (int i = 0; i < type.weight; i++) {
+                result.add(type);
+            }
+        }
+
+        return result;
     }
 
     /**

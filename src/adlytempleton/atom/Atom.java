@@ -26,41 +26,16 @@ public class Atom {
      * To store the locations of all bonded atoms
      * This eliminates circular refrences
      * And allows the state to be saved and loaded
-     *
+     * <p>
      * This contains relative locations, which should be reconstructed with ILocation.add
      */
     public ArrayList<ILocation> bondsLocation = new ArrayList<>();
-
-    /**
-     * Constructs bonds from bondsLocation
-     * Used when loading from json
-     */
-    public void reconstructBondList(AbstractMap map){
-        bonds = new ArrayList<>();
-        for(ILocation location : bondsLocation){
-            bonds.add(map.getAtomAtLocation(getLocation().add(location)));
-        }
-    }
-
-    /**
-     * Constructs bondsLocation data from bonds
-     * Used when saving to json
-     */
-    public void updateBondLocationList(){
-        bondsLocation = new ArrayList<>();
-        for(Atom bondedAtom : bonds){
-            bondsLocation.add(bondedAtom.getLocation().subtract(getLocation()));
-        }
-    }
-
-
-
     //The location of the atom
     private ILocation location;
-
     //Stores a fixed-length array of all Reactions this atom acts as an enzyme for
     //
     private ReactionData[] reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
+
 
     public Atom(EnumType type) {
         this.type = type;
@@ -76,6 +51,28 @@ public class Atom {
         this.type = type;
         this.state = state;
         this.reactions = rxn;
+    }
+
+    /**
+     * Constructs bonds from bondsLocation
+     * Used when loading from json
+     */
+    public void reconstructBondList(AbstractMap map) {
+        bonds = new ArrayList<>();
+        for (ILocation location : bondsLocation) {
+            bonds.add(map.getAtomAtLocation(getLocation().add(location)));
+        }
+    }
+
+    /**
+     * Constructs bondsLocation data from bonds
+     * Used when saving to json
+     */
+    public void updateBondLocationList() {
+        bondsLocation = new ArrayList<>();
+        for (Atom bondedAtom : bonds) {
+            bondsLocation.add(bondedAtom.getLocation().subtract(getLocation()));
+        }
     }
 
     public ILocation getLocation() {

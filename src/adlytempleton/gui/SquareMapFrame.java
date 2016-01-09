@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * <p>
  * A basic window for rendering
  */
-public class SquareMapFrame extends JFrame implements ActionListener{
+public class SquareMapFrame extends JFrame implements ActionListener {
 
     public SquareMapFrame(SquareMap map) {
 
@@ -41,7 +41,7 @@ public class SquareMapFrame extends JFrame implements ActionListener{
                 new JButton("Medium"),
                 new JButton("Fast")};
 
-        for(JButton button : buttons) {
+        for (JButton button : buttons) {
             button.setSize(50, 1500);
             button.addActionListener(this);
 
@@ -58,7 +58,7 @@ public class SquareMapFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
 
-        switch(e.getActionCommand()){
+        switch (e.getActionCommand()) {
             case "Pause":
                 SimulatorConstants.simulationSpeed = -1;
                 break;

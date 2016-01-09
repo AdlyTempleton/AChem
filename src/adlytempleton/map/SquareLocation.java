@@ -15,15 +15,15 @@ public class SquareLocation implements ILocation {
         this.x = x;
     }
 
-    public SquareLocation(){
-        this(0,0);
+    public SquareLocation() {
+        this(0, 0);
     }
 
     @Override
     public ILocation add(ILocation other) {
         assert other instanceof SquareLocation;
 
-        return new SquareLocation(((SquareLocation) other).x + x, ((SquareLocation)other).y + y);
+        return new SquareLocation(((SquareLocation) other).x + x, ((SquareLocation) other).y + y);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SquareLocation implements ILocation {
     @Override
     public ILocation subtract(ILocation other) {
         assert other instanceof SquareLocation;
-        return new SquareLocation(((SquareLocation) other).x - x, ((SquareLocation)other).y - y);
+        return new SquareLocation(((SquareLocation) other).x - x, ((SquareLocation) other).y - y);
     }
 
     @Override

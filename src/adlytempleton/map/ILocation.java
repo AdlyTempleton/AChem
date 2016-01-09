@@ -15,17 +15,16 @@ public interface ILocation {
      * @param other Another ILocation of the same type
      * @return The distance between this location and other(via the appropriate metric for the grid type)
      */
-    public int distance(ILocation other);
+    int distance(ILocation other);
 
     /*
         Returns this location offset by other (treated as a vector)
      */
-    public ILocation add(ILocation other);
+    ILocation add(ILocation other);
 
     /**
-        Returns the offset that must be added to other to get this location
-        ie. other location - this location
-
+     * Returns the offset that must be added to other to get this location
+     * ie. other location - this location
      **/
-    public ILocation subtract(ILocation other);
+    ILocation subtract(ILocation other);
 }

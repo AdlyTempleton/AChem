@@ -7,9 +7,7 @@ import adlytempleton.map.ILocation;
 import adlytempleton.map.Simulator;
 import adlytempleton.simulator.SimulatorConstants;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -72,22 +70,22 @@ public class ReactionManager {
      *
      * @return true if the reaction is valid, false otherwise
      */
-    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2){
+    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2) {
         HashSet<ILocation> crossedArea = map.getCrossedZone(enzyme.getLocation(), reactant1.getLocation());
         crossedArea.addAll(map.getCrossedZone(enzyme.getLocation(), reactant2.getLocation()));
 
-        for(ILocation loc : crossedArea){
+        for (ILocation loc : crossedArea) {
             Atom atom = map.getAtomAtLocation(loc);
             //Check for A-type atom
-            if(atom != null && atom.type == EnumType.A){
-                 for(Atom bondedAtom : atom.bonds){
-                    if(bondedAtom.type == EnumType.A){
+            if (atom != null && atom.type == EnumType.A) {
+                for (Atom bondedAtom : atom.bonds) {
+                    if (bondedAtom.type == EnumType.A) {
                         //Check for uniqueness
-                        if(!(atom == reactant1 || atom == reactant2)){
-                            if (map.crossed(reactant1.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)){
+                        if (!(atom == reactant1 || atom == reactant2)) {
+                            if (map.crossed(reactant1.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)) {
                                 return false;
                             }
-                            if (map.crossed(reactant2.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)){
+                            if (map.crossed(reactant2.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)) {
                                 return false;
                             }
                         }
@@ -115,7 +113,7 @@ public class ReactionManager {
             //We want to check the distance to either product
             if (map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
                     map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE) {
-                if(!SimulatorConstants.MEMBRANE_BLOCKING || canEnzymeReach(map, enzyme, atom1, atom2)){
+                if (!SimulatorConstants.MEMBRANE_BLOCKING || canEnzymeReach(map, enzyme, atom1, atom2)) {
                     return true;
                 }
             }

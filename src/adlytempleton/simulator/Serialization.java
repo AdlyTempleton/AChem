@@ -7,9 +7,7 @@ import adlytempleton.map.SquareMap;
 import adlytempleton.reaction.ReactionData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
 import com.google.gson.TypeAdapter;
-import com.google.gson.graph.GraphAdapterBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -26,7 +24,7 @@ import java.util.List;
  */
 public class Serialization {
 
-    public static SquareMap fromFile(String filename){
+    public static SquareMap fromFile(String filename) {
         //Creates GSON Object
         Gson gson = getGson();
 
@@ -39,18 +37,19 @@ public class Serialization {
             String contents = String.join("\n", Files.readAllLines(file.toPath()).toArray(new String[0]));
 
             //Deserialize a list
-            Type listType = new TypeToken<ArrayList<Atom>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Atom>>() {
+            }.getType();
             List<Atom> atoms = gson.fromJson(contents, listType);
 
             //Reform the map
             map = new SquareMap(SimulatorConstants.MAP_SIZE);
 
-            for(Atom atom : atoms){
+            for (Atom atom : atoms) {
                 map.addAtom(atom.getLocation(), atom);
             }
 
             //Reform bond data
-            for(Atom atom : map.getAllAtoms()){
+            for (Atom atom : map.getAllAtoms()) {
                 atom.reconstructBondList(map);
             }
 
@@ -67,6 +66,7 @@ public class Serialization {
 
     /**
      * Creates and configures a GSON object
+     *
      * @return Gson object
      */
     private static Gson getGson() {
@@ -98,7 +98,7 @@ public class Serialization {
             }
 
             //Collapse the bond data into refrences to locations
-            for(Atom atom : map.getAllAtoms()){
+            for (Atom atom : map.getAllAtoms()) {
                 atom.updateBondLocationList();
             }
 
@@ -149,7 +149,7 @@ public class Serialization {
     /**
      * This allows a condensed notation for ReactionData
      */
-    public static class ReactionAdapter extends TypeAdapter<ReactionData>{
+    public static class ReactionAdapter extends TypeAdapter<ReactionData> {
 
         public ReactionData read(JsonReader reader) throws IOException {
             //Boilerplate

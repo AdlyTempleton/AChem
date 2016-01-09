@@ -3,7 +3,6 @@ package adlytempleton.map;
 import adlytempleton.atom.Atom;
 import adlytempleton.gui.SquareMapFrame;
 import adlytempleton.reaction.ReactionData;
-import com.google.gson.annotations.Expose;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,8 +72,8 @@ public class SquareMap extends AbstractMap {
 
         ArrayList<ILocation> result = new ArrayList<ILocation>();
 
-        for(int dx = -range; dx <= range; dx++){
-            for(int dy = -range; dy <= range; dy++){
+        for (int dx = -range; dx <= range; dx++) {
+            for (int dy = -range; dy <= range; dy++) {
                 result.add(new SquareLocation(x + dx, y + dy));
             }
         }
@@ -104,8 +103,8 @@ public class SquareMap extends AbstractMap {
 
         //Check if lines are parallel
         //The ternary operator is user as a zero check
-        double slope1 = sq11.getX() == sq12.getX() ? Double.MAX_VALUE : (sq11.getY() - sq12.getY()) / (double)(sq11.getX() - sq12.getX());
-        double slope2 = sq21.getX() == sq22.getX() ? Double.MAX_VALUE : (sq21.getY() - sq22.getY()) / (double)(sq21.getX() - sq22.getX());
+        double slope1 = sq11.getX() == sq12.getX() ? Double.MAX_VALUE : (sq11.getY() - sq12.getY()) / (double) (sq11.getX() - sq12.getX());
+        double slope2 = sq21.getX() == sq22.getX() ? Double.MAX_VALUE : (sq21.getY() - sq22.getY()) / (double) (sq21.getX() - sq22.getX());
 
         //Compute y-intersection
         //The results must be discarded for vertical or horizontal lines
@@ -124,7 +123,7 @@ public class SquareMap extends AbstractMap {
         //Find the x of the intersection
 
         //If the lines are parallel
-        if(slope1 == slope2){
+        if (slope1 == slope2) {
             //Then the lines intersect if and only if
             //the four numbers are interwoven
             //And the y-intercepts are equal
@@ -133,7 +132,7 @@ public class SquareMap extends AbstractMap {
 
             //If the lines are colinear. This is the y-intercept, or x-intercept for vertical lines
             boolean sameAxis = slope1 == Double.MAX_VALUE ? sq11.getX() == sq21.getX() : b1 == b2;
-            return sameAxis && (numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY()) &&  numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX()));
+            return sameAxis && (numbersInterwoven(sq11.getY(), sq12.getY(), sq21.getY(), sq22.getY()) && numbersInterwoven(sq11.getX(), sq12.getX(), sq21.getX(), sq22.getX()));
 
         }
 
@@ -143,19 +142,19 @@ public class SquareMap extends AbstractMap {
         //Check for infinite slopes
         //If we have one infinite slope, x is on the verticle line
         //Note that both values can not be the same (or the function would have returned above
-        if(slope1 == Double.MAX_VALUE){
+        if (slope1 == Double.MAX_VALUE) {
             x = sq11.getX();
             y = x * slope2 + b2;
-        }else if(slope2 == Double.MAX_VALUE){
+        } else if (slope2 == Double.MAX_VALUE) {
             x = sq21.getX();
             y = x * slope1 + b1;
-        }else if (slope1 == 0) {
+        } else if (slope1 == 0) {
             y = sq11.getY();
             x = (y - b2) / slope2;
-        }else if (slope2 == 0) {
+        } else if (slope2 == 0) {
             y = sq21.getY();
             x = (y - b1) / slope1;
-        }else{
+        } else {
             x = (b2 - b1) / (slope1 - slope2);
             y = x * slope1 + b1;
         }
@@ -169,14 +168,14 @@ public class SquareMap extends AbstractMap {
         boolean withinLine1 = numbersInterwoven(sq11.getX(), sq12.getX(), x) && numbersInterwoven(sq11.getY(), sq12.getY(), y);
         boolean withinLine2 = numbersInterwoven(sq21.getX(), sq22.getX(), x) && numbersInterwoven(sq21.getY(), sq22.getY(), y);
 
-        if(strict){
+        if (strict) {
             //If the intersection is not an integer point, it can not be equal to any of the endpoints
-            if(x == Math.floor(x) && y == Math.floor(y)) {
-                SquareLocation intersection = new SquareLocation((int)x, (int)y);
-                if((intersection.equals(sq11) || intersection.equals(sq12)) && withinLine2) {
+            if (x == Math.floor(x) && y == Math.floor(y)) {
+                SquareLocation intersection = new SquareLocation((int) x, (int) y);
+                if ((intersection.equals(sq11) || intersection.equals(sq12)) && withinLine2) {
                     return true;
                 }
-                if((intersection.equals(sq21) || intersection.equals(sq22)) && withinLine1) {
+                if ((intersection.equals(sq21) || intersection.equals(sq22)) && withinLine1) {
                     return true;
                 }
             }
@@ -201,19 +200,18 @@ public class SquareMap extends AbstractMap {
         SquareLocation sq2 = (SquareLocation) loc2;
 
         //Ensure that sq1 is left of sq2
-        if(sq1.getX() > sq2.getX()){
+        if (sq1.getX() > sq2.getX()) {
             SquareLocation t = sq1;
             sq1 = sq2;
             sq2 = t;
         }
 
 
-
-        double slope = (sq1.getX() == sq2.getX()) ? Double.MAX_VALUE : (double) ((sq1.getY() - sq2.getY()) / ((double) (sq1.getX() - sq2.getX())));
+        double slope = (sq1.getX() == sq2.getX()) ? Double.MAX_VALUE : (sq1.getY() - sq2.getY()) / ((double) (sq1.getX() - sq2.getX()));
         double b = sq1.getY() - slope * sq1.getX();
 
         //A vertical line
-        if(slope == Double.MAX_VALUE){
+        if (slope == Double.MAX_VALUE) {
             int minY = Math.min(sq1.getY(), sq2.getY()) - 2;
             int maxY = Math.max(sq1.getY(), sq2.getY()) + 2;
 
@@ -224,16 +222,16 @@ public class SquareMap extends AbstractMap {
 
             }
             //A horizontal line
-        }else if(slope == 0){
+        } else if (slope == 0) {
             //The order along the x-axis was guaranteed
             int minX = sq1.getX() - 2;
             int maxX = sq2.getX() + 2;
-            for (int y = sq1.getY(); y <= sq1.getY() + 2; y++){
-                for(int x = minX; x <= maxX; x++){
+            for (int y = sq1.getY(); y <= sq1.getY() + 2; y++) {
+                for (int x = minX; x <= maxX; x++) {
                     result.add(new SquareLocation(x, y));
                 }
             }
-        }else {
+        } else {
 
             //At extreme slopes, either method leads to gaps. Therefore, we double up the methods
             //Removing duplicates implicitly with the HashSet
@@ -241,7 +239,7 @@ public class SquareMap extends AbstractMap {
                 //Find the initial line
                 int y = (int) Math.floor(b + x * slope);
                 //And shift two grid squares along that line
-                for(int yi = y; yi <= y + 3; yi++){
+                for (int yi = y; yi <= y + 3; yi++) {
                     result.add(new SquareLocation(x, yi));
                 }
             }
@@ -299,7 +297,7 @@ public class SquareMap extends AbstractMap {
      *
      * @param a1 First coord of first atom
      * @param a2 Second coord of first atom
-     * @param b Third point
+     * @param b  Third point
      * @return
      */
     private boolean numbersInterwoven(int a1, int a2, double b) {
@@ -399,8 +397,8 @@ public class SquareMap extends AbstractMap {
     public ArrayList<ILocation> getAllLocations() {
         ArrayList result = new ArrayList();
 
-        for(int x = 0; x < size; x ++){
-            for(int y = 0; y < size; y ++){
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
                 result.add(new SquareLocation(x, y));
             }
         }

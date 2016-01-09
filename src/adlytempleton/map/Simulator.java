@@ -78,7 +78,6 @@ public class Simulator {
             }
 
 
-
         }
 
         //Re-render after components have changed
@@ -100,7 +99,7 @@ public class Simulator {
                     if (atom1.getLocation().distance(atom2.getLocation()) == 1) {
                         //Checkk that this membrane atom to be ejected is clumped
                         //This slows down the security of the pinching
-                        if(atom1.getLocation().distance(atom.getLocation()) == 1 && atom2.getLocation().distance(atom.getLocation()) == 1)
+                        if (atom1.getLocation().distance(atom.getLocation()) == 1 && atom2.getLocation().distance(atom.getLocation()) == 1)
                             if (!doesBondCross(atom1, atom2)) {
                                 //Enzymes cannot leave the membrane
                                 if (!atom.isEnzyme()) {
@@ -126,11 +125,11 @@ public class Simulator {
     /**
      * After an atom moves, will add the atom to an enzyme if applicable
      */
-    public void addToMembrane(Atom atom){
+    public void addToMembrane(Atom atom) {
 
         Random random = new Random();
 
-        if(atom.type == EnumType.A && atom.state == 0){
+        if (atom.type == EnumType.A && atom.state == 0) {
 
             //A 2D array containing pairs of opposing atoms
             Atom[][] atomPairs = new Atom[][]{
@@ -139,7 +138,7 @@ public class Simulator {
                     {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, -1))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, 1)))},
                     {map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(-1, 1))), map.getAtomAtLocation(atom.getLocation().add(new SquareLocation(1, -1)))}
             };
-            for(Atom[] pair : atomPairs) {
+            for (Atom[] pair : atomPairs) {
                 Atom atom1 = pair[0];
                 Atom atom2 = pair[1];
                 if (atom1 != null && atom2 != null) {
@@ -185,7 +184,8 @@ public class Simulator {
         return false;
     }
 
-    /**n
+    /**
+     * n
      * Checks if a movement will cross a bond
      *
      * @param atom        The atom to be moved
@@ -200,9 +200,9 @@ public class Simulator {
             }
         }
 
-        if(!atom.bonds.isEmpty()){
-            for(Atom nearbyAtom : map.getAdjacentAtoms(atom.getLocation())){
-                if(!nearbyAtom.isBondedTo(atom)) {
+        if (!atom.bonds.isEmpty()) {
+            for (Atom nearbyAtom : map.getAdjacentAtoms(atom.getLocation())) {
+                if (!nearbyAtom.isBondedTo(atom)) {
                     for (Atom bondedAtom : nearbyAtom.bonds) {
                         if (map.crossed(atom.getLocation(), newLocation, nearbyAtom.getLocation(), bondedAtom.getLocation(), false)) {
                             return true;
@@ -262,9 +262,9 @@ public class Simulator {
         ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(loc, 1);
 
         //Prevent X-bonds
-        for(SquareLocation xLoc : new SquareLocation[]{new SquareLocation(0, -2), new SquareLocation(-2, 0), new SquareLocation(2, 0), new SquareLocation(0, 2)}) {
+        for (SquareLocation xLoc : new SquareLocation[]{new SquareLocation(0, -2), new SquareLocation(-2, 0), new SquareLocation(2, 0), new SquareLocation(0, 2)}) {
             Atom xAtom = map.getAtomAtLocation(loc.add(xLoc));
-            if(xAtom != null){
+            if (xAtom != null) {
                 nearbyAtoms.add(xAtom);
             }
         }
@@ -277,7 +277,7 @@ public class Simulator {
     /**
      * Spawns food particles randomly distributed
      */
-    public void populateFood(AbstractMap map){
+    public void populateFood(AbstractMap map) {
         ArrayList<EnumType> foodWeights = EnumType.weightedFoodMap();
         ArrayList<ILocation> cells = map.getAllLocations();
 
@@ -285,11 +285,11 @@ public class Simulator {
         Collections.shuffle(cells);
         Random r = new Random();
 
-        for(int i = 0; i < cells.size() * .1F; i ++){
+        for (int i = 0; i < cells.size() * .1F; i++) {
 
             ILocation loc = cells.get(i);
 
-            if(map.getAtomAtLocation(loc) == null){
+            if (map.getAtomAtLocation(loc) == null) {
 
                 //Pick a random state
                 EnumType state = foodWeights.get(r.nextInt(foodWeights.size()));

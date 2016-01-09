@@ -143,7 +143,7 @@ public class Simulator {
                 Atom atom1 = pair[0];
                 Atom atom2 = pair[1];
                 if (atom1 != null && atom2 != null) {
-                    if (atom1.state == 36 && atom2.state == 36 && atom1.type == EnumType.A && atom2.type == EnumType.A) {
+                    if ((atom1.state == 37 || atom1.state == 36) && (atom2.state == 37 || atom2.state == 36) && atom1.type == EnumType.A && atom2.type == EnumType.A) {
                         //Check that no atom in the membrane is bonded to something else
                         if (atom1.bonds.size() == 2 && atom2.bonds.size() == 2) {
                             if (atom2.isBondedTo(atom1)) {

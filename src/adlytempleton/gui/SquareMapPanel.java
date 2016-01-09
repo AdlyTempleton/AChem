@@ -49,7 +49,13 @@ public class SquareMapPanel extends JPanel {
 
             //render each type of atom with a different color
             g.setColor(atom.type.color);
-            g.fillOval(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
+            if(atom.state == 0 && atom.bonds.isEmpty()) {
+
+                g.fillOval(cellWidth * x, cellHeight * y, 6, 6);
+            }else{
+
+                g.fillOval(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
+            }
 
             //Render the state of the atom
             //The text should be at the atoms position + half of the cell width/height
@@ -59,7 +65,9 @@ public class SquareMapPanel extends JPanel {
             //The offset from cornet of the cell
             int textOffsetX = (cellWidth / 2);
             int textOffsetY = (cellHeight / 2);
-            g.drawString("" + atom.state, (int) x * cellWidth + textOffsetX, (int) y * cellHeight + textOffsetY);
+            if(atom.state != 0) {
+                g.drawString("" + atom.state, (int) x * cellWidth + textOffsetX, (int) y * cellHeight + textOffsetY);
+            }
 
             //Bonds
             //Find the position to render the center of the bonds

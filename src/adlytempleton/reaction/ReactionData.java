@@ -8,18 +8,18 @@ import adlytempleton.atom.EnumType;
  */
 public class ReactionData {
 
-    final EnumType type1;
-    final EnumType type2;
+    public final EnumType type1;
+    public final EnumType type2;
 
-    final int preState1;
-    final int preState2;
-    final int postState1;
-    final int postState2;
+    public final int preState1;
+    public final int preState2;
+    public final int postState1;
+    public final int postState2;
 
-    final boolean preBonded;
-    final boolean postBonded;
+    public final boolean preBonded;
+    public final boolean postBonded;
 
-    final boolean copiesReaction;
+    public final boolean copiesReaction;
 
     /**
      * Constructs a reaction from all component elements
@@ -111,7 +111,7 @@ public class ReactionData {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
     }
 
@@ -172,7 +172,7 @@ public class ReactionData {
     public boolean matchesPair(Atom a1, Atom a2) {
 
         //If the reaction applies to any two atoms of the same type
-        boolean sameTypes = type1.isFlexible() && type1 == type2;
+        boolean sameTypes = type1.isWildcard() && type1 == type2;
 
         //Types of atoms are valid
         boolean typesMatch = (sameTypes && a1.type == a2.type) || (!sameTypes && a1.type.matches(type1) && a2.type.matches(type2));

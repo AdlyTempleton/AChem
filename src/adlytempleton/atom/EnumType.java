@@ -58,6 +58,20 @@ public enum EnumType {
     }
 
     /**
+     * Returns a list of 'standard' types
+     */
+    public static ArrayList<EnumType> standardTypes() {
+        ArrayList result = new ArrayList();
+        for (EnumType type : EnumType.values()) {
+            if(!type.isWildcard()) {
+                result.add(type);
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * Returns the EnumType that correponds to a given character
      */
     public static EnumType fromChar(char c) {
@@ -71,7 +85,7 @@ public enum EnumType {
         return null;
     }
 
-    public boolean isFlexible() {
+    public boolean isWildcard() {
         return flexible;
     }
 
@@ -84,6 +98,6 @@ public enum EnumType {
      * @return True if the two match or are accessible via wildcard
      */
     public boolean matches(EnumType type) {
-        return this == type || this.isFlexible() || type.isFlexible();
+        return this == type || this.isWildcard() || type.isWildcard();
     }
 }

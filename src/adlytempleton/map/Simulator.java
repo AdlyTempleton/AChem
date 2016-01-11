@@ -309,20 +309,34 @@ public class Simulator {
      * @param centralLocation Location of the main atom
      */
     public void reactAround(ILocation centralLocation) {
+
         Atom centralAtom = map.getAtomAtLocation(centralLocation);
+        if(centralAtom != null) {
 
-        for (ILocation location : map.getLocationsWithinRange(centralLocation, SimulatorConstants.REACTION_RANGE)) {
-            Atom atom = map.getAtomAtLocation(location);
+            for (Atom atom : map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE)) {
 
-            if (atom != null && centralAtom != null) {
-                if (ReactionManager.react(atom, centralAtom, map, this)) {
-                    //Because the state has changed, we must check atoms around to propagate reactions
-                    //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
-                    updatedLocations.add(location);
-                    updatedLocations.add(centralLocation);
+                //This allows two atoms to react when not surrounded by any other atoms
+                if(map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE).isEmpty()){
+                    if (ReactionManager.react(atom, centralAtom, null, map, this)) {
+                        updatedLocations.add(atom.getLocation());
+                        updatedLocations.add(centralLocation);
+                        return;
+                    }
+                }else{
+                    for (Atom atom2 : map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE)) {
+                        if(atom2.getLocation().distance(atom.getLocation()) <= 2) {
+                            if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
+                                //Because the state has changed, we must check atoms around to propagate reactions
+                                //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
+                                updatedLocations.add(atom.getLocation());
+                                updatedLocations.add(atom2.getLocation());
+                                updatedLocations.add(centralLocation);
+                                return;
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-
 }

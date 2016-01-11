@@ -59,7 +59,7 @@ public class SquareMapPanel extends JPanel {
 
             //Render the state of the atom
             //The text should be at the atoms position + half of the cell width/height
-            g.setFont(new Font("TimesRoman", Font.BOLD, 15));
+            g.setFont(new Font("TimesRoman", Font.BOLD, 12));
             g.setColor(Color.BLACK);
 
             //The offset from cornet of the cell

@@ -2,6 +2,10 @@ package adlytempleton.reaction;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
+import adlytempleton.map.AbstractMap;
+import adlytempleton.map.Simulator;
+
+import java.util.ArrayList;
 
 /**
  * Created by ATempleton on 11/14/2015.
@@ -46,6 +50,10 @@ public class ReactionData {
     }
 
     public static ReactionData fromString(String s) {
+
+        if(s.startsWith("3:")){
+            return ReactionDataTriple.fromString(s.replaceFirst("3:", ""));
+        }
 
         //Preprocess for sanity
         s = s.replaceAll(" ", "");
@@ -99,7 +107,7 @@ public class ReactionData {
      * Helper method for fromString
      * Starting from the beginning of the string, this method will return the initial string of digits
      */
-    private static String digitSubstring(String s) {
+    protected static String digitSubstring(String s) {
         String result = "";
 
         while (s.length() > 0 && Character.isDigit(s.charAt(0))) {
@@ -153,12 +161,25 @@ public class ReactionData {
 
     /**
      * Checks if a ReactionData is applicable to a given pair of atoms. This is order-independent
+     * If the reaction only takes two components (is not ReactionDataTriple), all combinations are checked
+     *
+     * @param a1
+     * @param a2
+     * @param a3
+     * @return
+     */
+    public boolean matches(Atom a1, Atom a2, Atom a3){
+        return matches(a1, a2) || matches(a2, a3) || matches(a1, a3);
+    }
+
+    /**
+     * Checks if a ReactionData is applicable to a given pair of atoms. This is order-independent
      *
      * @param a1 One Atom
      * @param a2 Another Atom
      * @return True if this reaction describes a reaction between those atoms
      */
-    public boolean matches(Atom a1, Atom a2) {
+    private boolean matches(Atom a1, Atom a2) {
         return matchesPair(a1, a2) || matchesPair(a2, a1);
     }
 
@@ -169,7 +190,7 @@ public class ReactionData {
      * @param a2 Second Atom
      * @return True if atom is valid
      */
-    public boolean matchesPair(Atom a1, Atom a2) {
+    private boolean matchesPair(Atom a1, Atom a2) {
 
         //If the reaction applies to any two atoms of the same type
         boolean sameTypes = type1.isWildcard() && type1 == type2;
@@ -184,6 +205,72 @@ public class ReactionData {
 
         return typesMatch && statesMatch && bondsMatch;
 
+    }
+
+    /**
+     * Runs the reaction on the given set of atoms. If this is a 2-reactant reaction, all valid reactions will be performed sequentially
+     */
+    public boolean apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator){
+
+        boolean result = false;
+
+        if(matches(a1, a2)){
+            result = result || apply(a1, a2, map, simulator);
+        }
+        if(matches(a2, a3)){
+            result = result || apply(a2, a3, map, simulator);
+        }
+        if(matches(a3, a1)){
+            result = result || apply(a3, a1, map, simulator);
+        }
+
+        return result;
+    }
+
+    /**
+     * Runs the reaction on a given pair of atoms. Order-independent.
+     */
+    private boolean apply(Atom a1, Atom a2, AbstractMap map, Simulator simulator){
+        if(matchesPair(a1, a2)){
+            return applyPair(a1, a2, map, simulator);
+        }else if(matchesPair(a2, a1)){
+            return applyPair(a2, a1, map, simulator);
+        }
+        return false;
+    }
+
+    /**
+     * Runs the reaction on a given pair of atoms. Order-dependent.
+     */
+    private boolean applyPair(Atom atom1, Atom atom2, AbstractMap map, Simulator simulator){
+
+        if (!simulator.doesBondCross(atom1, atom1.getLocation(), atom2, atom2.getLocation())) {
+            if (ReactionManager.enzymeNearby(atom1, atom2, this, map)) {
+                atom1.state = postState1;
+                atom2.state = postState2;
+
+                //The bond and unbond methods contain the checks for the pre-reaction states
+                if (postBonded) {
+                    atom1.bond(atom2);
+                } else {
+                    atom2.unbond(atom1);
+                }
+
+                //Copies over reaction data
+                if (copiesReaction) {
+                    //Note that getReactions returns a shallow clone
+                    map.updateEnzymes(atom2, atom1.getReactions());
+
+                    atom2.setReactions(atom1.getReactions());
+
+                    simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -43,7 +43,9 @@ public class Simulator {
         ArrayList<ILocation> updatedLocationsCopy = (ArrayList<ILocation>) updatedLocations.clone();
         updatedLocations.clear();
         for (ILocation location : updatedLocationsCopy) {
-            reactAround(location);
+            if(map.getAtomAtLocation(location) != null && map.getAtomAtLocation(location).state != 0) {
+                reactAround(location);
+            }
         }
 
         //Move all atoms
@@ -71,7 +73,9 @@ public class Simulator {
                     }
 
                     map.move(atom, newLocation);
-                    reactAround(newLocation);
+                    if(atom.state != 0) {
+                        reactAround(newLocation);
+                    }
                     addToMembrane(atom);
                     pinchMembrane(atom);
                 }

@@ -22,7 +22,7 @@ public class SimulatorConstants {
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
-    public static final float FOOT_ABUNDANCE = .4F;
+    public static final float FOOT_ABUNDANCE = .1F;
     //The delay, in ms, between ticks
     //-1 pauses the simulation
     public static int simulationSpeed = 500;

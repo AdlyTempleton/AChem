@@ -285,7 +285,7 @@ public class Simulator {
         Collections.shuffle(cells);
         Random r = new Random();
 
-        for (int i = 0; i < cells.size() * .1F; i++) {
+        for (int i = 0; i < cells.size() * SimulatorConstants.FOOT_ABUNDANCE; i++) {
 
             ILocation loc = cells.get(i);
 

@@ -317,7 +317,9 @@ public class Simulator {
         Atom centralAtom = map.getAtomAtLocation(centralLocation);
         if(centralAtom != null) {
 
-            for (Atom atom : map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE)) {
+            ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE);
+
+            for (Atom atom : nearbyAtoms) {
 
                 //This allows two atoms to react when not surrounded by any other atoms
                 if(map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE).isEmpty()){
@@ -327,7 +329,7 @@ public class Simulator {
                         return;
                     }
                 }else{
-                    for (Atom atom2 : map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE)) {
+                    for (Atom atom2 : nearbyAtoms) {
                         if(atom2.getLocation().distance(atom.getLocation()) <= 2) {
                             if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
                                 //Because the state has changed, we must check atoms around to propagate reactions

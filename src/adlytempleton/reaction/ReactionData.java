@@ -168,7 +168,7 @@ public class ReactionData {
      * @param a3
      * @return
      */
-    public boolean matches(Atom a1, Atom a2, Atom a3){
+    public boolean matches(Atom a1, Atom a2, Atom a3) {
         return matches(a1, a2) || matches(a2, a3) || matches(a1, a3);
     }
 
@@ -192,18 +192,29 @@ public class ReactionData {
      */
     private boolean matchesPair(Atom a1, Atom a2) {
 
-        //If the reaction applies to any two atoms of the same type
-        boolean sameTypes = type1.isWildcard() && type1 == type2;
+        if (a1 != a2) {
 
-        //Types of atoms are valid
-        boolean typesMatch = (sameTypes && a1.type == a2.type) || (!sameTypes && a1.type.matches(type1) && a2.type.matches(type2));
 
-        //States of atoms are valid
-        boolean statesMatch = a1.state == preState1 && a2.state == preState2;
+            //States of atoms are valid
+            if (a1.state == preState1 && a2.state == preState2) {
 
-        boolean bondsMatch = a1.bonds.contains(a2) == preBonded;
+                if (a1.bonds.contains(a2) == preBonded) {
 
-        return typesMatch && statesMatch && bondsMatch;
+                    //If the reaction applies to any two atoms of the same type
+                    boolean sameTypes = type1.isWildcard() && type1 == type2;
+
+                    //Types of atoms are valid
+                    if ((sameTypes && a1.type == a2.type) || (!sameTypes && a1.type.matches(type1) && a2.type.matches(type2))) {
+
+
+
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
 
     }
 

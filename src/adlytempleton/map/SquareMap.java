@@ -74,21 +74,14 @@ public class SquareMap extends AbstractMap {
 
         for (int dx = -range; dx <= range; dx++) {
             for (int dy = -range; dy <= range; dy++) {
-                result.add(new SquareLocation(x + dx, y + dy));
+                if(isOnGrid(new SquareLocation(x + dx, y + dy))) {
+                    result.add(new SquareLocation(x + dx, y + dy));
+                }
             }
         }
 
         //Avoid counting the atom itself
         result.remove(new SquareLocation(x, y));
-
-        //Check that all these locations lie within the boundaries of the grid
-        Iterator iter = result.iterator();
-        while (iter.hasNext()) {
-            if (!isOnGrid((ILocation) iter.next())) {
-                iter.remove();
-            }
-        }
-
         return result;
     }
 

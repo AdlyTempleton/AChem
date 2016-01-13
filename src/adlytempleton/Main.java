@@ -9,37 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        /**
-         SquareMap map = new SquareMap(SimulatorConstants.MAP_SIZE);
-
-         //Test data
-         Atom a1 = new Atom(EnumType.A);
-         Atom a2 = new Atom(EnumType.A);
-         Atom a3 = new Atom(EnumType.A);
-
-
-         map.addAtom(new SquareLocation(6, 0), a1);
-         map.addAtom(new SquareLocation(6, 1), a2);
-         map.addAtom(new SquareLocation(6, 2), a3);
-
-         map.addAtom(new SquareLocation(1, 1), new Atom(EnumType.B));
-         map.addAtom(new SquareLocation(1, 2), new Atom(EnumType.B));
-         map.addAtom(new SquareLocation(1, 3), new Atom(EnumType.B));
-
-         map.addAtom(new SquareLocation(10, 10), new Atom(EnumType.E, 5, new ReactionData[]{
-         new ReactionData(EnumType.X, EnumType.X, 0, 0, 1, 2, false, true, false),
-         new ReactionData(EnumType.X, EnumType.Y, 2, 2, 3, 3, false, true, false),
-         new ReactionData(EnumType.X, EnumType.Y, 1, 1, 4, 4, false, true, false),
-         new ReactionData(EnumType.X, EnumType.Y, 4, 3, 5, 5, true, true, false),
-         new ReactionData(EnumType.E, EnumType.X, 5, 0, 6, 6, false, true, true),
-         }));
-
-
-         Serialization.toFile("maps/state.json", map);
-         **/
-
-
         SquareMap map = Serialization.fromFile("cell.json");
 
         Simulator simulator = new Simulator(map);
@@ -60,7 +29,7 @@ public class Main {
 
                 System.out.println(ticks + " " + (System.currentTimeMillis() - start));
 
-                if (ticks % 5000 == 0) {
+                if (ticks % 3000 == 0) {
                     simulator.flood(map);
                 }
 

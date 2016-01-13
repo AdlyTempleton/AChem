@@ -77,7 +77,7 @@ public class Simulator {
                     if(atom.state != 0) {
                         reactAround(newLocation);
                     }
-                    addToMembrane(atom);
+                    //addToMembrane(atom);
                     pinchMembrane(atom);
                 }
             }

@@ -1,9 +1,7 @@
 package adlytempleton.simulator;
 
 import adlytempleton.atom.Atom;
-import adlytempleton.map.ILocation;
-import adlytempleton.map.SquareLocation;
-import adlytempleton.map.SquareMap;
+import adlytempleton.map.*;
 import adlytempleton.reaction.ReactionData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,7 +40,7 @@ public class Serialization {
             List<Atom> atoms = gson.fromJson(contents, listType);
 
             //Reform the map
-            map = new SquareMap(SimulatorConstants.MAP_SIZE);
+            map = SimulatorConstants.TOROIDAL_MAP ? new ToroidalMap(SimulatorConstants.MAP_SIZE) : new SquareMap(SimulatorConstants.MAP_SIZE);
 
             for (Atom atom : atoms) {
                 map.addAtom(atom.getLocation(), atom);
@@ -131,7 +129,7 @@ public class Serialization {
             String[] parts = xy.split(",");
             int x = Integer.parseInt(parts[0]);
             int y = Integer.parseInt(parts[1]);
-            return new SquareLocation(x, y);
+            return SimulatorConstants.TOROIDAL_MAP ? new ToroidalLocation(x, y, SimulatorConstants.MAP_SIZE) : new SquareLocation(x, y);
         }
 
         public void write(JsonWriter writer, ILocation value) throws IOException {

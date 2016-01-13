@@ -261,7 +261,7 @@ public class SquareMap extends AbstractMap {
      * @param b1 First coord of second atom
      * @param b2 Second coord of second atom
      */
-    private boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
+    protected boolean numbersInterwoven(int a1, int a2, int b1, int b2) {
 
         //Ensure that all the coords are in the proper order
         //ie. That a1 <= a2, and that b1 <= b2
@@ -293,7 +293,7 @@ public class SquareMap extends AbstractMap {
      * @param b  Third point
      * @return
      */
-    private boolean numbersInterwoven(int a1, int a2, double b) {
+    protected boolean numbersInterwoven(int a1, int a2, double b) {
 
         //Ensure that all the coords are in the proper order
         //ie. That a1 <= a2, and that b1 <= b2

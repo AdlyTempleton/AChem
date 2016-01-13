@@ -19,6 +19,8 @@ public class SimulatorConstants {
     //Chance of mutation each time an enzyme is copied
     public static final float MUTATION_CHANCE = .05F;
 
+    public static boolean TOROIDAL_MAP = true;
+
     //Whether actions of enzymes are blocked by membranes
     public static final boolean MEMBRANE_BLOCKING = false;
     //The abundance of zero-state 'food' particles

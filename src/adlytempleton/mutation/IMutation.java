@@ -13,8 +13,9 @@ public interface IMutation {
     /**
      * Runs the mutation on an array of given reactions
      * The given ReactionData may be modified and returned
-     * This method should always return a mutated reaction set
+     * This method may not always return a mutated reaction set
      * Mutation chance is handled at a higher level
+     * The ReactionData[] should be a shallow clone
      * @return The modified enzyme
      */
     public ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map);

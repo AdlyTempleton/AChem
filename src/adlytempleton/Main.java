@@ -46,21 +46,29 @@ public class Main {
 
         simulator.populateFood(map);
 
+
+        int ticks = 0;
+
         while (true) {
 
-            for (int i = 0; i < 100; i++) {
 
-                //Check if paused
-                if (SimulatorConstants.simulationSpeed != -1) {
-                    long start = System.currentTimeMillis();
-                    simulator.tick();
-                    System.out.println(System.currentTimeMillis() - start);
+            //Check if paused
+            if (SimulatorConstants.simulationSpeed != -1) {
+                long start = System.currentTimeMillis();
+                simulator.tick();
+                ticks++;
+
+                System.out.println(ticks + " " + (System.currentTimeMillis() - start));
+
+                if (ticks % 5000 == 0) {
+                    simulator.flood(map);
                 }
+
 
                 try {
                     //Sanity check - this value is -1 if the simulation is paused
 
-                    if (SimulatorConstants.simulationSpeed >= 0) {
+                    if (SimulatorConstants.simulationSpeed > 0) {
                         Thread.sleep(SimulatorConstants.simulationSpeed);
                     }
                 } catch (InterruptedException e) {
@@ -68,8 +76,7 @@ public class Main {
 
                 }
             }
-
-            Serialization.toFile("maps/state.json", map);
         }
     }
 }
+

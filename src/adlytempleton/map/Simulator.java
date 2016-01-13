@@ -2,6 +2,7 @@ package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
+import adlytempleton.reaction.ReactionData;
 import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.SimulatorConstants;
 
@@ -18,7 +19,7 @@ public class Simulator {
 
     //Stores Locations which have been updated by a reaction or movement
     //And should be reachecked next tick
-    public ArrayList<ILocation> updatedLocations = new ArrayList<>();
+    public HashSet<ILocation> updatedLocations = new HashSet<>();
     AbstractMap map;
 
     /**
@@ -40,7 +41,7 @@ public class Simulator {
         //Update all atoms which have changed
         //We want to add in more locations while this check is ongoing
         //Which wont be processed until the next tick
-        ArrayList<ILocation> updatedLocationsCopy = (ArrayList<ILocation>) updatedLocations.clone();
+        HashSet<ILocation> updatedLocationsCopy = (HashSet<ILocation>) updatedLocations.clone();
         updatedLocations.clear();
         for (ILocation location : updatedLocationsCopy) {
             if(map.getAtomAtLocation(location) != null && map.getAtomAtLocation(location).state != 0) {
@@ -278,6 +279,26 @@ public class Simulator {
         return nearbyAtoms;
     }
 
+    public void flood(AbstractMap map){
+        Random random = new Random();
+        int centerX = random.nextInt(SimulatorConstants.MAP_SIZE);
+        int centerY = random.nextInt(SimulatorConstants.MAP_SIZE);
+
+        for(int x = centerX - 10; x < centerX + 10; x++){
+            for(int y = centerY - 10; y < centerY + 10; y++){
+                Atom atom = map.getAtomAtLocation(new SquareLocation(centerX, centerY));
+                if(atom != null){
+                    atom.state = 0;
+                    Iterator iterator = atom.bonds.iterator();
+                    while (iterator.hasNext()){
+                        atom.unbond((Atom) iterator.next());
+                    }
+                    atom.setReactions(null);
+                }
+            }
+        }
+    }
+
     /**
      * Spawns food particles randomly distributed
      */
@@ -330,14 +351,16 @@ public class Simulator {
                     }
                 }else{
                     for (Atom atom2 : nearbyAtoms) {
-                        if(atom2.getLocation().distance(atom.getLocation()) <= 2) {
-                            if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
-                                //Because the state has changed, we must check atoms around to propagate reactions
-                                //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
-                                updatedLocations.add(atom.getLocation());
-                                updatedLocations.add(atom2.getLocation());
-                                updatedLocations.add(centralLocation);
-                                return;
+                        if(atom != atom2) {
+                            if (atom2.getLocation().distance(atom.getLocation()) <= 2) {
+                                if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
+                                    //Because the state has changed, we must check atoms around to propagate reactions
+                                    //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
+                                    updatedLocations.add(atom.getLocation());
+                                    updatedLocations.add(atom2.getLocation());
+                                    updatedLocations.add(centralLocation);
+                                    return;
+                                }
                             }
                         }
                     }

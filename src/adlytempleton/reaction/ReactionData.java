@@ -4,6 +4,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
+import adlytempleton.mutation.MutationManager;
 
 import java.util.ArrayList;
 
@@ -275,6 +276,8 @@ public class ReactionData {
                     atom2.setReactions(atom1.getReactions());
 
                     simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
+
+                    MutationManager.mutate(atom2, map);
                 }
 
                 return true;

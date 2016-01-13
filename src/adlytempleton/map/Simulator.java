@@ -284,16 +284,20 @@ public class Simulator {
         int centerX = random.nextInt(SimulatorConstants.MAP_SIZE);
         int centerY = random.nextInt(SimulatorConstants.MAP_SIZE);
 
-        for(int x = centerX - 10; x < centerX + 10; x++){
-            for(int y = centerY - 10; y < centerY + 10; y++){
-                Atom atom = map.getAtomAtLocation(new SquareLocation(centerX, centerY));
+        for(int x = centerX - SimulatorConstants.FLOOD_RANGE; x < centerX + SimulatorConstants.FLOOD_RANGE; x++){
+            for(int y = centerY - SimulatorConstants.FLOOD_RANGE; y < centerY + SimulatorConstants.FLOOD_RANGE; y++){
+                Atom atom = map.getAtomAtLocation(new SquareLocation(x, y));
                 if(atom != null){
                     atom.state = 0;
                     Iterator iterator = atom.bonds.iterator();
                     while (iterator.hasNext()){
-                        atom.unbond((Atom) iterator.next());
+
+                        Atom bondedAtom = (Atom) iterator.next();
+                        bondedAtom.bonds.remove(atom);
+
+                        iterator.remove();
                     }
-                    atom.setReactions(null);
+                    atom.setReactions(new ReactionData[10]);
                 }
             }
         }

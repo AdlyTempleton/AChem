@@ -29,7 +29,7 @@ public class Main {
 
                 System.out.println(ticks + " " + (System.currentTimeMillis() - start));
 
-                if (ticks % 3000 == 0) {
+                if (ticks > SimulatorConstants.FLOOD_DELAY && ticks % SimulatorConstants.FLOOD_FREQUENCY == 0) {
                     simulator.flood(map);
                 }
 

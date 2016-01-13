@@ -19,7 +19,7 @@ public class SimulatorConstants {
     //Chance of mutation each time an enzyme is copied
     public static final float MUTATION_CHANCE = .05F;
 
-    public static boolean TOROIDAL_MAP = true;
+    public static boolean TOROIDAL_MAP = false;
 
     //Whether actions of enzymes are blocked by membranes
     public static final boolean MEMBRANE_BLOCKING = false;
@@ -27,10 +27,20 @@ public class SimulatorConstants {
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
-    public static final float FOOT_ABUNDANCE = .3F;
+    public static final float FOOT_ABUNDANCE = .2F;
     //The delay, in ms, between ticks
     //-1 pauses the simulation
     public static int simulationSpeed = 500;
     //The range which atoms will search to find reaction partners
     public static int REACTION_RANGE = 2;
+
+
+    //Ticks before first floor
+    public static int FLOOD_DELAY = 0;
+
+    //Frequency of flooding
+    public static int FLOOD_FREQUENCY = 1000;
+
+    //Radius of area affected by a floor
+    public static int FLOOD_RANGE = 10;
 }

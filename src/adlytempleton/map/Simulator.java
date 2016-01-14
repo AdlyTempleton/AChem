@@ -66,6 +66,7 @@ public class Simulator {
 
                     ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
+
                     //Checks if the atom is an enzyme
                     //if it is, mark all cells for update which are now in it's range
                     //Note that this is only marking them for future use - so we call this before we move the enzyme
@@ -73,10 +74,25 @@ public class Simulator {
                         updateReactions(atom.getLocation(), newLocation);
                     }
 
+
                     map.move(atom, newLocation);
                     if(atom.state != 0) {
                         reactAround(newLocation);
                     }
+
+                    if(atom.type == EnumType.CAUSTIC){
+                        for(Atom nearbyAtom : map.getAdjacentAtoms(newLocation)){
+                            if(nearbyAtom.type != EnumType.A || nearbyAtom.bonds.size() < 2){
+                                //Prevents caustic agent from affecting atoms through membranes
+                                if(!doesBondCross(atom, nearbyAtom)) {
+                                    nearbyAtom.state = 0;
+                                    nearbyAtom.unbondAll();
+                                    nearbyAtom.setReactions(new ReactionData[10]);
+                                }
+                            }
+                        }
+                    }
+
                     //addToMembrane(atom);
                     pinchMembrane(atom);
                 }
@@ -289,14 +305,7 @@ public class Simulator {
                 Atom atom = map.getAtomAtLocation(new SquareLocation(x, y));
                 if(atom != null){
                     atom.state = 0;
-                    Iterator iterator = atom.bonds.iterator();
-                    while (iterator.hasNext()){
-
-                        Atom bondedAtom = (Atom) iterator.next();
-                        bondedAtom.bonds.remove(atom);
-
-                        iterator.remove();
-                    }
+                    atom.unbondAll();
                     atom.setReactions(new ReactionData[10]);
                 }
             }

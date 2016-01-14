@@ -6,6 +6,7 @@ import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -127,6 +128,21 @@ public class Atom {
 
     public void setReactions(ReactionData[] reactions) {
         this.reactions = reactions;
+    }
+
+    /**
+     * Breaks all bonds this atom is connected to
+     * Will not unbond caustic agents
+     */
+    public void unbondAll(){
+        if(type != EnumType.CAUSTIC) {
+            //Prevent concurrent modification exceptions
+            ArrayList<Atom> bondsCopy = (ArrayList<Atom>) bonds.clone();
+
+            for (Atom atom : bondsCopy) {
+                unbond(atom);
+            }
+        }
     }
 
     /**

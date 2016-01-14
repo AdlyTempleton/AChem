@@ -12,7 +12,7 @@ import java.util.Random;
 public class PointTypeMutation extends SingleReactionMutation {
     @Override
     protected MutableReactionData mutateReaction(MutableReactionData reaction, Random random) {
-        EnumType type = EnumType.values()[random.nextInt(EnumType.values().length)];
+        EnumType type = EnumType.valuesExcludingCaustic()[random.nextInt(EnumType.valuesExcludingCaustic().length)];
 
         //Whether to modify reaction 1 or reaction 2
         if(reaction instanceof MutableReactionDataTriple){

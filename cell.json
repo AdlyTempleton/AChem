@@ -297,5 +297,42 @@
     ],
     "location": "2,8",
     "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+  {
+    "type": "CAUSTIC",
+    "state":0,
+    "bondsLocation": [
+      "1,1"
+    ],
+    "location": "10,10",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+  {
+    "type": "CAUSTIC",
+    "state":36,
+    "bondsLocation": [
+      "-1,-1"
+    ],
+    "location": "11,11",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+
+  {
+    "type": "CAUSTIC",
+    "state":0,
+    "bondsLocation": [
+      "1,1"
+    ],
+    "location": "12,10",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+  {
+    "type": "CAUSTIC",
+    "state":36,
+    "bondsLocation": [
+      "-1,-1"
+    ],
+    "location": "13,11",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
   }
 ]

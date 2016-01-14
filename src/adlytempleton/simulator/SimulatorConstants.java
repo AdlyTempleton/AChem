@@ -36,10 +36,10 @@ public class SimulatorConstants {
 
 
     //Ticks before first floor
-    public static int FLOOD_DELAY = 0;
+    public static int FLOOD_DELAY = 5000;
 
     //Frequency of flooding
-    public static int FLOOD_FREQUENCY = 1000;
+    public static int FLOOD_FREQUENCY = 3000;
 
     //Radius of area affected by a floor
     public static int FLOOD_RANGE = 10;

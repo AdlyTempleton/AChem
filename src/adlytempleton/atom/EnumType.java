@@ -2,6 +2,7 @@ package adlytempleton.atom;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -10,14 +11,15 @@ import java.util.ArrayList;
  * Contains some information useful for rendering
  */
 public enum EnumType {
-    A('A', Color.YELLOW, 4),
-    B('B', Color.CYAN, 4),
+    A('A', Color.YELLOW, 40),
+    B('B', Color.CYAN, 40),
     C('C', Color.GREEN),
     D('D', Color.LIGHT_GRAY),
-    E('E', Color.ORANGE, 1),
-    F('F', Color.PINK, 4),
+    E('E', Color.ORANGE, 10),
+    F('F', Color.PINK, 40),
     X('X', Color.BLACK, true),
-    Y('Y', Color.BLACK, true);
+    Y('Y', Color.BLACK, true),
+    CAUSTIC('.', Color.BLACK);
 
     public char symbol;
     public Color color;
@@ -30,6 +32,10 @@ public enum EnumType {
     EnumType(char symbol, Color color) {
         this.symbol = symbol;
         this.color = color;
+    }
+
+    public static EnumType[] valuesExcludingCaustic(){
+        return new EnumType[]{A, B, C, D, E, F, X, Y};
     }
 
     EnumType(char symbol, Color color, int weight) {

@@ -22,7 +22,7 @@ public class SimulatorConstants {
     public static boolean TOROIDAL_MAP = false;
 
     //Whether actions of enzymes are blocked by membranes
-    public static final boolean MEMBRANE_BLOCKING = false;
+    public static final boolean MEMBRANE_BLOCKING = true;
     //The abundance of zero-state 'food' particles
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)

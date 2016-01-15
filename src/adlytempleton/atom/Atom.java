@@ -96,6 +96,11 @@ public class Atom {
         }
     }
 
+    @Override
+    public int hashCode() {
+        return location.hashCode() * state;
+    }
+
     /**
      * Bonds this atom to another atom, if they are not already bonded
      *

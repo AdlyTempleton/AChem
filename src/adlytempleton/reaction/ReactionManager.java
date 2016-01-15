@@ -7,6 +7,7 @@ import adlytempleton.map.ILocation;
 import adlytempleton.map.Simulator;
 import adlytempleton.simulator.SimulatorConstants;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +48,7 @@ public class ReactionManager {
      *
      * @return true if the reaction is valid, false otherwise
      */
-    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2) {
+    public static boolean enzymePathBlocked(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2) {
         HashSet<ILocation> crossedArea = map.getCrossedZone(enzyme.getLocation(), reactant1.getLocation());
         crossedArea.addAll(map.getCrossedZone(enzyme.getLocation(), reactant2.getLocation()));
 
@@ -75,6 +76,60 @@ public class ReactionManager {
     }
 
     /**
+     * Returns true if two atoms are connected by a string of bonds, false otherwise
+     */
+    public static boolean connected(Atom atom1, Atom atom2){
+        ArrayList<Atom> checkedAtoms = new ArrayList<>();
+        ArrayList<Atom> atomsToCheck = new ArrayList<>();
+
+        atomsToCheck.add(atom1);
+
+        //Basic depth-first search
+        while (atomsToCheck.size() != 0){
+            Atom atom = atomsToCheck.remove(atomsToCheck.size() - 1);
+            checkedAtoms.add(atom);
+
+            for(Atom bondedAtom : atom.bonds){
+                if(!checkedAtoms.contains(bondedAtom) && !atomsToCheck.contains(bondedAtom)){
+                    if(atom == atom2){
+                        return true;
+                    }
+
+                    atomsToCheck.add(bondedAtom);
+                }
+
+
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the reaction between atom1 and atom2 is blocked by a membrane, taking special rules into account
+     * This is a wrapper around enzymePathBlocked
+     * @return
+     */
+    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2){
+        if(!SimulatorConstants.MEMBRANE_BLOCKING){
+            return true;
+        }
+
+        boolean lineBlocked = enzymePathBlocked(map, enzyme, reactant1, reactant2);
+
+        boolean isMembrane = (reactant1.type == EnumType.A && reactant1.state != 0) || (reactant2.type == EnumType.A && reactant2.state != 0);
+
+        boolean connected = connected(enzyme, reactant1) || connected(enzyme, reactant2);
+
+        if(isMembrane){
+            return connected;
+        }else {
+            return !lineBlocked || connected;
+        }
+
+    }
+
+    /**
      * Given a reaction and a pair of two atoms
      * Determines whether an appropriate enzyme is nearby
      *
@@ -90,7 +145,7 @@ public class ReactionManager {
             //We want to check the distance to either product
             if (map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
                     map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE) {
-                if (!SimulatorConstants.MEMBRANE_BLOCKING || canEnzymeReach(map, enzyme, atom1, atom2)) {
+                if (canEnzymeReach(map, enzyme, atom1, atom2)) {
                     return true;
                 }
             }

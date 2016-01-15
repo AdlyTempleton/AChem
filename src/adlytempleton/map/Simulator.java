@@ -312,6 +312,8 @@ public class Simulator {
         }
     }
 
+
+
     /**
      * Spawns food particles randomly distributed
      */

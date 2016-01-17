@@ -16,9 +16,11 @@ public abstract class SingleReactionMutation implements IMutation{
     @Override
     public ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map) {
         //Find reaction to mutate
-        int i = random.nextInt(original.length);
-        if(original[i] != null) {
-            original[i] = mutateReaction(MutableReactionData.fromReaction(original[i]), random).toReaction();
+        if(original.length > 0) {
+            int i = random.nextInt(original.length);
+            if (original[i] != null) {
+                original[i] = mutateReaction(MutableReactionData.fromReaction(original[i]), random).toReaction();
+            }
         }
 
 

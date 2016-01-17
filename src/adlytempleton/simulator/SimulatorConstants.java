@@ -12,7 +12,7 @@ public class SimulatorConstants {
     public static final int ENZYME_RANGE = 10;
 
     //Reactions per enzyme
-    public static final int ENZYME_CAPACITY = 10;
+    public static final int ENZYME_CAPACITY = 15;
 
     public static final int MAP_SIZE = 50;
 

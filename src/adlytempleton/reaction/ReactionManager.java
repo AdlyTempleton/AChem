@@ -117,7 +117,7 @@ public class ReactionManager {
 
         boolean lineBlocked = enzymePathBlocked(map, enzyme, reactant1, reactant2);
 
-        boolean isMembrane = (reactant1.type == EnumType.A && reactant1.state != 0) || (reactant2.type == EnumType.A && reactant2.state != 0);
+        boolean isMembrane = (reactant1.type == EnumType.A && reactant1.state == 36) || (reactant2.type == EnumType.A && reactant2.state == 36);
 
         boolean connected = connected(enzyme, reactant1) || connected(enzyme, reactant2);
 

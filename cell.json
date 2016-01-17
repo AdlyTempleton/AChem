@@ -317,6 +317,8 @@
     "reactions": [null,null,null,null,null,null,null,null,null,null]
   },
 
+
+
   {
     "type": "CAUSTIC",
     "state":0,
@@ -333,6 +335,46 @@
       "-1,-1"
     ],
     "location": "13,11",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+
+
+
+  {
+    "type": "CAUSTIC",
+    "state":0,
+    "bondsLocation": [
+      "1,1"
+    ],
+    "location": "13,10",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+  {
+    "type": "CAUSTIC",
+    "state":36,
+    "bondsLocation": [
+      "-1,-1"
+    ],
+    "location": "14,11",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+
+  {
+    "type": "CAUSTIC",
+    "state":0,
+    "bondsLocation": [
+      "1,1"
+    ],
+    "location": "15,10",
+    "reactions": [null,null,null,null,null,null,null,null,null,null]
+  },
+  {
+    "type": "CAUSTIC",
+    "state":36,
+    "bondsLocation": [
+      "-1,-1"
+    ],
+    "location": "16,11",
     "reactions": [null,null,null,null,null,null,null,null,null,null]
   }
 ]

@@ -1,5 +1,6 @@
 package adlytempleton;
 
+import adlytempleton.gui.SquareMapFrame;
 import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareMap;
 import adlytempleton.simulator.Serialization;
@@ -28,6 +29,7 @@ public class Main {
                 ticks++;
 
                 System.out.println(ticks + " " + (System.currentTimeMillis() - start));
+
 
                 if (ticks > SimulatorConstants.FLOOD_DELAY && ticks % SimulatorConstants.FLOOD_FREQUENCY == 0) {
                     simulator.flood(map);

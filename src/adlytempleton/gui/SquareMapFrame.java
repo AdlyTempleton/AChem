@@ -1,7 +1,11 @@
 package adlytempleton.gui;
 
+import adlytempleton.map.AbstractMap;
 import adlytempleton.map.SquareMap;
+import adlytempleton.monitor.EnzymeMonitor;
+import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
+import com.google.common.collect.Multiset;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +19,13 @@ import java.awt.event.ActionListener;
  */
 public class SquareMapFrame extends JFrame implements ActionListener {
 
+    DefaultListModel<String> enzymeListModel;
+    JList enzymeList;
+
+    JLabel timingLabel;
+
+    SquareMap squareMap;
+
     public SquareMapFrame(SquareMap map) {
 
         setTitle("Artifical Chemistry");
@@ -22,17 +33,26 @@ public class SquareMapFrame extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
+
+        squareMap = map;
 
 
         //Take up the main panel
         GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1;
-        c.weighty = 1;
+        add(new SquareMapPanel(map), BorderLayout.CENTER);
 
-        add(new SquareMapPanel(map), c);
+        //Add list display
+        enzymeListModel = new DefaultListModel<>();
+        updateEnzymeList(map);
+        enzymeList = new JList();
+        enzymeList.setModel(enzymeListModel);
+        enzymeList.setVisible(true);
+        enzymeList.setSize(500, 1500);
+        add(enzymeList, BorderLayout.EAST);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
 
         //Add buttons
         JButton[] buttons = new JButton[]{
@@ -44,14 +64,35 @@ public class SquareMapFrame extends JFrame implements ActionListener {
         for (JButton button : buttons) {
             button.setSize(50, 1500);
             button.addActionListener(this);
-
-            c = new GridBagConstraints();
-            c.weightx = .1;
-            c.fill = GridBagConstraints.HORIZONTAL;
-            add(button, c);
+            buttonPanel.add(button);
         }
+        add(buttonPanel, BorderLayout.SOUTH);
+
 
         setVisible(true);
+    }
+
+    public void updateEnzymeList(AbstractMap map){
+        Multiset multiset = EnzymeMonitor.getNewReactions(map);
+        if(enzymeList != null) {
+            enzymeListModel = new DefaultListModel<>();
+
+            enzymeListModel.addElement("New Enzymes");
+
+            for (Object obj : multiset.elementSet()) {
+                ReactionData rxn = (ReactionData) obj;
+                String s = rxn.toString() + "   (" + map.enzymes.keys().count(rxn) + ")";
+                enzymeListModel.addElement(s);
+            }
+
+            enzymeList.setModel(enzymeListModel);
+        }
+    }
+
+    @Override
+    public void repaint(long time, int x, int y, int width, int height) {
+        super.repaint(time, x, y, width, height);
+        updateEnzymeList(squareMap);
     }
 
     @Override

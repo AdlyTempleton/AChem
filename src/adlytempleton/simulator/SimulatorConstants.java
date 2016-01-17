@@ -17,7 +17,7 @@ public class SimulatorConstants {
     public static final int MAP_SIZE = 50;
 
     //Chance of mutation each time an enzyme is copied
-    public static final float MUTATION_CHANCE = .05F;
+    public static final float MUTATION_CHANCE = .1F;
 
     public static boolean TOROIDAL_MAP = false;
 
@@ -36,10 +36,10 @@ public class SimulatorConstants {
 
 
     //Ticks before first floor
-    public static int FLOOD_DELAY = 5000;
+    public static int FLOOD_DELAY = 10001;
 
     //Frequency of flooding
-    public static int FLOOD_FREQUENCY = 3000;
+    public static int FLOOD_FREQUENCY = 5000;
 
     //Radius of area affected by a floor
     public static int FLOOD_RANGE = 10;

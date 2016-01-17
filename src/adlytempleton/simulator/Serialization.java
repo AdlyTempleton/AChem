@@ -2,6 +2,7 @@ package adlytempleton.simulator;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.map.*;
+import adlytempleton.monitor.EnzymeMonitor;
 import adlytempleton.reaction.ReactionData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,6 +59,8 @@ public class Serialization {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        EnzymeMonitor.loadBaselineReactions(map);
 
         return map;
     }

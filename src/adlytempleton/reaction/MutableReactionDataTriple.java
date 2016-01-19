@@ -39,4 +39,9 @@ public class MutableReactionDataTriple extends MutableReactionData {
         this.postBonded23 = postBonded23;
         this.postBonded31 = postBonded31;
     }
+
+    @Override
+    public ReactionData toReaction() {
+        return new ReactionDataTriple(type1, type2, type3, preState1, preState2, preState3, postState1, postState2, postState3, preBonded, preBonded23, preBonded31, postBonded, postBonded23, postBonded31);
+    }
 }

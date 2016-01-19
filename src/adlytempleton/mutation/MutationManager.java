@@ -32,6 +32,7 @@ public class MutationManager {
         mutations.add(new DuplicationMutation());
         mutations.add(new PointStateMutation());
         mutations.add(new PointTypeMutation());
+        mutations.add(new MergeMutation());
 
         return mutations;
     }

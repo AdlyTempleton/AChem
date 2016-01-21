@@ -63,6 +63,8 @@ public class ReactionGraphPanel extends JPanel {
             maxValue = Math.max(maxValue, EventTracker.eventsWithinPeriod(reactionData, period * periodWidth, (period + 1) * periodWidth));
         }
 
+        g.drawString(maxValue + ":", getX() + 5, getY() + 20);
+
         int previousYLevel = 0;
         int yLevel = 0;
 

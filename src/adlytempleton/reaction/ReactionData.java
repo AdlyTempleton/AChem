@@ -16,6 +16,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
+import adlytempleton.monitor.EventTracker;
 import adlytempleton.mutation.MutationManager;
 
 import java.util.ArrayList;
@@ -291,6 +292,8 @@ public class ReactionData {
 
                     MutationManager.mutate(atom2, map);
                 }
+
+                EventTracker.notifyOfReaction(this);
 
                 return true;
             }

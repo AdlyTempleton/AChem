@@ -16,6 +16,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
+import adlytempleton.monitor.EventTracker;
 
 /**
  * Created by ATempleton on 1/10/2016.
@@ -260,6 +261,8 @@ public class ReactionDataTriple extends ReactionData {
             }else{
                 atom3.unbond(atom1);
             }
+
+            EventTracker.notifyOfReaction(this);
 
             return true;
         }

@@ -34,6 +34,9 @@ public class Simulator {
     public HashSet<ILocation> updatedLocations = new HashSet<>();
     AbstractMap map;
 
+    //The number of the current tick
+    public static int ticks = 0;
+
     /**
      * Constructs a new map
      *
@@ -45,8 +48,11 @@ public class Simulator {
 
     /**
      * Main simulation method. Updates all elements of the simulation
+     * @param ticks
      */
-    public void tick() {
+    public void tick(int ticks) {
+
+        Simulator.ticks = ticks;
 
         Random rand = new Random();
 

@@ -15,11 +15,14 @@ package adlytempleton.gui;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.SquareMap;
 import adlytempleton.monitor.EnzymeMonitor;
+import adlytempleton.monitor.EventTracker;
 import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
 import com.google.common.collect.Multiset;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +44,7 @@ public class SquareMapFrame extends JFrame implements ActionListener {
     public SquareMapFrame(SquareMap map) {
 
         setTitle("Artifical Chemistry");
-        setSize(1500, 1500);
+        setSize(1900, 1500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -51,7 +54,6 @@ public class SquareMapFrame extends JFrame implements ActionListener {
 
 
         //Take up the main panel
-        GridBagConstraints c = new GridBagConstraints();
         add(new SquareMapPanel(map), BorderLayout.CENTER);
 
         //Add list display
@@ -79,6 +81,22 @@ public class SquareMapFrame extends JFrame implements ActionListener {
             buttonPanel.add(button);
         }
         add(buttonPanel, BorderLayout.SOUTH);
+
+        JPanel graphPanel = new JPanel();
+
+        graphPanel.setLayout(new FlowLayout());
+        graphPanel.setPreferredSize(new Dimension(400, 1200));
+        graphPanel.setMinimumSize(graphPanel.getPreferredSize());
+        graphPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        for(ReactionData data : EventTracker.monitoredReactions){
+            ReactionGraphPanel reactionGraph = new ReactionGraphPanel(data);
+            reactionGraph.setPreferredSize(new Dimension(400, 400));
+
+            reactionGraph.setMinimumSize(reactionGraph.getPreferredSize());
+            graphPanel.add(reactionGraph);
+        }
+        add(graphPanel, BorderLayout.WEST);
 
 
         setVisible(true);

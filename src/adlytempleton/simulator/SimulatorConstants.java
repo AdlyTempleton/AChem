@@ -48,7 +48,7 @@ public class SimulatorConstants {
 
 
     //Ticks before first floor
-    public static int FLOOD_DELAY = 10001;
+    public static int FLOOD_DELAY = 0;
 
     //Frequency of flooding
     public static int FLOOD_FREQUENCY = 5000;

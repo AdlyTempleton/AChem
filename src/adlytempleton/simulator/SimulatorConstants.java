@@ -26,7 +26,7 @@ public class SimulatorConstants {
     //Reactions per enzyme
     public static final int ENZYME_CAPACITY = 15;
 
-    public static final int MAP_SIZE = 50;
+    public static final int MAP_SIZE =  50;
 
     //Chance of mutation each time an enzyme is copied
     public static final float MUTATION_CHANCE = .1F;

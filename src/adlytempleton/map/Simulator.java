@@ -68,6 +68,8 @@ public class Simulator {
         }
 
         //Move all atoms
+        List<Atom> atoms = new ArrayList<>(map.getAllAtoms());
+        Collections.shuffle(atoms, rand);
         for (Atom atom : map.getAllAtoms()) {
             if (rand.nextDouble() < SimulatorConstants.MOVEMENT_CHANCE) {
                 ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);

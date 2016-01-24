@@ -73,10 +73,10 @@ public class ReactionManager {
                         //Check for uniqueness
                         if (!(atom == reactant1 || atom == reactant2)) {
                             if (map.crossed(reactant1.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)) {
-                                return false;
+                                return true;
                             }
                             if (map.crossed(reactant2.getLocation(), enzyme.getLocation(), atom.getLocation(), bondedAtom.getLocation(), true)) {
-                                return false;
+                                return true;
                             }
                         }
                     }
@@ -84,7 +84,7 @@ public class ReactionManager {
             }
         }
 
-        return true;
+        return false;
     }
 
     /**

@@ -27,8 +27,8 @@ public enum EnumType {
     B('B', Color.CYAN, 40),
     C('C', Color.GREEN),
     D('D', Color.LIGHT_GRAY),
-    E('E', Color.ORANGE, 10),
-    F('F', Color.PINK, 40),
+    E('E', Color.ORANGE, 20),
+    F('F', Color.PINK, 20),
     X('X', Color.BLACK, true),
     Y('Y', Color.BLACK, true),
     CAUSTIC('.', Color.BLACK);

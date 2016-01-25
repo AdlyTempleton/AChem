@@ -75,7 +75,7 @@ public class ReactionGraphPanel extends JPanel {
             yLevel = (int) (endY - (height * (periodCount / maxValue)));
 
             //Connect lines vertically
-            g.drawLine(startX, previousYLevel, startX, yLevel);
+            g.drawLine(startX + pixelsPerPeriod * period, previousYLevel, startX + pixelsPerPeriod * period, yLevel);
             g.drawLine(startX + pixelsPerPeriod * period, yLevel, startX + pixelsPerPeriod * (period + 1), yLevel);
 
         }

@@ -34,10 +34,16 @@ public class SquareMap extends AbstractMap {
     //If an atom is not present at an location, the location should not be a key in the hashmap.
     private ConcurrentHashMap<SquareLocation, Atom> atomMap = new ConcurrentHashMap<SquareLocation, Atom>();
 
-    public SquareMap(int size) {
+    public SquareMap(int size){
+        this(size, true);
+    }
+
+    public SquareMap(int size, boolean showGUI) {
         this.size = size;
 
-        renderer = new SquareMapFrame(this);
+        if(showGUI) {
+            renderer = new SquareMapFrame(this);
+        }
     }
 
     @Override
@@ -452,7 +458,10 @@ public class SquareMap extends AbstractMap {
 
     @Override
     public void render() {
-        renderer.repaint();
+        //Null if there is no gui
+        if(renderer != null) {
+            renderer.repaint();
+        }
     }
 
     public int getSize() {

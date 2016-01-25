@@ -46,6 +46,8 @@ public class Simulator {
         this.map = map;
     }
 
+
+
     /**
      * Main simulation method. Updates all elements of the simulation
      * @param ticks
@@ -345,7 +347,7 @@ public class Simulator {
         Collections.shuffle(cells);
         Random r = new Random();
 
-        for (int i = 0; i < cells.size() * SimulatorConstants.FOOT_ABUNDANCE; i++) {
+        for (int i = 0; i < cells.size() * SimulatorConstants.FOOD_ABUNDANCE; i++) {
 
             ILocation loc = cells.get(i);
 

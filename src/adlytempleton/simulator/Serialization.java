@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class Serialization {
 
-    public static SquareMap fromFile(String filename) {
+    public static SquareMap fromFile(String filename, boolean showGUI) {
         //Creates GSON Object
         Gson gson = getGson();
 
@@ -53,7 +53,7 @@ public class Serialization {
             List<Atom> atoms = gson.fromJson(contents, listType);
 
             //Reform the map
-            map = SimulatorConstants.TOROIDAL_MAP ? new ToroidalMap(SimulatorConstants.MAP_SIZE) : new SquareMap(SimulatorConstants.MAP_SIZE);
+            map = SimulatorConstants.TOROIDAL_MAP ? new ToroidalMap(SimulatorConstants.MAP_SIZE, showGUI) : new SquareMap(SimulatorConstants.MAP_SIZE, showGUI);
 
             for (Atom atom : atoms) {
                 map.addAtom(atom.getLocation(), atom);
@@ -82,7 +82,7 @@ public class Serialization {
      *
      * @return Gson object
      */
-    private static Gson getGson() {
+    public static Gson getGson() {
         GsonBuilder builder = new GsonBuilder();
         //Splits data across multiple lines
         builder.setPrettyPrinting();

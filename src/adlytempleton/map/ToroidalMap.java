@@ -21,7 +21,7 @@ import java.util.*;
  * Created by ATempleton on 1/12/2016.
  */
 public class ToroidalMap extends SquareMap {
-    public ToroidalMap(int size) {
+    public ToroidalMap(int size, boolean showGUI) {
         super(size);
     }
 

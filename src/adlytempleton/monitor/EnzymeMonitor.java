@@ -20,6 +20,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.google.common.collect.TreeMultiset;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,8 +37,10 @@ public class EnzymeMonitor {
         baselineReactions = new HashSet<>(map.enzymes.keySet());
     }
 
+    public static HashMap<Integer, Multiset<ReactionData>> records;
+
     /**
-     * Returns the reactions that did not exist at world load
+     * Returns the reactions that did not exist at world run
      * Uses the cached data
      */
     public static Multiset getNewReactions(AbstractMap map){

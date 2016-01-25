@@ -17,6 +17,8 @@ import adlytempleton.reaction.ReactionData;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import java.util.HashMap;
+
 /**
  * Created by ATempleton on 1/20/2016.
  */
@@ -36,6 +38,16 @@ public class EventTracker {
                 return;
             }
         }
+    }
+
+    public static HashMap<ReactionData, Integer> allEventsWithinPeriod(int start, int end){
+        HashMap result = new HashMap();
+
+        for(ReactionData rxn : monitoredReactions){
+            result.put(rxn, eventsWithinPeriod(rxn, start, end));
+        }
+
+        return result;
     }
 
     /**

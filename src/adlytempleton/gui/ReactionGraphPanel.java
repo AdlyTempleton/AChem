@@ -26,7 +26,7 @@ public class ReactionGraphPanel extends JPanel {
 
     ReactionData reactionData;
 
-    public ReactionGraphPanel(ReactionData reactionData){
+    public ReactionGraphPanel(ReactionData reactionData) {
         this.reactionData = reactionData;
     }
 
@@ -59,7 +59,7 @@ public class ReactionGraphPanel extends JPanel {
         //Scale the graph based on the maximum value
         double maxValue = 0;
 
-        for(int period = 0; period < numPeriods; period++){
+        for (int period = 0; period < numPeriods; period++) {
             maxValue = Math.max(maxValue, EventTracker.eventsWithinPeriod(reactionData, period * periodWidth, (period + 1) * periodWidth));
         }
 
@@ -68,7 +68,7 @@ public class ReactionGraphPanel extends JPanel {
         int previousYLevel = 0;
         int yLevel = 0;
 
-        for(int period = 0; period < numPeriods; period++){
+        for (int period = 0; period < numPeriods; period++) {
 
             int periodCount = EventTracker.eventsWithinPeriod(reactionData, period * periodWidth, (period + 1) * periodWidth);
             previousYLevel = yLevel;

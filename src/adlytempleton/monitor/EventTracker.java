@@ -31,19 +31,19 @@ public class EventTracker {
     public static Multimap<ReactionData, Integer> records = HashMultimap.create(monitoredReactions.length, 1000);
 
 
-    public static void notifyOfReaction(ReactionData activatedReaction){
-        for(ReactionData data : monitoredReactions){
-            if(activatedReaction.equals(data)){
+    public static void notifyOfReaction(ReactionData activatedReaction) {
+        for (ReactionData data : monitoredReactions) {
+            if (activatedReaction.equals(data)) {
                 records.put(data, Simulator.ticks);
                 return;
             }
         }
     }
 
-    public static HashMap<ReactionData, Integer> allEventsWithinPeriod(int start, int end){
+    public static HashMap<ReactionData, Integer> allEventsWithinPeriod(int start, int end) {
         HashMap result = new HashMap();
 
-        for(ReactionData rxn : monitoredReactions){
+        for (ReactionData rxn : monitoredReactions) {
             result.put(rxn, eventsWithinPeriod(rxn, start, end));
         }
 
@@ -53,13 +53,13 @@ public class EventTracker {
     /**
      * Returns the number of recorded events of data between the times of start (inclusive) and end (exclusive)
      */
-    public static int eventsWithinPeriod(ReactionData data, int start, int end){
+    public static int eventsWithinPeriod(ReactionData data, int start, int end) {
 
         int count = 0;
 
-        for(int i : records.get(data)){
-            if(i >= start && i < end){
-                count ++;
+        for (int i : records.get(data)) {
+            if (i >= start && i < end) {
+                count++;
             }
         }
 

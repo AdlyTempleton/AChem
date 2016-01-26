@@ -28,6 +28,10 @@ public class ToroidalLocation extends SquareLocation {
         this.mapSize = mapSize;
     }
 
+    public ToroidalLocation(int x, int y) {
+        super(x, y);
+    }
+
     @Override
     public ILocation subtract(ILocation other) {
         assert other instanceof SquareLocation;
@@ -46,7 +50,7 @@ public class ToroidalLocation extends SquareLocation {
     public int distance(ILocation other) {
         assert other instanceof ToroidalLocation;
 
-        SquareLocation transformedLoc = ((ToroidalLocation)other).compareTo(this);
+        SquareLocation transformedLoc = ((ToroidalLocation) other).compareTo(this);
 
         return super.distance(transformedLoc);
     }
@@ -54,27 +58,23 @@ public class ToroidalLocation extends SquareLocation {
     /**
      * Returns the equivalent representation of these toroidal coordinates which is closest to the given ToroidalLocation
      */
-    public SquareLocation compareTo(ToroidalLocation other){
+    public SquareLocation compareTo(ToroidalLocation other) {
         int transformedX = getX();
         int transformedY = getY();
 
         int border = mapSize / 2;
-        if(other.getX() < border && getX() > border){
+        if (other.getX() < border && getX() > border) {
             transformedX = getX() - mapSize;
-        }else if(other.getX() > border & getX() < border){
+        } else if (other.getX() > border & getX() < border) {
             transformedX = getX() + mapSize;
         }
 
-        if(other.getY() < border && getY() > border){
+        if (other.getY() < border && getY() > border) {
             transformedY = getY() - mapSize;
-        }else if(other.getY() > border && getX() < border){
+        } else if (other.getY() > border && getX() < border) {
             transformedY = getY() + mapSize;
         }
 
         return new SquareLocation(transformedX, transformedY);
-    }
-
-    public ToroidalLocation(int x, int y) {
-        super(x, y);
     }
 }

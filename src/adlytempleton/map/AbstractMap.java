@@ -96,7 +96,7 @@ public abstract class AbstractMap {
     public ArrayList<Atom> getAdjacentAtoms(ILocation location, int range) {
 
         ArrayList<ILocation> locations = getLocationsWithinRange(location, range);
-        ArrayList<Atom> result = new ArrayList<Atom>();
+        ArrayList<Atom> result = new ArrayList<>();
 
         for (ILocation nearbyLocation : locations) {
             if (getAtomAtLocation(nearbyLocation) != null) {
@@ -128,9 +128,8 @@ public abstract class AbstractMap {
      *
      * @param atom        The atom to be moved
      * @param newLocation The new location to move it to (of type getLocationType)
-     * @return True if movement succeeeded, false otherwise
      */
-    public abstract boolean move(Atom atom, ILocation newLocation);
+    public abstract void move(Atom atom, ILocation newLocation);
 
     /**
      * @param location1 First AbstactLocation of type getLocationType()
@@ -152,8 +151,6 @@ public abstract class AbstractMap {
      * Then draw a 'rectangle' extending two points to the right and collect all points on that rectangle
      * Every bond between atoms which crosses the line between loc1 and loc2
      * Must contain one atom in this set of points
-     *
-     * @return
      */
     public abstract HashSet<ILocation> getCrossedZone(ILocation loc1, ILocation loc2);
 
@@ -204,9 +201,8 @@ public abstract class AbstractMap {
      *
      * @param location Place to add the atom.
      * @param atom     The atom to place
-     * @return True if the operation succeeded, false otherwise
      */
-    public abstract boolean addAtom(ILocation location, Atom atom);
+    public abstract void addAtom(ILocation location, Atom atom);
 
 
 }

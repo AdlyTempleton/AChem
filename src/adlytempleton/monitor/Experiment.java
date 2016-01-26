@@ -15,20 +15,23 @@ package adlytempleton.monitor;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareMap;
-import adlytempleton.reaction.ReactionData;
-import adlytempleton.reaction.ReactionManager;
 import adlytempleton.simulator.Serialization;
 import adlytempleton.simulator.SimulatorConstants;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 
 /**
  * Created by ATempleton on 1/24/2016.
- *
+ * <p>
  * Runs experiments through .properties files and a CLI
  */
 public class Experiment {
@@ -45,16 +48,17 @@ public class Experiment {
 
     public boolean showGUI = true;
 
-    public void run(String filename) throws IOException{
+    public void run(String filename) throws IOException {
         load(filename);
         simulate();
         write();
     }
 
-    private void write() {}
+    private void write() {
+    }
 
-    private void simulate() throws FileNotFoundException {
-        for(int ticks = 0; ticks < maxGenerations; ticks++) {
+    private void simulate() {
+        for (int ticks = 0; ticks < maxGenerations; ticks++) {
 
             long start = System.currentTimeMillis();
             simulator.tick(ticks);
@@ -63,7 +67,7 @@ public class Experiment {
                 System.out.println(ticks + " " + (System.currentTimeMillis() - start));
             }
 
-            if(ticks % 1000 == 0){
+            if (ticks % 1000 == 0) {
 
 
                 try {
@@ -113,32 +117,32 @@ public class Experiment {
         Properties prop = new Properties();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
 
-        if(inputStream != null){
+        if (inputStream != null) {
             prop.load(inputStream);
 
             //All properties are optional, and will reset to default values
 
-            if(prop.containsKey("filename")){
+            if (prop.containsKey("filename")) {
                 this.filename = prop.getProperty("filename");
             }
 
-            if(prop.containsKey("state")){
+            if (prop.containsKey("state")) {
                 state = prop.getProperty("state");
             }
 
-            if(prop.containsKey("instrument")){
+            if (prop.containsKey("instrument")) {
                 instrument = Boolean.parseBoolean(prop.getProperty("instrument"));
             }
 
-            if(prop.containsKey("maxGenerations")){
+            if (prop.containsKey("maxGenerations")) {
                 maxGenerations = Integer.parseInt(prop.getProperty("maxGenerations"));
             }
 
-            if(prop.containsKey("mapSize")){
+            if (prop.containsKey("mapSize")) {
                 SimulatorConstants.MAP_SIZE = Integer.parseInt(prop.getProperty("mapSize"));
             }
 
-            if(prop.containsKey("mutationChance")){
+            if (prop.containsKey("mutationChance")) {
                 SimulatorConstants.MUTATION_CHANCE = Float.parseFloat(prop.getProperty("mutationChance"));
             }
 
@@ -148,7 +152,7 @@ public class Experiment {
             simulator.populateFood(map);
 
 
-        }else{
+        } else {
             throw new FileNotFoundException("Could not find experimental properties file");
         }
 

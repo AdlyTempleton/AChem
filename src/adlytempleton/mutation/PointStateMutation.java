@@ -14,7 +14,6 @@ package adlytempleton.mutation;
 
 import adlytempleton.reaction.MutableReactionData;
 import adlytempleton.reaction.MutableReactionDataTriple;
-import adlytempleton.reaction.ReactionData;
 
 import java.util.Random;
 
@@ -57,12 +56,12 @@ public class PointStateMutation extends SingleReactionMutation {
                 rxn.postState2 = Math.abs(rxn.postState2);
                 break;
             case 4:
-                ((MutableReactionDataTriple)rxn).preState3 += offset;
-                ((MutableReactionDataTriple)rxn).preState3 = Math.abs(((MutableReactionDataTriple)rxn).preState3);
+                ((MutableReactionDataTriple) rxn).preState3 += offset;
+                ((MutableReactionDataTriple) rxn).preState3 = Math.abs(((MutableReactionDataTriple) rxn).preState3);
                 break;
             case 5:
-                ((MutableReactionDataTriple)rxn).postState3 += offset;
-                ((MutableReactionDataTriple)rxn).postState3 = Math.abs(((MutableReactionDataTriple)rxn).preState3);
+                ((MutableReactionDataTriple) rxn).postState3 += offset;
+                ((MutableReactionDataTriple) rxn).postState3 = Math.abs(((MutableReactionDataTriple) rxn).preState3);
                 break;
         }
 

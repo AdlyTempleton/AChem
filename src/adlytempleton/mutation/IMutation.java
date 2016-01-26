@@ -28,18 +28,19 @@ public interface IMutation {
      * This method may not always return a mutated reaction set
      * Mutation chance is handled at a higher level
      * The ReactionData[] should be a shallow clone
+     *
      * @return The modified enzyme
      */
-    public ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map);
+    ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map);
 
 
     /**
      * Returns the weight of this mutation (in selecting a mutation to be used
      */
-    public int getWeight();
+    int getWeight();
 
     /**
      * Returns true if this is a valid mutation for the given ReactionData[]
      */
-    public boolean isValidMutation(ReactionData[] original);
+    boolean isValidMutation(ReactionData[] original);
 }

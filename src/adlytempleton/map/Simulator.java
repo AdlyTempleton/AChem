@@ -29,13 +29,12 @@ public class Simulator {
 
     //Constants of simulation
 
+    //The number of the current tick
+    public static int ticks = 0;
     //Stores Locations which have been updated by a reaction or movement
     //And should be reachecked next tick
     public HashSet<ILocation> updatedLocations = new HashSet<>();
     AbstractMap map;
-
-    //The number of the current tick
-    public static int ticks = 0;
 
     /**
      * Constructs a new map
@@ -47,9 +46,9 @@ public class Simulator {
     }
 
 
-
     /**
      * Main simulation method. Updates all elements of the simulation
+     *
      * @param ticks
      */
     public void tick(int ticks) {
@@ -64,7 +63,7 @@ public class Simulator {
         HashSet<ILocation> updatedLocationsCopy = (HashSet<ILocation>) updatedLocations.clone();
         updatedLocations.clear();
         for (ILocation location : updatedLocationsCopy) {
-            if(map.getAtomAtLocation(location) != null && map.getAtomAtLocation(location).state != 0) {
+            if (map.getAtomAtLocation(location) != null && map.getAtomAtLocation(location).state != 0) {
                 reactAround(location);
             }
         }
@@ -98,15 +97,15 @@ public class Simulator {
 
 
                     map.move(atom, newLocation);
-                    if(atom.state != 0) {
+                    if (atom.state != 0) {
                         reactAround(newLocation);
                     }
 
-                    if(atom.type == EnumType.CAUSTIC){
-                        for(Atom nearbyAtom : map.getAdjacentAtoms(newLocation)){
-                            if(nearbyAtom.type != EnumType.A || nearbyAtom.bonds.size() < 2){
+                    if (atom.type == EnumType.CAUSTIC) {
+                        for (Atom nearbyAtom : map.getAdjacentAtoms(newLocation)) {
+                            if (nearbyAtom.type != EnumType.A || nearbyAtom.bonds.size() < 2) {
                                 //Prevents caustic agent from affecting atoms through membranes
-                                if(!doesBondCross(atom, nearbyAtom)) {
+                                if (!doesBondCross(atom, nearbyAtom)) {
                                     nearbyAtom.state = 0;
                                     nearbyAtom.unbondAll();
                                     nearbyAtom.setReactions(new ReactionData[10]);
@@ -169,8 +168,6 @@ public class Simulator {
      * After an atom moves, will add the atom to an enzyme if applicable
      */
     public void addToMembrane(Atom atom) {
-
-        Random random = new Random();
 
         if (atom.type == EnumType.A && atom.state == 0) {
 
@@ -317,15 +314,15 @@ public class Simulator {
         return nearbyAtoms;
     }
 
-    public void flood(AbstractMap map){
+    public void flood(AbstractMap map) {
         Random random = new Random();
         int centerX = random.nextInt(SimulatorConstants.MAP_SIZE);
         int centerY = random.nextInt(SimulatorConstants.MAP_SIZE);
 
-        for(int x = centerX - SimulatorConstants.FLOOD_RANGE; x < centerX + SimulatorConstants.FLOOD_RANGE; x++){
-            for(int y = centerY - SimulatorConstants.FLOOD_RANGE; y < centerY + SimulatorConstants.FLOOD_RANGE; y++){
+        for (int x = centerX - SimulatorConstants.FLOOD_RANGE; x < centerX + SimulatorConstants.FLOOD_RANGE; x++) {
+            for (int y = centerY - SimulatorConstants.FLOOD_RANGE; y < centerY + SimulatorConstants.FLOOD_RANGE; y++) {
                 Atom atom = map.getAtomAtLocation(new SquareLocation(x, y));
-                if(atom != null){
+                if (atom != null) {
                     atom.state = 0;
                     atom.unbondAll();
                     atom.setReactions(new ReactionData[10]);
@@ -333,7 +330,6 @@ public class Simulator {
             }
         }
     }
-
 
 
     /**
@@ -373,22 +369,22 @@ public class Simulator {
     public void reactAround(ILocation centralLocation) {
 
         Atom centralAtom = map.getAtomAtLocation(centralLocation);
-        if(centralAtom != null) {
+        if (centralAtom != null) {
 
             ArrayList<Atom> nearbyAtoms = map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE);
 
             for (Atom atom : nearbyAtoms) {
 
                 //This allows two atoms to react when not surrounded by any other atoms
-                if(map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE).isEmpty()){
+                if (map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE).isEmpty()) {
                     if (ReactionManager.react(atom, centralAtom, null, map, this)) {
                         updatedLocations.add(atom.getLocation());
                         updatedLocations.add(centralLocation);
                         return;
                     }
-                }else{
+                } else {
                     for (Atom atom2 : nearbyAtoms) {
-                        if(atom != atom2) {
+                        if (atom != atom2) {
                             if (atom2.getLocation().distance(atom.getLocation()) <= 2) {
                                 if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
                                     //Because the state has changed, we must check atoms around to propagate reactions

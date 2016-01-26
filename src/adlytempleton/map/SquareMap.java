@@ -32,22 +32,22 @@ public class SquareMap extends AbstractMap {
 
     //The main HashMap that stores locations of all atoms.
     //If an atom is not present at an location, the location should not be a key in the hashmap.
-    private ConcurrentHashMap<SquareLocation, Atom> atomMap = new ConcurrentHashMap<SquareLocation, Atom>();
+    private ConcurrentHashMap<SquareLocation, Atom> atomMap = new ConcurrentHashMap<>();
 
-    public SquareMap(int size){
+    public SquareMap(int size) {
         this(size, true);
     }
 
     public SquareMap(int size, boolean showGUI) {
         this.size = size;
 
-        if(showGUI) {
+        if (showGUI) {
             renderer = new SquareMapFrame(this);
         }
     }
 
     @Override
-    public boolean move(Atom atom, ILocation newLocation) {
+    public void move(Atom atom, ILocation newLocation) {
         assert newLocation instanceof SquareLocation;
 
 
@@ -62,9 +62,9 @@ public class SquareMap extends AbstractMap {
 
             //Insert the atom in it's new location
             atomMap.put((SquareLocation) newLocation, atom);
-            return true;
+            return;
         } else {
-            return false;
+            return;
         }
     }
 
@@ -88,11 +88,11 @@ public class SquareMap extends AbstractMap {
         int x = ((SquareLocation) location).getX();
         int y = ((SquareLocation) location).getY();
 
-        ArrayList<ILocation> result = new ArrayList<ILocation>();
+        ArrayList<ILocation> result = new ArrayList<>();
 
         for (int dx = -range; dx <= range; dx++) {
             for (int dy = -range; dy <= range; dy++) {
-                if(isOnGrid(new SquareLocation(x + dx, y + dy))) {
+                if (isOnGrid(new SquareLocation(x + dx, y + dy))) {
                     result.add(new SquareLocation(x + dx, y + dy));
                 }
             }
@@ -309,7 +309,6 @@ public class SquareMap extends AbstractMap {
      * @param a1 First coord of first atom
      * @param a2 Second coord of first atom
      * @param b  Third point
-     * @return
      */
     protected boolean numbersInterwoven(int a1, int a2, double b) {
 
@@ -434,7 +433,7 @@ public class SquareMap extends AbstractMap {
     }
 
     @Override
-    public boolean addAtom(ILocation location, Atom atom) {
+    public void addAtom(ILocation location, Atom atom) {
 
         assert location instanceof SquareLocation;
 
@@ -450,16 +449,16 @@ public class SquareMap extends AbstractMap {
                     }
                 }
             }
-            return true;
+            return;
         } else {
-            return false;
+            return;
         }
     }
 
     @Override
     public void render() {
         //Null if there is no gui
-        if(renderer != null) {
+        if (renderer != null) {
             renderer.repaint();
         }
     }

@@ -24,9 +24,9 @@ import java.util.Random;
 public class DuplicationMutation implements IMutation {
     @Override
     public ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map) {
-        for(int i = 0; i < original.length; i++){
-            if(original[i] == null){
-                original[i] = (ReactionData) original[random.nextInt(original.length)];
+        for (int i = 0; i < original.length; i++) {
+            if (original[i] == null) {
+                original[i] = original[random.nextInt(original.length)];
 
             }
         }
@@ -41,8 +41,8 @@ public class DuplicationMutation implements IMutation {
 
     @Override
     public boolean isValidMutation(ReactionData[] original) {
-        for(ReactionData data : original){
-            if(data == null){
+        for (ReactionData data : original) {
+            if (data == null) {
                 return true;
             }
         }

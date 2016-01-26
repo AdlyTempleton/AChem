@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class MutationManager {
 
-    private static ArrayList<IMutation> mutations(){
+    private static ArrayList<IMutation> mutations() {
         ArrayList<IMutation> mutations = new ArrayList<>();
 
         mutations.add(new BooleanFlagMutation());
@@ -37,19 +37,19 @@ public class MutationManager {
         return mutations;
     }
 
-    public static void mutate(Atom atom, AbstractMap map){
+    public static void mutate(Atom atom, AbstractMap map) {
 
         Random random = new Random();
-        if(random.nextFloat() < SimulatorConstants.MUTATION_CHANCE){
+        if (random.nextFloat() < SimulatorConstants.MUTATION_CHANCE && atom != null) {
             //Note that getReactions returns a shallow clone
             ReactionData[] reactions = atom.getReactions();
 
             int i = 0;
             IMutation selectedMutation = null;
-            for(IMutation mutation : mutations()){
-                if(mutation.isValidMutation(reactions)){
-                    for(int j = 0; j < mutation.getWeight(); j++){
-                        if(i == 0 || random.nextInt(i) == 0){
+            for (IMutation mutation : mutations()) {
+                if (mutation.isValidMutation(reactions)) {
+                    for (int j = 0; j < mutation.getWeight(); j++) {
+                        if (i == 0 || random.nextInt(i) == 0) {
                             selectedMutation = mutation;
                         }
                         i++;

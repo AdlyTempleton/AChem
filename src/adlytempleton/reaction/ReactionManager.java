@@ -35,7 +35,6 @@ public class ReactionManager {
      * @param atom1 First Atom
      * @param atom2 Second Atom
      * @param atom3 Third Atom
-     *
      * @return True if a reaction took place
      */
     public static boolean react(Atom atom1, Atom atom2, Atom atom3, AbstractMap map, Simulator simulator) {
@@ -90,20 +89,20 @@ public class ReactionManager {
     /**
      * Returns true if two atoms are connected by a string of bonds, false otherwise
      */
-    public static boolean connected(Atom atom1, Atom atom2){
+    public static boolean connected(Atom atom1, Atom atom2) {
         ArrayList<Atom> checkedAtoms = new ArrayList<>();
         ArrayList<Atom> atomsToCheck = new ArrayList<>();
 
         atomsToCheck.add(atom1);
 
         //Basic depth-first search
-        while (atomsToCheck.size() != 0){
+        while (atomsToCheck.size() != 0) {
             Atom atom = atomsToCheck.remove(atomsToCheck.size() - 1);
             checkedAtoms.add(atom);
 
-            for(Atom bondedAtom : atom.bonds){
-                if(!checkedAtoms.contains(bondedAtom) && !atomsToCheck.contains(bondedAtom)){
-                    if(atom == atom2){
+            for (Atom bondedAtom : atom.bonds) {
+                if (!checkedAtoms.contains(bondedAtom) && !atomsToCheck.contains(bondedAtom)) {
+                    if (atom == atom2) {
                         return true;
                     }
 
@@ -120,10 +119,9 @@ public class ReactionManager {
     /**
      * Returns true if the reaction between atom1 and atom2 is blocked by a membrane, taking special rules into account
      * This is a wrapper around enzymePathBlocked
-     * @return
      */
-    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2){
-        if(!SimulatorConstants.MEMBRANE_BLOCKING){
+    public static boolean canEnzymeReach(AbstractMap map, Atom enzyme, Atom reactant1, Atom reactant2) {
+        if (!SimulatorConstants.MEMBRANE_BLOCKING) {
             return true;
         }
 
@@ -133,9 +131,9 @@ public class ReactionManager {
 
         boolean connected = connected(enzyme, reactant1) || connected(enzyme, reactant2);
 
-        if(isMembrane){
+        if (isMembrane) {
             return connected;
-        }else {
+        } else {
             return !lineBlocked || connected;
         }
 

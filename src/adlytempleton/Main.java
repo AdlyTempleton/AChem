@@ -12,14 +12,12 @@
 
 package adlytempleton;
 
-import adlytempleton.gui.SquareMapFrame;
 import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareMap;
 import adlytempleton.monitor.Experiment;
 import adlytempleton.simulator.Serialization;
 import adlytempleton.simulator.SimulatorConstants;
 
-import java.beans.Expression;
 import java.io.IOException;
 
 public class Main {
@@ -27,9 +25,8 @@ public class Main {
     public static void main(String[] args) {
 
 
-
-        if(args.length == 2){
-            if(args[0].equals("-e")){
+        if (args.length == 2) {
+            if (args[0].equals("-e")) {
                 Experiment e = new Experiment();
                 try {
                     e.run(args[1]);
@@ -37,7 +34,7 @@ public class Main {
                     e1.printStackTrace();
                 }
             }
-        }else{
+        } else {
             SquareMap map = Serialization.fromFile("cell.json", true);
 
             Simulator simulator = new Simulator(map);

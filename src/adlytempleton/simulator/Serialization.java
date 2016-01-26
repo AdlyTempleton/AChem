@@ -41,11 +41,11 @@ public class Serialization {
 
         File file = new File(filename);
 
-        FileReader fw = null;
         SquareMap map = null;
         try {
             //Read the file into one string
-            String contents = String.join("\n", Files.readAllLines(file.toPath()).toArray(new String[0]));
+            List<String> var = Files.readAllLines(file.toPath());
+            String contents = String.join("\n", var.toArray(new String[var.size()]));
 
             //Deserialize a list
             Type listType = new TypeToken<ArrayList<Atom>>() {
@@ -66,8 +66,6 @@ public class Serialization {
 
             //Update enzyme mappings
             map.updateAllEnzymes();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

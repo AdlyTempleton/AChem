@@ -21,8 +21,6 @@ import adlytempleton.simulator.SimulatorConstants;
 import com.google.common.collect.Multiset;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +44,7 @@ public class SquareMapFrame extends JFrame implements ActionListener {
         setTitle("Artifical Chemistry");
         setSize(1900, 1500);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
 
@@ -89,7 +87,7 @@ public class SquareMapFrame extends JFrame implements ActionListener {
         graphPanel.setMinimumSize(graphPanel.getPreferredSize());
         graphPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        for(ReactionData data : EventTracker.monitoredReactions){
+        for (ReactionData data : EventTracker.monitoredReactions) {
             ReactionGraphPanel reactionGraph = new ReactionGraphPanel(data);
             reactionGraph.setPreferredSize(new Dimension(400, 400));
 
@@ -102,9 +100,9 @@ public class SquareMapFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void updateEnzymeList(AbstractMap map){
+    public void updateEnzymeList(AbstractMap map) {
         Multiset multiset = EnzymeMonitor.getNewReactions(map);
-        if(enzymeList != null) {
+        if (enzymeList != null) {
             enzymeListModel = new DefaultListModel<>();
 
             enzymeListModel.addElement("New Enzymes");

@@ -27,8 +27,8 @@ public class PointTypeMutation extends SingleReactionMutation {
         EnumType type = EnumType.valuesExcludingCaustic()[random.nextInt(EnumType.valuesExcludingCaustic().length)];
 
         //Whether to modify reaction 1 or reaction 2
-        if(reaction instanceof MutableReactionDataTriple){
-            switch (random.nextInt(3)){
+        if (reaction instanceof MutableReactionDataTriple) {
+            switch (random.nextInt(3)) {
                 case 0:
                     reaction.type1 = type;
                     break;
@@ -39,7 +39,7 @@ public class PointTypeMutation extends SingleReactionMutation {
                     ((MutableReactionDataTriple) reaction).type3 = type;
                     break;
             }
-        }else {
+        } else {
             if (random.nextBoolean()) {
                 reaction.type1 = type;
             } else {

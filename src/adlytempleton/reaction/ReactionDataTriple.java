@@ -37,14 +37,14 @@ public class ReactionDataTriple extends ReactionData {
     /**
      * Constructs a reaction from all component elements
      *
-     * @param type1          Type of atom 1
-     * @param type2          Type of atom 2
-     * @param preState1      State of atom 1 before reaction
-     * @param preState2      State of atom 2 before reaction
-     * @param postState1     State of atom 1 after reaction
-     * @param postState2     State of atom 2 after reaction
-     * @param preBonded      Are atoms 1 and 2 bonded before reaction
-     * @param postBonded     Are atoms 1 and 2 bonded after reaction
+     * @param type1      Type of atom 1
+     * @param type2      Type of atom 2
+     * @param preState1  State of atom 1 before reaction
+     * @param preState2  State of atom 2 before reaction
+     * @param postState1 State of atom 1 after reaction
+     * @param postState2 State of atom 2 after reaction
+     * @param preBonded  Are atoms 1 and 2 bonded before reaction
+     * @param postBonded Are atoms 1 and 2 bonded after reaction
      */
     public ReactionDataTriple(EnumType type1, EnumType type2, EnumType type3, int preState1, int preState2, int prestate3, int postState1, int postState2, int postState3, boolean preBonded, boolean preBonded23, boolean preBonded31, boolean postBonded, boolean postBonded23, boolean postBonded31) {
         super(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, false);
@@ -57,7 +57,6 @@ public class ReactionDataTriple extends ReactionData {
         this.postBonded23 = postBonded23;
         this.postBonded31 = postBonded31;
     }
-
 
 
     public static ReactionData fromString(String s) {
@@ -179,7 +178,6 @@ public class ReactionDataTriple extends ReactionData {
     }
 
 
-
     /**
      * Checks if a ReactionData is applicable to a given triple of atoms. This is order-specific
      *
@@ -206,22 +204,22 @@ public class ReactionDataTriple extends ReactionData {
 
     @Override
     public boolean apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator) {
-        if(matchesTriple(a1, a2, a3)){
+        if (matchesTriple(a1, a2, a3)) {
             return applyTriple(a1, a2, a3, map, simulator);
         }
-        if(matchesTriple(a1, a3, a2)){
+        if (matchesTriple(a1, a3, a2)) {
             return applyTriple(a1, a3, a2, map, simulator);
         }
-        if(matchesTriple(a2, a3, a1)){
+        if (matchesTriple(a2, a3, a1)) {
             return applyTriple(a2, a3, a1, map, simulator);
         }
-        if(matchesTriple(a2, a1, a3)){
+        if (matchesTriple(a2, a1, a3)) {
             return applyTriple(a2, a1, a3, map, simulator);
         }
-        if(matchesTriple(a3, a1, a2)){
+        if (matchesTriple(a3, a1, a2)) {
             return applyTriple(a3, a1, a2, map, simulator);
         }
-        if(matchesTriple(a3, a2, a1)){
+        if (matchesTriple(a3, a2, a1)) {
             return applyTriple(a3, a2, a1, map, simulator);
         }
 
@@ -234,7 +232,7 @@ public class ReactionDataTriple extends ReactionData {
     private boolean applyTriple(Atom atom1, Atom atom2, Atom atom3, AbstractMap map, Simulator simulator) {
 
         //Check that all bonds formed are legal
-        if((postBonded && simulator.doesBondCross(atom1, atom2)) || (postBonded23 && simulator.doesBondCross(atom2, atom3)) || (postBonded31 && simulator.doesBondCross(atom3, atom1))){
+        if ((postBonded && simulator.doesBondCross(atom1, atom2)) || (postBonded23 && simulator.doesBondCross(atom2, atom3)) || (postBonded31 && simulator.doesBondCross(atom3, atom1))) {
             return false;
         }
         if (ReactionManager.enzymeNearby(atom1, atom2, this, map) && ReactionManager.enzymeNearby(atom2, atom3, this, map)) {
@@ -250,15 +248,15 @@ public class ReactionDataTriple extends ReactionData {
                 atom2.unbond(atom1);
             }
 
-            if(postBonded23){
+            if (postBonded23) {
                 atom2.bond(atom3);
-            }else{
+            } else {
                 atom2.unbond(atom3);
             }
 
-            if(postBonded31){
+            if (postBonded31) {
                 atom3.bond(atom1);
-            }else{
+            } else {
                 atom3.unbond(atom1);
             }
 

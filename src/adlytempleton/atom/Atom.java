@@ -18,7 +18,6 @@ import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -32,7 +31,7 @@ public class Atom {
     public EnumType type;
     public int state = 0;
     //Bonded atoms
-    public transient ArrayList<Atom> bonds = new ArrayList<Atom>();
+    public transient ArrayList<Atom> bonds = new ArrayList<>();
 
     /**
      * This is used when loading from json
@@ -151,8 +150,8 @@ public class Atom {
      * Breaks all bonds this atom is connected to
      * Will not unbond caustic agents
      */
-    public void unbondAll(){
-        if(type != EnumType.CAUSTIC) {
+    public void unbondAll() {
+        if (type != EnumType.CAUSTIC) {
             //Prevent concurrent modification exceptions
             ArrayList<Atom> bondsCopy = (ArrayList<Atom>) bonds.clone();
 

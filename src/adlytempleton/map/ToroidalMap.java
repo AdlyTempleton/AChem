@@ -13,7 +13,6 @@
 package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
-import com.sun.corba.se.impl.orb.ParserTable;
 
 import java.util.*;
 
@@ -22,7 +21,7 @@ import java.util.*;
  */
 public class ToroidalMap extends SquareMap {
     public ToroidalMap(int size, boolean showGUI) {
-        super(size);
+        super(size, showGUI);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class ToroidalMap extends SquareMap {
 
         ArrayList<ILocation> result = new ArrayList<>();
 
-        for(ILocation iLocation : locations){
+        for (ILocation iLocation : locations) {
             result.add(new ToroidalLocation((SquareLocation) iLocation, getSize()));
         }
 

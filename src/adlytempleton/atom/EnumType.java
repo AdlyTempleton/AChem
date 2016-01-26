@@ -14,7 +14,6 @@ package adlytempleton.atom;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -46,10 +45,6 @@ public enum EnumType {
         this.color = color;
     }
 
-    public static EnumType[] valuesExcludingCaustic(){
-        return new EnumType[]{A, B, C, D, E, F, X, Y};
-    }
-
     EnumType(char symbol, Color color, int weight) {
         this(symbol, color);
         this.weight = weight;
@@ -58,6 +53,10 @@ public enum EnumType {
     EnumType(char symbol, Color color, boolean flexible) {
         this(symbol, color);
         this.flexible = flexible;
+    }
+
+    public static EnumType[] valuesExcludingCaustic() {
+        return new EnumType[]{A, B, C, D, E, F, X, Y};
     }
 
     /**
@@ -81,7 +80,7 @@ public enum EnumType {
     public static ArrayList<EnumType> standardTypes() {
         ArrayList result = new ArrayList();
         for (EnumType type : EnumType.values()) {
-            if(!type.isWildcard()) {
+            if (!type.isWildcard()) {
                 result.add(type);
             }
         }

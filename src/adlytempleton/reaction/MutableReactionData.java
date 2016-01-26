@@ -16,7 +16,7 @@ import adlytempleton.atom.EnumType;
 
 /**
  * Created by ATempleton on 1/9/2016.
- *
+ * <p>
  * Helper class used to modify the contents of a ReactionData
  */
 public class MutableReactionData {
@@ -32,20 +32,6 @@ public class MutableReactionData {
     public boolean postBonded;
 
     public boolean copiesReaction;
-
-    public static MutableReactionData fromReaction(ReactionData rxn){
-        if(rxn instanceof ReactionDataTriple) {
-            ReactionDataTriple triple = (ReactionDataTriple) rxn;
-            return new MutableReactionDataTriple(triple.type1, triple.type2, triple.type3, triple.preState1, triple.preState2, triple.preState3, triple.postState1, triple.postState2, triple.postState3
-                    ,triple.preBonded, triple.preBonded23, triple.preBonded31, triple.postBonded, triple.postBonded23, triple.postBonded31);
-        }else{
-            return new MutableReactionData(rxn.type1, rxn.type2, rxn.preState1, rxn.preState2, rxn.postState1, rxn.postState2, rxn.preBonded, rxn.postBonded, rxn.copiesReaction);
-        }    
-       }
-
-    public ReactionData toReaction(){
-        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
-    }
 
     /**
      * Constructs a reaction from all component elements
@@ -69,5 +55,19 @@ public class MutableReactionData {
         this.preBonded = preBonded;
         this.postBonded = postBonded;
         this.copiesReaction = copiesReaction;
+    }
+
+    public static MutableReactionData fromReaction(ReactionData rxn) {
+        if (rxn instanceof ReactionDataTriple) {
+            ReactionDataTriple triple = (ReactionDataTriple) rxn;
+            return new MutableReactionDataTriple(triple.type1, triple.type2, triple.type3, triple.preState1, triple.preState2, triple.preState3, triple.postState1, triple.postState2, triple.postState3
+                    , triple.preBonded, triple.preBonded23, triple.preBonded31, triple.postBonded, triple.postBonded23, triple.postBonded31);
+        } else {
+            return new MutableReactionData(rxn.type1, rxn.type2, rxn.preState1, rxn.preState2, rxn.postState1, rxn.postState2, rxn.preBonded, rxn.postBonded, rxn.copiesReaction);
+        }
+    }
+
+    public ReactionData toReaction() {
+        return new ReactionData(type1, type2, preState1, preState2, postState1, postState2, preBonded, postBonded, copiesReaction);
     }
 }

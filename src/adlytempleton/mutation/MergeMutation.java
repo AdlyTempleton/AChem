@@ -24,34 +24,34 @@ import java.util.Random;
 
 /**
  * Created by ATempleton on 1/17/2016.
- *
+ * <p>
  * Merges multiple refrences of states into one
  */
-public class MergeMutation implements IMutation{
+public class MergeMutation implements IMutation {
     @Override
     public ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map) {
         ArrayList<Integer> statesPresent = new ArrayList<>();
-        for(ReactionData rxn : original) {
-            if(rxn != null){
+        for (ReactionData rxn : original) {
+            if (rxn != null) {
                 statesPresent.add(rxn.preState1);
                 statesPresent.add(rxn.preState2);
                 statesPresent.add(rxn.postState1);
                 statesPresent.add(rxn.postState2);
 
-                if(rxn instanceof ReactionDataTriple) {
+                if (rxn instanceof ReactionDataTriple) {
                     statesPresent.add(((ReactionDataTriple) rxn).preState3);
                     statesPresent.add(((ReactionDataTriple) rxn).postState3);
                 }
             }
         }
 
-        if(statesPresent.size() > 0) {
+        if (statesPresent.size() > 0) {
             int from = statesPresent.get(random.nextInt(statesPresent.size()));
             int to = statesPresent.get(random.nextInt(statesPresent.size()));
 
-            for(int i = 0; i < original.length; i++){
+            for (int i = 0; i < original.length; i++) {
                 ReactionData rxn = original[i];
-                if(rxn != null){
+                if (rxn != null) {
                     MutableReactionData mutableRxn = MutableReactionData.fromReaction(rxn);
 
                     mutableRxn.preState1 = mutableRxn.preState1 == from ? to : mutableRxn.preState1;
@@ -60,7 +60,7 @@ public class MergeMutation implements IMutation{
                     mutableRxn.postState2 = mutableRxn.postState2 == from ? to : mutableRxn.postState2;
 
 
-                    if(mutableRxn instanceof MutableReactionDataTriple) {
+                    if (mutableRxn instanceof MutableReactionDataTriple) {
 
                         MutableReactionDataTriple mutableRxn3 = (MutableReactionDataTriple) mutableRxn;
 

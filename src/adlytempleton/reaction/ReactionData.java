@@ -19,8 +19,6 @@ import adlytempleton.map.Simulator;
 import adlytempleton.monitor.EventTracker;
 import adlytempleton.mutation.MutationManager;
 
-import java.util.ArrayList;
-
 /**
  * Created by ATempleton on 11/14/2015.
  */
@@ -65,7 +63,7 @@ public class ReactionData {
 
     public static ReactionData fromString(String s) {
 
-        if(s.startsWith("3:")){
+        if (s.startsWith("3:")) {
             return ReactionDataTriple.fromString(s.replaceFirst("3:", ""));
         }
 
@@ -176,11 +174,6 @@ public class ReactionData {
     /**
      * Checks if a ReactionData is applicable to a given pair of atoms. This is order-independent
      * If the reaction only takes two components (is not ReactionDataTriple), all combinations are checked
-     *
-     * @param a1
-     * @param a2
-     * @param a3
-     * @return
      */
     public boolean matches(Atom a1, Atom a2, Atom a3) {
         return matches(a1, a2) || matches(a2, a3) || matches(a1, a3);
@@ -221,7 +214,6 @@ public class ReactionData {
                     if ((sameTypes && a1.type == a2.type) || (!sameTypes && a1.type.matches(type1) && a2.type.matches(type2))) {
 
 
-
                         return true;
                     }
                 }
@@ -235,30 +227,28 @@ public class ReactionData {
     /**
      * Runs the reaction on the given set of atoms. If this is a 2-reactant reaction, all valid reactions will be performed sequentially
      */
-    public boolean apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator){
+    public void apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator) {
 
         boolean result = false;
 
-        if(matches(a1, a2)){
+        if (matches(a1, a2)) {
             result = result || apply(a1, a2, map, simulator);
         }
-        if(matches(a2, a3)){
+        if (matches(a2, a3)) {
             result = result || apply(a2, a3, map, simulator);
         }
-        if(matches(a3, a1)){
+        if (matches(a3, a1)) {
             result = result || apply(a3, a1, map, simulator);
         }
-
-        return result;
     }
 
     /**
      * Runs the reaction on a given pair of atoms. Order-independent.
      */
-    private boolean apply(Atom a1, Atom a2, AbstractMap map, Simulator simulator){
-        if(matchesPair(a1, a2)){
+    private boolean apply(Atom a1, Atom a2, AbstractMap map, Simulator simulator) {
+        if (matchesPair(a1, a2)) {
             return applyPair(a1, a2, map, simulator);
-        }else if(matchesPair(a2, a1)){
+        } else if (matchesPair(a2, a1)) {
             return applyPair(a2, a1, map, simulator);
         }
         return false;
@@ -267,7 +257,7 @@ public class ReactionData {
     /**
      * Runs the reaction on a given pair of atoms. Order-dependent.
      */
-    private boolean applyPair(Atom atom1, Atom atom2, AbstractMap map, Simulator simulator){
+    private boolean applyPair(Atom atom1, Atom atom2, AbstractMap map, Simulator simulator) {
 
         if (!simulator.doesBondCross(atom1, atom1.getLocation(), atom2, atom2.getLocation())) {
             if (ReactionManager.enzymeNearby(atom1, atom2, this, map)) {

@@ -203,27 +203,31 @@ public class ReactionDataTriple extends ReactionData {
     }
 
     @Override
-    public boolean apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator) {
+    public void apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator) {
         if (matchesTriple(a1, a2, a3)) {
-            return applyTriple(a1, a2, a3, map, simulator);
+            applyTriple(a1, a2, a3, map, simulator);
+            return;
         }
         if (matchesTriple(a1, a3, a2)) {
-            return applyTriple(a1, a3, a2, map, simulator);
+            applyTriple(a1, a3, a2, map, simulator);
+            return;
         }
         if (matchesTriple(a2, a3, a1)) {
-            return applyTriple(a2, a3, a1, map, simulator);
+            applyTriple(a2, a3, a1, map, simulator);
+            return;
         }
         if (matchesTriple(a2, a1, a3)) {
-            return applyTriple(a2, a1, a3, map, simulator);
+            applyTriple(a2, a1, a3, map, simulator);
+            return;
         }
         if (matchesTriple(a3, a1, a2)) {
-            return applyTriple(a3, a1, a2, map, simulator);
+            applyTriple(a3, a1, a2, map, simulator);
+            return;
         }
         if (matchesTriple(a3, a2, a1)) {
-            return applyTriple(a3, a2, a1, map, simulator);
+            applyTriple(a3, a2, a1, map, simulator);
+            return;
         }
-
-        return false;
     }
 
     /**

@@ -18,6 +18,7 @@ import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by ATempleton on 11/7/2015.
@@ -139,7 +140,7 @@ public class Atom {
      * @return A shallow clone of reactions. The shallowness of the clone is safe, as ReactionData is final.
      */
     public ReactionData[] getReactions() {
-        return reactions.clone();
+        return Arrays.copyOf(reactions.clone(), SimulatorConstants.ENZYME_CAPACITY);
     }
 
     public void setReactions(ReactionData[] reactions) {

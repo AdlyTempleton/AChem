@@ -29,7 +29,7 @@ public class SimulatorConstants {
     public static int MAP_SIZE = 50;
 
     //Chance of mutation each time an enzyme is copied
-    public static float MUTATION_CHANCE = .01F;
+    public static float MUTATION_CHANCE = .05F;
 
     public static boolean TOROIDAL_MAP = false;
 

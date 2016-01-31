@@ -229,16 +229,15 @@ public class ReactionData {
      */
     public void apply(Atom a1, Atom a2, Atom a3, AbstractMap map, Simulator simulator) {
 
-        boolean result = false;
 
         if (matches(a1, a2)) {
-            result = result || apply(a1, a2, map, simulator);
+            apply(a1, a2, map, simulator);
         }
         if (matches(a2, a3)) {
-            result = result || apply(a2, a3, map, simulator);
+            apply(a2, a3, map, simulator);
         }
         if (matches(a3, a1)) {
-            result = result || apply(a3, a1, map, simulator);
+            apply(a3, a1, map, simulator);
         }
     }
 
@@ -277,6 +276,7 @@ public class ReactionData {
                     map.updateEnzymes(atom2, atom1.getReactions());
 
                     atom2.setReactions(atom1.getReactions());
+
 
                     simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
 

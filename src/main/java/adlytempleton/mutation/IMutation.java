@@ -15,6 +15,7 @@ package adlytempleton.mutation;
 import adlytempleton.atom.Atom;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.reaction.macroreactions.Macroreaction;
 
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public interface IMutation {
      *
      * @return The modified enzyme
      */
-    ReactionData[] mutate(ReactionData[] original, Random random, Atom atom, AbstractMap map);
+    Macroreaction mutate(Macroreaction original, Random random, Atom atom, AbstractMap map);
 
 
     /**

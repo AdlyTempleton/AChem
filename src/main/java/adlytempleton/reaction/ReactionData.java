@@ -18,11 +18,15 @@ import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
 import adlytempleton.monitor.EventTracker;
 import adlytempleton.mutation.MutationManager;
+import adlytempleton.reaction.macroreactions.Macroreaction;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by ATempleton on 11/14/2015.
  */
-public class ReactionData {
+public class ReactionData extends Macroreaction{
 
     public final EnumType type1;
     public final EnumType type2;
@@ -276,7 +280,7 @@ public class ReactionData {
                     //Note that getReactions returns a shallow clone
                     map.updateEnzymes(atom2, atom1.getReactions());
 
-                    atom2.setReactions(atom1.getReactions());
+                    atom2.setReactions(atom1.getMacroreaction());
 
                     simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
 
@@ -292,4 +296,13 @@ public class ReactionData {
         return false;
     }
 
+    @Override
+    public List<Macroreaction> getSubreactions() {
+        return Arrays.<Macroreaction>asList(new Macroreaction[]{this});
+    }
+
+    @Override
+    public List<Macroreaction> flatten() {
+        return getSubreactions();
+    }
 }

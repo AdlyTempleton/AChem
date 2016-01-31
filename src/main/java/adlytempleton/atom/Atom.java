@@ -15,6 +15,8 @@ package adlytempleton.atom;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.ILocation;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.reaction.macroreactions.EmptyMacroreaction;
+import adlytempleton.reaction.macroreactions.Macroreaction;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class Atom {
     private ILocation location;
     //Stores a fixed-length array of all Reactions this atom acts as an enzyme for
     //
-    private ReactionData[] reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
+    private Macroreaction reactions = new EmptyMacroreaction();
 
 
     public Atom(EnumType type) {
@@ -56,10 +58,10 @@ public class Atom {
     public Atom(EnumType type, int state) {
         this.type = type;
         this.state = state;
-        this.reactions = new ReactionData[SimulatorConstants.ENZYME_CAPACITY];
+        this.reactions = new EmptyMacroreaction();
     }
 
-    public Atom(EnumType type, int state, ReactionData[] rxn) {
+    public Atom(EnumType type, int state, Macroreaction rxn) {
         this.type = type;
         this.state = state;
         this.reactions = rxn;
@@ -139,10 +141,14 @@ public class Atom {
      * @return A shallow clone of reactions. The shallowness of the clone is safe, as ReactionData is final.
      */
     public ReactionData[] getReactions() {
-        return reactions.clone();
+        return reactions.flatten().toArray(new ReactionData[]{});
     }
 
-    public void setReactions(ReactionData[] reactions) {
+    public Macroreaction getMacroreaction() {
+        return reactions;
+    }
+
+    public void setReactions(Macroreaction reactions) {
         this.reactions = reactions;
     }
 
@@ -166,11 +172,6 @@ public class Atom {
      * ie. Whether getReactions() contains any non-null elements
      */
     public boolean isEnzyme() {
-        for (ReactionData rxn : reactions) {
-            if (rxn != null) {
-                return true;
-            }
-        }
-        return false;
+        return !(reactions instanceof EmptyMacroreaction);
     }
 }

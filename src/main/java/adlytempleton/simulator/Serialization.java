@@ -16,6 +16,8 @@ import adlytempleton.atom.Atom;
 import adlytempleton.map.*;
 import adlytempleton.monitor.EnzymeMonitor;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.reaction.macroreactions.ChainMacroreaction;
+import adlytempleton.reaction.macroreactions.Macroreaction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -91,7 +93,7 @@ public class Serialization {
         //Fix interface issues
         builder.registerTypeAdapter(ILocation.class, new LocationAdapter());
         //Condensed reaction notation
-        builder.registerTypeAdapter(ReactionData.class, new ReactionAdapter());
+        builder.registerTypeAdapter(Macroreaction.class, new MacroreactionAdapter());
 
         return builder.create();
     }
@@ -154,6 +156,29 @@ public class Serialization {
             SquareLocation sqLoc = (SquareLocation) value;
             String xy = sqLoc.getX() + "," + sqLoc.getY();
             writer.value(xy);
+        }
+    }
+
+    public static class MacroreactionAdapter extends TypeAdapter<Macroreaction> {
+
+        public Macroreaction read(JsonReader reader) throws IOException {
+            //Boilerplate
+            if (reader.peek() == JsonToken.NULL) {
+                reader.nextNull();
+                return null;
+            }
+
+
+            return Macroreaction.fromString(reader.nextString());
+        }
+
+        public void write(JsonWriter writer, Macroreaction value) throws IOException {
+            //Boilerplate
+            if (value == null) {
+                writer.nullValue();
+                return;
+            }
+            writer.value(value.toString());
         }
     }
 

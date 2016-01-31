@@ -16,6 +16,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.atom.EnumType;
 import adlytempleton.reaction.ReactionData;
 import adlytempleton.reaction.ReactionManager;
+import adlytempleton.reaction.macroreactions.EmptyMacroreaction;
 import adlytempleton.simulator.SimulatorConstants;
 
 import java.util.*;
@@ -108,7 +109,7 @@ public class Simulator {
                                 if (!doesBondCross(atom, nearbyAtom)) {
                                     nearbyAtom.state = 0;
                                     nearbyAtom.unbondAll();
-                                    nearbyAtom.setReactions(new ReactionData[10]);
+                                    nearbyAtom.setReactions(new EmptyMacroreaction());
                                 }
                             }
                         }
@@ -325,7 +326,7 @@ public class Simulator {
                 if (atom != null) {
                     atom.state = 0;
                     atom.unbondAll();
-                    atom.setReactions(new ReactionData[10]);
+                    atom.setReactions(new EmptyMacroreaction());
                 }
             }
         }

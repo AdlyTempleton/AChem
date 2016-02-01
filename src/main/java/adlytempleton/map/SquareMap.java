@@ -39,6 +39,7 @@ public class SquareMap extends AbstractMap {
     }
 
     public SquareMap(int size, boolean showGUI) {
+        super();
         this.size = size;
 
         if (showGUI) {
@@ -420,14 +421,14 @@ public class SquareMap extends AbstractMap {
         //First, take it out of all current enzyme mappings
         for (ReactionData rxn : atom.getReactions()) {
             if (rxn != null) {
-                enzymes.remove(rxn, atom);
+                removeFronEnzymeMap(rxn, atom);
             }
         }
 
         //Then, add the new ones
         for (ReactionData rxn : newReaction) {
             if (rxn != null) {
-                enzymes.put(rxn, atom);
+                removeFronEnzymeMap(rxn, atom);
             }
         }
     }
@@ -445,7 +446,7 @@ public class SquareMap extends AbstractMap {
             if (atom.isEnzyme()) {
                 for (ReactionData rxn : atom.getReactions()) {
                     if (rxn != null) {
-                        enzymes.put(rxn, atom);
+                        removeFronEnzymeMap(rxn, atom);
                     }
                 }
             }

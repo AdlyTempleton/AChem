@@ -14,9 +14,12 @@ package adlytempleton.map;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.reaction.ReactionDataTriple;
+import adlytempleton.simulator.SimulatorConstants;
 import com.google.common.collect.HashMultimap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,19 +40,45 @@ public abstract class AbstractMap {
      * This is used to quickly calculate reactions
      * TODO: Performance optimizations by defining initial values for multimap parameters based on actual data
      */
-    transient public HashMultimap<ReactionData, Atom> enzymes = HashMultimap.create();
+    transient public ArrayList<HashMultimap<ReactionData, Atom>> enzymes = new ArrayList<>();
+
+    public AbstractMap(){
+        for(int i = 0; i < SimulatorConstants.MAX_STATE; i++){
+            enzymes.add(HashMultimap.create());
+        }
+    }
+
+    public void addToEnzymeMap(ReactionData rxn, Atom atom){
+        enzymes.get(rxn.preState1).put(rxn, atom);
+        enzymes.get(rxn.preState2).put(rxn, atom);
+
+        if(rxn instanceof ReactionDataTriple){
+            enzymes.get(((ReactionDataTriple) rxn).preState3).put(rxn, atom);
+        }
+    }
+
+    public void removeFronEnzymeMap(ReactionData rxn, Atom atom){
+        enzymes.get(rxn.preState1).remove(rxn, atom);
+        enzymes.get(rxn.preState2).remove(rxn, atom);
+
+        if(rxn instanceof ReactionDataTriple){
+            enzymes.get(((ReactionDataTriple) rxn).preState3).remove(rxn, atom);
+        }
+    }
 
     /**
      * Reforms the enzymes list
      * Used when reading from a file
      */
     public void updateAllEnzymes() {
-        enzymes.clear();
+        for(int i = 0; i < SimulatorConstants.MAX_STATE; i++){
+            enzymes.get(i).clear();
+        }
 
         for (Atom atom : getAllAtoms()) {
             for (ReactionData rxn : atom.getReactions()) {
                 if (rxn != null) {
-                    enzymes.put(rxn, atom);
+                    addToEnzymeMap(rxn, atom);
                 }
             }
         }

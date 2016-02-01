@@ -30,6 +30,28 @@ public class ReactionManager {
 
 
     /**
+     * Returns all reactions in the given map which apply to a given pair of atoms
+     */
+    public static Set<ReactionData> getRelaventReactions(AbstractMap map, Atom atom1, Atom atom2){
+        Set<ReactionData> reactions = new HashSet<>();
+        reactions.addAll(map.enzymes.get(atom1.state).keySet());
+        reactions.addAll(map.enzymes.get(atom2.state).keySet());
+        return reactions;
+    }
+
+    /**
+     * Returns all enzymes in the given map which catalyze a given reaction
+     */
+    public static Set<Atom> getRelaventEnzymes(AbstractMap map, ReactionData rxn){
+
+        Set<Atom> reactions = new HashSet<>();
+        reactions.addAll(map.enzymes.get(rxn.preState1).get(rxn));
+        reactions.addAll(map.enzymes.get(rxn.preState2).get(rxn));
+        return reactions;
+    }
+
+
+    /**
      * Performs a reaction on two atoms, if it is possible. Order-independent
      *
      * @param atom1 First Atom
@@ -40,7 +62,9 @@ public class ReactionManager {
     public static boolean react(Atom atom1, Atom atom2, Atom atom3, AbstractMap map, Simulator simulator) {
 
         //For testing purposes, this ReactionData is hardcoded in
-        Set<ReactionData> reactions = map.enzymes.keySet();
+        Set<ReactionData> reactions = getRelaventReactions(map, atom1, atom1);
+        //Note that we only need to check 2 arbitrary states of the three
+        //As each reaction is listed under multiple states
 
         for (ReactionData reactionData : reactions) {
             if (reactionData.matches(atom1, atom2, atom3)) {
@@ -151,7 +175,7 @@ public class ReactionManager {
      */
     public static boolean enzymeNearby(Atom atom1, Atom atom2, ReactionData reaction, AbstractMap map) {
         //Cycle through all enzymes which contain a given reaction
-        for (Atom enzyme : map.enzymes.get(reaction)) {
+        for (Atom enzyme : getRelaventEnzymes(map, reaction)) {
             //We want to check the distance to either product
             if (map.getDistance(enzyme.getLocation(), atom1.getLocation()) <= SimulatorConstants.ENZYME_RANGE ||
                     map.getDistance(enzyme.getLocation(), atom2.getLocation()) <= SimulatorConstants.ENZYME_RANGE) {

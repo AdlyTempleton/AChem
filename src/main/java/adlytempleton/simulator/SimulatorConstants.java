@@ -28,6 +28,9 @@ public class SimulatorConstants {
 
     public static int MAP_SIZE = 50;
 
+    //The highest state a reaction can reach
+    public static int MAX_STATE = 256;
+
     //Chance of mutation each time an enzyme is copied
     public static float MUTATION_CHANCE = .05F;
 

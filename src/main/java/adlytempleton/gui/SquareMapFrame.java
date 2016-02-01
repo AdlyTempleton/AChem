@@ -109,7 +109,12 @@ public class SquareMapFrame extends JFrame implements ActionListener {
 
             for (Object obj : multiset.elementSet()) {
                 ReactionData rxn = (ReactionData) obj;
-                String s = rxn.toString() + "   (" + map.enzymes.keys().count(rxn) + ")";
+
+
+
+                //Every instance of a given reaction is given in the appropriate bucket
+                //S
+                String s = rxn.toString() + "   (" + map.enzymes.get(rxn.preState1).keys().count(rxn) + ")";
                 enzymeListModel.addElement(s);
             }
 

@@ -33,6 +33,7 @@ public class MutationManager {
         //mutations.add(new PointStateMutation());
         //mutations.add(new PointTypeMutation());
         mutations.add(new MergeMutation());
+        mutations.add(new InsertionMutation());
 
         return mutations;
     }

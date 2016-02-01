@@ -12,11 +12,13 @@
 
 package adlytempleton.monitor;
 
+import adlytempleton.atom.Atom;
 import adlytempleton.map.AbstractMap;
+import adlytempleton.map.Simulator;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.simulator.SimulatorConstants;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Multisets;
+import com.google.common.collect.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,7 +35,11 @@ public class EnzymeMonitor {
     protected static Set<ReactionData> baselineReactions;
 
     public static void loadBaselineReactions(AbstractMap map) {
-        baselineReactions = new HashSet<>(map.enzymes.keySet());
+        baselineReactions = new HashSet<ReactionData>();
+        //Add reactions from all states
+        for(int i = 0; i < SimulatorConstants.MAX_STATE; i++){
+            baselineReactions.addAll(map.enzymes.get(i).keySet());
+        }
     }
 
     /**
@@ -41,7 +47,17 @@ public class EnzymeMonitor {
      * Uses the cached data
      */
     public static Multiset getNewReactions(AbstractMap map) {
-        Multiset enzymes = Multisets.copyHighestCountFirst(map.enzymes.keys());
+
+        Multiset enzymes = HashMultiset.create();
+
+        for(Multimap<ReactionData, Atom> multimap : map.enzymes){
+            for(ReactionData rxn : multimap.keys()){
+                if(!enzymes.contains(rxn)){
+                    enzymes.add(rxn, multimap.keys().count(rxn));
+                }
+            }
+        }
+
         if (baselineReactions != null) {
             enzymes = Multisets.filter(enzymes, Predicates.not(Predicates.in(baselineReactions)));
         }

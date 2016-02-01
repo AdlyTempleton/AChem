@@ -35,7 +35,7 @@ public class Main {
                 }
             }
         } else {
-            SquareMap map = Serialization.fromFile("cell.json", true);
+            SquareMap map = Serialization.fromFile("double.json", true);
 
             Simulator simulator = new Simulator(map);
 

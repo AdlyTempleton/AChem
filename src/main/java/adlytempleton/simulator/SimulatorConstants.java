@@ -32,7 +32,7 @@ public class SimulatorConstants {
     public static int MAX_STATE = 256;
 
     //Chance of mutation each time an enzyme is copied
-    public static float MUTATION_CHANCE = .05F;
+    public static float MUTATION_CHANCE = .1F;
 
     public static boolean TOROIDAL_MAP = false;
 
@@ -42,7 +42,7 @@ public class SimulatorConstants {
     //This is the percentage of cells which, if empty, will contain food
     //(Not including double counting)
     //The real percentage will be slightly lower in starting maps with initially defined atoms
-    public static float FOOD_ABUNDANCE = .2F;
+    public static float FOOD_ABUNDANCE = .15F;
     //The delay, in ms, between ticks
     //-1 pauses the simulation
     public static int simulationSpeed = 500;

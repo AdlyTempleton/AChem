@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Contains some information useful for rendering
  */
 public enum EnumType {
-    A('A', Color.YELLOW, 40),
+    A('A', Color.YELLOW, 80),
     B('B', Color.CYAN, 40),
     C('C', Color.GREEN),
     D('D', Color.LIGHT_GRAY),

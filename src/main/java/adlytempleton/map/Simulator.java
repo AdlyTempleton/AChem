@@ -72,20 +72,25 @@ public class Simulator {
         List<Atom> atoms = new ArrayList<>(map.getAllAtoms());
         Collections.shuffle(atoms, rand);
         for (Atom atom : map.getAllAtoms()) {
-            if (rand.nextDouble() < SimulatorConstants.MOVEMENT_CHANCE) {
-                ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);
+            ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);
 
-                Iterator iter = nearbySpaces.iterator();
-                while (iter.hasNext()) {
-                    ILocation location = (ILocation) iter.next();
-                    if (map.getAtomAtLocation(location) != null || willStretchBonds(atom, location) || willCrossBonds(atom, location)) {
-                        iter.remove();
-                    }
+            Iterator iter = nearbySpaces.iterator();
+            while (iter.hasNext()) {
+                ILocation location = (ILocation) iter.next();
+                if (map.getAtomAtLocation(location) != null || willStretchBonds(atom, location) || willCrossBonds(atom, location)) {
+                    iter.remove();
                 }
+            }
 
-                if (nearbySpaces.size() > 0) {
+            //A chance of remaining stationary
+            nearbySpaces.add(atom.getLocation());
 
-                    ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
+
+            if (nearbySpaces.size() > 0) {
+
+                ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
+
+                if (newLocation != atom.getLocation()) {
 
 
                     //Checks if the atom is an enzyme
@@ -118,6 +123,7 @@ public class Simulator {
                     pinchMembrane(atom);
                 }
             }
+
 
 
         }

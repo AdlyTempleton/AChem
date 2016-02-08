@@ -26,7 +26,7 @@ public class SimulatorConstants {
     //Reactions per enzyme
     public static int ENZYME_CAPACITY = 15;
 
-    public static int MAP_SIZE = 50;
+    public static int MAP_SIZE = 150;
 
     //The highest state a reaction can reach
     public static int MAX_STATE = 256;

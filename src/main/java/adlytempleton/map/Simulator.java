@@ -71,7 +71,7 @@ public class Simulator {
         //Move all atoms
         List<Atom> atoms = new ArrayList<>(map.getAllAtoms());
         Collections.shuffle(atoms, rand);
-        for (Atom atom : map.getAllAtoms()) {
+        for (Atom atom : atoms) {
             ArrayList<ILocation> nearbySpaces = map.getLocationsWithinRange(atom.getLocation(), 1);
 
             Iterator iter = nearbySpaces.iterator();

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public enum EnumType {
     A('A', Color.YELLOW, 80),
-    B('B', Color.CYAN, 40),
+    B('B', Color.CYAN, 80),
     C('C', Color.GREEN, 10),
     D('D', Color.LIGHT_GRAY),
     E('E', Color.ORANGE, 20),

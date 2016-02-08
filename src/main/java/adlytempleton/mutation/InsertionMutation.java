@@ -32,12 +32,12 @@ public class InsertionMutation implements IMutation{
         reactions.removeAll(Collections.singleton(null));
 
         //If there was a null element
-        if(reactions.size() < SimulatorConstants.ENZYME_CAPACITY){
+        if(reactions.size() > 0 && reactions.size() < SimulatorConstants.ENZYME_CAPACITY){
             //The ReactionData to break up
-            ReactionData toSplit = (ReactionData) reactions.get(random.nextInt());
+            ReactionData toSplit = (ReactionData) reactions.get(random.nextInt(reactions.size()));
 
             //The Reaction whose product will catalyze a reaction
-            ReactionData catalyst = (ReactionData) reactions.get(random.nextInt());
+            ReactionData catalyst = (ReactionData) reactions.get(random.nextInt(reactions.size()));
             int catalystState = random.nextBoolean() ? catalyst.postState1 : catalyst.postState2;
 
             //The offset of the intermediate state
@@ -59,8 +59,8 @@ public class InsertionMutation implements IMutation{
             }
 
             reactions.remove(toSplit);
-            reactions.add(part1);
-            reactions.add(part2);
+            reactions.add(part1.toReaction());
+            reactions.add(part2.toReaction());
 
 
         }
@@ -69,11 +69,11 @@ public class InsertionMutation implements IMutation{
 
     @Override
     public int getWeight() {
-        return 0;
+        return 1;
     }
 
     @Override
     public boolean isValidMutation(ReactionData[] original) {
-        return false;
+        return true;
     }
 }

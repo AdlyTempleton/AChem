@@ -19,10 +19,7 @@ import adlytempleton.simulator.Serialization;
 import adlytempleton.simulator.SimulatorConstants;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -67,7 +64,7 @@ public class Experiment {
                 System.out.println(ticks + " " + (System.currentTimeMillis() - start));
             }
 
-            if (ticks % 1000 == 0) {
+            if (ticks % 10000 == 0) {
 
 
                 try {
@@ -87,26 +84,27 @@ public class Experiment {
     }
 
     private void snapshot(int ticks) throws IOException {
-        File folder = new File(String.format("%s/%s/states/", System.getProperty("user.dir"), filename));
-        folder.mkdirs();
-
-        Files.delete(Paths.get(String.format("%s/%s/states/%d.json", System.getProperty("user.dir"), filename, ticks)));
-        Serialization.toFile(String.format("%s/%s/states/%d.json", System.getProperty("user.dir"), filename, ticks), (SquareMap) map);
 
         //Make folders
+        File folder = new File(String.format("%s/%s/states/", System.getProperty("user.dir"), filename));
+        folder.mkdirs();
         folder = new File(String.format("%s/%s/enzymes/", System.getProperty("user.dir"), filename));
         folder.mkdirs();
         folder = new File(String.format("%s/%s/reactionStats/", System.getProperty("user.dir"), filename));
         folder.mkdirs();
 
         Gson gson = Serialization.getGson();
+
+        Path statePath = Paths.get(String.format("%s/%s/states/%d.json", System.getProperty("user.dir"), filename, ticks));
         Path enzymePath = Paths.get(String.format("%s/%s/enzymes/%d.json", System.getProperty("user.dir"), filename, ticks));
         Path reactionPath = Paths.get(String.format("%s/%s/reactionStats/%d.json", System.getProperty("user.dir"), filename, ticks));
 
         Files.deleteIfExists(enzymePath);
         Files.deleteIfExists(reactionPath);
+        Files.deleteIfExists(statePath);
 
-        Files.write(enzymePath, gson.toJson(EnzymeMonitor.getNewReactions(map)).getBytes(), StandardOpenOption.CREATE);
+        Serialization.toFile(statePath.toString(), (SquareMap) map);
+        Files.write(enzymePath, gson.toJson(EnzymeMonitor.getNewReactions(map)).toString().getBytes(), StandardOpenOption.CREATE);
         Files.write(reactionPath, gson.toJson(EventTracker.allEventsWithinPeriod(ticks - 1000, ticks)).getBytes(), StandardOpenOption.CREATE);
 
     }
@@ -115,7 +113,7 @@ public class Experiment {
         //Load constants
 
         Properties prop = new Properties();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream inputStream = new FileInputStream(filename);
 
         if (inputStream != null) {
             prop.load(inputStream);

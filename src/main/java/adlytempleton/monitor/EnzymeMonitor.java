@@ -28,7 +28,6 @@ import java.util.Set;
  * Created by ATempleton on 1/15/2016.
  */
 public class EnzymeMonitor {
-    public static HashMap<Integer, Multiset<ReactionData>> records;
     /*
      * Enzymes present when file is loaded
      */

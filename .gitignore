@@ -18,6 +18,8 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+results
+
 map.json
 maps/
 
@@ -54,3 +56,5 @@ idea/*
 *iml
 
 uber-achem-1.0-SNAPSHOT.jar
+achem.jar
+achem.jar

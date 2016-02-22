@@ -44,7 +44,7 @@ public abstract class AbstractMap {
 
     public AbstractMap(){
         for(int i = 0; i < SimulatorConstants.MAX_STATE; i++){
-            enzymes.add(HashMultimap.create());
+            enzymes.add(HashMultimap.<ReactionData, Atom>create());
         }
     }
 
@@ -54,6 +54,22 @@ public abstract class AbstractMap {
 
         if(rxn instanceof ReactionDataTriple){
             enzymes.get(((ReactionDataTriple) rxn).preState3).put(rxn, atom);
+        }
+    }
+
+    public void removeFronEnzymeMap(Atom atom){
+        for(ReactionData rxn : atom.getReactions()){
+            if(rxn != null){
+                removeFronEnzymeMap(rxn, atom);
+            }
+        }
+    }
+
+    public void addToEnzymeMap(Atom atom){
+        for(ReactionData rxn : atom.getReactions()){
+            if(rxn != null){
+                addToEnzymeMap(rxn, atom);
+            }
         }
     }
 

@@ -19,6 +19,8 @@ import adlytempleton.map.Simulator;
 import adlytempleton.monitor.EventTracker;
 import adlytempleton.mutation.MutationManager;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by ATempleton on 11/14/2015.
  */
@@ -62,8 +64,7 @@ public class ReactionData {
     }
 
     public static ReactionData fromString(String s) {
-
-        if (s.startsWith("3:")) {
+        if (s.startsWith("3:"))  {
             return ReactionDataTriple.fromString(s.replaceFirst("3:", ""));
         }
 
@@ -273,7 +274,7 @@ public class ReactionData {
                 //Copies over reaction data
                 if (copiesReaction) {
                     //Note that getReactions returns a shallow clone
-                    map.updateEnzymes(atom2, atom1.getReactions());
+                    map.removeFronEnzymeMap(atom2);
 
                     atom2.setReactions(atom1.getReactions());
 
@@ -281,6 +282,8 @@ public class ReactionData {
                     simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
 
                     MutationManager.mutate(atom2, map);
+                    map.addToEnzymeMap(atom2);
+
                 }
 
                 EventTracker.notifyOfReaction(this);

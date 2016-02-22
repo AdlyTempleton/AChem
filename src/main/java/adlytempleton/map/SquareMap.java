@@ -53,19 +53,16 @@ public class SquareMap extends AbstractMap {
 
 
         if (!atomMap.containsKey(newLocation)) {
-
-
             //Remove the atom from the current map
             atomMap.remove(atom.getLocation());
+            removeFronEnzymeMap(atom);
 
             //Update the location in the Atom object
             atom.setLocation(newLocation);
 
             //Insert the atom in it's new location
             atomMap.put((SquareLocation) newLocation, atom);
-            return;
-        } else {
-            return;
+            addToEnzymeMap(atom);
         }
     }
 

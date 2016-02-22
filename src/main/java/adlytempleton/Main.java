@@ -35,7 +35,13 @@ public class Main {
                 }
             }
         } else {
-            SquareMap map = Serialization.fromFile("double.json", true);
+
+            String mapName = "cell.json";
+            if(args.length > 0){
+                mapName = args[0];
+            }
+
+            SquareMap map = Serialization.fromFile(mapName, true);
 
             Simulator simulator = new Simulator(map);
 
@@ -60,7 +66,6 @@ public class Main {
                     if (ticks > SimulatorConstants.FLOOD_DELAY && ticks % SimulatorConstants.FLOOD_FREQUENCY == 0) {
                         simulator.flood(map);
                     }
-
 
                     try {
                         //Sanity check - this value is -1 if the simulation is paused

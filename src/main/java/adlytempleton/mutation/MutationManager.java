@@ -28,11 +28,11 @@ public class MutationManager {
     private static ArrayList<IMutation> mutations() {
         ArrayList<IMutation> mutations = new ArrayList<>();
 
-        //mutations.add(new BooleanFlagMutation());
-        //mutations.add(new DuplicationMutation());
-        //mutations.add(new PointStateMutation());
-        //mutations.add(new PointTypeMutation());
-        //mutations.add(new MergeMutation());
+        mutations.add(new BooleanFlagMutation());
+        mutations.add(new DuplicationMutation());
+        mutations.add(new PointStateMutation());
+        mutations.add(new PointTypeMutation());
+        mutations.add(new MergeMutation());
         mutations.add(new InsertionMutation());
 
         return mutations;

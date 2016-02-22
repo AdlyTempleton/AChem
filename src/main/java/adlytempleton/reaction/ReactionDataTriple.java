@@ -139,7 +139,7 @@ public class ReactionDataTriple extends ReactionData {
     @Override
     public String toString() {
         //Forms a representative string for a reaction
-        return String.format("%c%d %c %c%d %c %c%d %c to %d %c %d %c %d %c",
+        return String.format("3: %c%d %c %c%d %c %c%d %c to %d %c %d %c %d %c",
                 type1.symbol, preState1, preBonded ? '-' : '+', type2.symbol, preState2, preBonded23 ? '-' : '+', type3.symbol, preState3, preBonded31 ? '-' : '+',
                 postState1, postBonded ? '-' : '+', postState2, postBonded23 ? '-' : '+', postState3, postBonded31 ? '-' : '+');
     }

@@ -36,7 +36,7 @@ public interface ILocation {
 
     /**
      * Returns the offset that must be added to other to get this location
-     * ie. other location - this location
+     * ie. this location - other location
      **/
     ILocation subtract(ILocation other);
 }

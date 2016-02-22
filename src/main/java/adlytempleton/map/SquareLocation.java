@@ -49,7 +49,7 @@ public class SquareLocation implements ILocation {
     @Override
     public ILocation subtract(ILocation other) {
         assert other instanceof SquareLocation;
-        return new SquareLocation(((SquareLocation) other).x - x, ((SquareLocation) other).y - y);
+        return new SquareLocation(x - ((SquareLocation) other).x, y - ((SquareLocation) other).y);
     }
 
     @Override

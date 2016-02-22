@@ -73,7 +73,12 @@ public class Atom {
     public void reconstructBondList(AbstractMap map) {
         bonds = new ArrayList<>();
         for (ILocation location : bondsLocation) {
-            bonds.add(map.getAtomAtLocation(getLocation().add(location)));
+            Atom atomToAdd = map.getAtomAtLocation(getLocation().add(location));
+            //Legacy support to load all files which stored offsets in reverse
+            //if(atomToAdd == null){
+                //Atom atomToAdd = map.getAtomAtLocation(getLocation().subtract(location));
+            //}
+            bonds.add(atomToAdd);
         }
     }
 

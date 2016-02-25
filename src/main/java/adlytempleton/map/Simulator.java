@@ -57,17 +57,6 @@ public class Simulator {
 
         Random rand = new Random();
 
-        //Update all atoms which have changed
-        //We want to add in more locations while this check is ongoing
-        //Which wont be processed until the next tick
-        HashSet<ILocation> updatedLocationsCopy = (HashSet<ILocation>) updatedLocations.clone();
-        updatedLocations.clear();
-        for (ILocation location : updatedLocationsCopy) {
-            if (map.getAtomAtLocation(location) != null && map.getAtomAtLocation(location).state != 0) {
-                reactAround(location);
-            }
-        }
-
         //Move all atoms
         List<Atom> atoms = new ArrayList<>(map.getAllAtoms());
         Collections.shuffle(atoms, rand);
@@ -91,15 +80,6 @@ public class Simulator {
                 ILocation newLocation = nearbySpaces.get(rand.nextInt(nearbySpaces.size()));
 
                 if (newLocation != atom.getLocation()) {
-
-
-                    //Checks if the atom is an enzyme
-                    //if it is, mark all cells for update which are now in it's range
-                    //Note that this is only marking them for future use - so we call this before we move the enzyme
-                    if (atom.isEnzyme()) {
-                        updateReactions(atom.getLocation(), newLocation);
-                    }
-
 
                     map.move(atom, newLocation);
                     if (atom.state != 0) {
@@ -203,15 +183,6 @@ public class Simulator {
                 }
             }
         }
-    }
-
-    /**
-     * Uses the result of AbstractMap.newlyInRange
-     * To perform all potential reactions
-     * On the next tick. Uses updatedLocations as a queue
-     */
-    public void updateReactions(ILocation start, ILocation end) {
-        updatedLocations.addAll(map.newlyInRange(start, end, SimulatorConstants.ENZYME_RANGE));
     }
 
     /**
@@ -383,23 +354,12 @@ public class Simulator {
 
                 //This allows two atoms to react when not surrounded by any other atoms
                 if (map.getAdjacentAtoms(centralLocation, SimulatorConstants.REACTION_RANGE).isEmpty()) {
-                    if (ReactionManager.react(atom, centralAtom, null, map, this)) {
-                        updatedLocations.add(atom.getLocation());
-                        updatedLocations.add(centralLocation);
-                        return;
-                    }
+                    ReactionManager.react(atom, centralAtom, null, map, this);
                 } else {
                     for (Atom atom2 : nearbyAtoms) {
                         if (atom != atom2) {
                             if (atom2.getLocation().distance(atom.getLocation()) <= 2) {
-                                if (ReactionManager.react(atom, atom2, centralAtom, map, this)) {
-                                    //Because the state has changed, we must check atoms around to propagate reactions
-                                    //We want this to take effect once per tick, to preserve locality, among other things (such as infinite recursion
-                                    updatedLocations.add(atom.getLocation());
-                                    updatedLocations.add(atom2.getLocation());
-                                    updatedLocations.add(centralLocation);
-                                    return;
-                                }
+                                ReactionManager.react(atom, atom2, centralAtom, map, this);
                             }
                         }
                     }

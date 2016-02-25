@@ -278,9 +278,6 @@ public class ReactionData {
 
                     atom2.setReactions(atom1.getReactions());
 
-
-                    simulator.updateReactions(atom1.getLocation(), atom2.getLocation());
-
                     MutationManager.mutate(atom2, map);
                     map.addToEnzymeMap(atom2);
 

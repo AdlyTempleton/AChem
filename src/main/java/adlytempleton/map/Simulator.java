@@ -86,13 +86,14 @@ public class Simulator {
                         reactAround(newLocation);
                     }
 
-                    if (atom.type == EnumType.CAUSTIC) {
+                    if (atom.type == EnumType.CAUSTIC && ticks > SimulatorConstants.CAUSTIC_DELAY) {
                         for (Atom nearbyAtom : map.getAdjacentAtoms(newLocation)) {
                             if (nearbyAtom.type != EnumType.A || nearbyAtom.bonds.size() < 2) {
                                 //Prevents caustic agent from affecting atoms through membranes
                                 if (!doesBondCross(atom, nearbyAtom)) {
                                     nearbyAtom.state = 0;
                                     nearbyAtom.unbondAll();
+                                    map.removeFromEnzymeMap(atom);
                                     nearbyAtom.setReactions(new ReactionData[10]);
                                 }
                             }

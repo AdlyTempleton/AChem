@@ -49,13 +49,13 @@ public class InsertionMutation implements IMutation{
             MutableReactionData part2;
             MutableReactionData part1 = MutableReactionData.fromReaction(toSplit);
 
-            int finalState;
+            int finalState = Math.abs(toSplit.postState2 + offset);
             if(modifySecondAtom){
                 part1.postState2 += offset;
-                part2 = new MutableReactionData(part1.type1, EnumType.Y, toSplit.postState2 + offset, catalystState, toSplit.postState2, catalystState, random.nextBoolean(), random.nextBoolean(), false);
+                part2 = new MutableReactionData(part1.type1, EnumType.Y, finalState, catalystState, toSplit.postState2, catalystState, random.nextBoolean(), random.nextBoolean(), false);
             }else{
                 part1.postState1 += offset;
-                part2 = new MutableReactionData(part1.type1, EnumType.Y, toSplit.postState2 + offset, catalystState, toSplit.postState1, catalystState, random.nextBoolean(), random.nextBoolean(), false);
+                part2 = new MutableReactionData(part1.type1, EnumType.Y, finalState + offset, catalystState, toSplit.postState1, catalystState, random.nextBoolean(), random.nextBoolean(), false);
             }
 
             reactions.remove(toSplit);

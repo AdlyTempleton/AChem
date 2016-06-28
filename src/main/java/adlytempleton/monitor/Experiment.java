@@ -15,6 +15,7 @@ package adlytempleton.monitor;
 import adlytempleton.map.AbstractMap;
 import adlytempleton.map.Simulator;
 import adlytempleton.map.SquareMap;
+import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.Serialization;
 import adlytempleton.simulator.SimulatorConstants;
 import com.google.gson.Gson;
@@ -34,10 +35,14 @@ import java.util.Properties;
 public class Experiment {
 
     public int maxGenerations = 100000;
-    public String filename = "experiment1";
+
+    public String baseFilename = "experiment1";
+    public String numberedFilename = baseFilename;
 
     //Filename of the state to be loaded (ie. cell.json)
     public String state = "cell.json";
+
+    public int repetitions = 1;
 
     public AbstractMap map;
     public Simulator simulator;
@@ -47,8 +52,12 @@ public class Experiment {
 
     public void run(String filename) throws IOException {
         load(filename);
-        simulate();
-        write();
+
+        for(int i = 0; i < repetitions; i++) {
+            numberedFilename = baseFilename + i;
+            initalizeMap();
+            simulate();
+        }
     }
 
     private void write() {
@@ -68,44 +77,72 @@ public class Experiment {
 
 
                 try {
+                    snapshotBiomass(ticks);
                     snapshot(ticks);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
+            } else {
+                if (ticks % 1000 == 0) {
+
+
+                    try {
+                        snapshotBiomass(ticks);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
 
 
             if (ticks > SimulatorConstants.FLOOD_DELAY && ticks % SimulatorConstants.FLOOD_FREQUENCY == 0) {
                 simulator.flood(map);
             }
+
         }
+    }
+
+    private void snapshotBiomass(int ticks) throws IOException{
+
+        File folder = new File(String.format("%s/%s/", System.getProperty("user.dir"), numberedFilename));
+        folder.mkdirs();
+
+        Path biomassPath = Paths.get(String.format("%s/%s/biomass.json", System.getProperty("user.dir"), numberedFilename));
+        Files.write(biomassPath, String.format("%d:%f\n", ticks, Biomass.calculateBiomassPercentage(map)).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
     private void snapshot(int ticks) throws IOException {
 
         //Make folders
-        File folder = new File(String.format("%s/%s/states/", System.getProperty("user.dir"), filename));
+        File folder = new File(String.format("%s/%s/states/", System.getProperty("user.dir"), numberedFilename));
         folder.mkdirs();
-        folder = new File(String.format("%s/%s/enzymes/", System.getProperty("user.dir"), filename));
+
+        folder = new File(String.format("%s/%s/enzymes/", System.getProperty("user.dir"), numberedFilename));
         folder.mkdirs();
-        folder = new File(String.format("%s/%s/reactionStats/", System.getProperty("user.dir"), filename));
-        folder.mkdirs();
+        //folder = new File(String.format("%s/%s/reactionStats/", System.getProperty("user.dir"), numberedFilename));
+        //folder.mkdirs();
 
         Gson gson = Serialization.getGson();
 
-        Path statePath = Paths.get(String.format("%s/%s/states/%d.json", System.getProperty("user.dir"), filename, ticks));
-        Path enzymePath = Paths.get(String.format("%s/%s/enzymes/%d.json", System.getProperty("user.dir"), filename, ticks));
-        Path reactionPath = Paths.get(String.format("%s/%s/reactionStats/%d.json", System.getProperty("user.dir"), filename, ticks));
+        Path enzymePath = Paths.get(String.format("%s/%s/enzymes/%d.json", System.getProperty("user.dir"), numberedFilename, ticks));
+        Path statePath = Paths.get(String.format("%s/%s/states/%d.json", System.getProperty("user.dir"), numberedFilename, ticks));
 
         Files.deleteIfExists(enzymePath);
-        Files.deleteIfExists(reactionPath);
         Files.deleteIfExists(statePath);
+
+        /*
+
+        for(ReactionData data : EventTracker.monitoredReactions){
+            Path reactionPath = Paths.get(String.format("%s/%s/states/%s.json", System.getProperty("user.dir"), numberedFilename, data));
+            Files.write(reactionPath, String.format("%d:%d", ticks, EventTracker.eventsWithinPeriod(data, ticks - 10000, ticks)).getBytes(),StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        }
+        */
 
         Serialization.toFile(statePath.toString(), (SquareMap) map);
         Files.write(enzymePath, gson.toJson(EnzymeMonitor.getNewReactions(map)).toString().getBytes(), StandardOpenOption.CREATE);
-        Files.write(reactionPath, gson.toJson(EventTracker.allEventsWithinPeriod(ticks - 1000, ticks)).getBytes(), StandardOpenOption.CREATE);
 
     }
 
@@ -121,11 +158,15 @@ public class Experiment {
             //All properties are optional, and will reset to default values
 
             if (prop.containsKey("filename")) {
-                this.filename = prop.getProperty("filename");
+                this.baseFilename = prop.getProperty("filename");
             }
 
             if (prop.containsKey("state")) {
                 state = prop.getProperty("state");
+            }
+
+            if (prop.containsKey("repetitions")) {
+                repetitions = Integer.parseInt(prop.getProperty("repetitions"));
             }
 
             if (prop.containsKey("instrument")) {
@@ -143,11 +184,9 @@ public class Experiment {
             if (prop.containsKey("mutationChance")) {
                 SimulatorConstants.MUTATION_CHANCE = Float.parseFloat(prop.getProperty("mutationChance"));
             }
-
-            map = Serialization.fromFile(state, false);
-
-            simulator = new Simulator(map);
-            simulator.populateFood(map);
+            if (prop.containsKey("floodRadius")) {
+                SimulatorConstants.FLOOD_RANGE = Integer.parseInt(prop.getProperty("floodRadius"));
+            }
 
 
         } else {
@@ -155,6 +194,13 @@ public class Experiment {
         }
 
 
+    }
+
+    private void initalizeMap() {
+        map = Serialization.fromFile(state, false);
+
+        simulator = new Simulator(map);
+        simulator.populateFood(map);
     }
 
 

@@ -74,7 +74,9 @@ public class Atom {
         bonds = new ArrayList<>();
         for (ILocation location : bondsLocation) {
             Atom atomToAdd = map.getAtomAtLocation(getLocation().add(location));
-            assert atomToAdd != null;
+            if(atomToAdd == null){
+                throw new IllegalArgumentException();
+            }
             //Legacy support to load all files which stored offsets in reverse
             //if(atomToAdd == null){
                 //Atom atomToAdd = map.getAtomAtLocation(getLocation().subtract(location));
@@ -90,7 +92,7 @@ public class Atom {
     public void updateBondLocationList() {
         bondsLocation = new ArrayList<>();
         for (Atom bondedAtom : bonds) {
-            bondsLocation.add(getLocation().subtract(bondedAtom.getLocation()));
+            bondsLocation.add(bondedAtom.getLocation().subtract(getLocation()));
         }
     }
 

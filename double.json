@@ -1,329 +1,4 @@
 [
-
-  {
-    "type": "E",
-    "state":10,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,1",
-    "reactions": [null, null, null, null, null, null, null, null, null, null]
-  },
-  {
-    "type": "B",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,2",
-    "reactions": [
-      "3: E10 - A37 + E0 + to 2 - 37 - 3 -",
-      "3: X3 - X2 - Y1 + to 7 - 2 - 5 -",
-      "X5 + X0 to 6 - 6 (cpy)",
-      "3: X7 - Y6 - Y6 + to 2 + 2 - 3 -",
-      "3: F3 - F2 - A37 + to 8 + 8 - 11 -",
-      "3: E13 - A37 - E13 + to 18 - 20 - 18 +",
-
-      "3: E10 - A37 + E0 + to 2 - 37 - 3 -",
-      "3: X3 - X2 - Y1 + to 7 - 2 - 5 -",
-      "X5 + X0 to 6 - 6 (cpy)",
-      "3: X7 - Y6 - Y6 + to 2 + 2 - 3 -",
-      "3: F3 - F2 - A37 + to 8 + 8 - 11 -",
-      "3: E13 - A37 - E13 + to 18 - 20 - 18 +"
-    ]
-
-  },
-  {
-    "type": "B",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,3",
-    "reactions":  [
-      "X32 - Y17 to 41 - 32",
-      "B41 + B0 to 42 - 43 (cpy)",
-      "B43 + B43 to 44 - 44",
-      "B43 + B0 to 44 - 44",
-      "B42 - B44 to 45 + 50",
-      "A41 + A36 to 45 + 36 (cpy)",
-      "F32 - A37 to 46 - 37",
-      "X46 - Y45 to 1 - 46",
-      "3: B46 - E41 - A37 + to 1 - 10 - 37 +",
-      "A17 + A37 to 17 + 37 (cpy)",
-
-      "X32 - Y17 to 41 - 32",
-      "B41 + B0 to 42 - 43 (cpy)",
-      "B43 + B43 to 44 - 44",
-      "B43 + B0 to 44 - 44",
-      "B42 - B44 to 45 + 50",
-      "A41 + A36 to 45 + 36 (cpy)",
-      "F32 - A37 to 46 - 37",
-      "X46 - Y45 to 1 - 46",
-      "3: B46 - E41 - A37 + to 1 - 10 - 37 +",
-      "A17 + A37 to 17 + 37 (cpy)",]
-  },
-  {
-    "type": "B",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,4",
-    "reactions": [
-      "X2 - Y8 to 9 - 1 ",
-      "X9 - Y9 to 8 + 8 ",
-      "3: F1 - A11 - A36 + to 13 - 11 - 37 -",
-      "E8 - A37 to 1 - 37",
-      "3: A11 - X13 - Y1 + to 11 + 17 - 13 -",
-
-      "X2 - Y8 to 9 - 1 ",
-      "X9 - Y9 to 8 + 8 ",
-      "3: F1 - A11 - A36 + to 13 - 11 - 37 -",
-      "E8 - A37 to 1 - 37",
-      "3: A11 - X13 - Y1 + to 11 + 17 - 13 -"
-    ]
-  },
-  {
-    "type": "A",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,5",
-    "reactions": [
-
-
-      "3: A36 - A24 - A23 + to 36 + 25 - 23 -",
-      "3: A37 - A23 - A25 + to 37 + 30 + 30 -",
-      "3: A37 - A37 + A0 + to 37 + 37 - 36 -",
-      "3: A37 - A36 + A0 + to 37 + 36 - 36 -",
-      "3: A36 - A37 - F11 + to 37 - 36 + 11 -",
-      "3: A36 - A37 - F8 + to 37 - 36 + 8 -",
-      "3: A36 - A37 - F1 + to 37 - 36 + 1 -",
-      "3: A20 - E18 - A11 + to 21 - 18 - 22 -",
-      "E18 - A22 to 31 + 23",
-      "E18 - A21 to 31 + 24",
-      "A30 - E31 to 37 - 32",
-
-
-
-      "3: A36 - A24 - A23 + to 36 + 25 - 23 -",
-      "3: A37 - A23 - A25 + to 37 + 30 + 30 -",
-      "3: A37 - A37 + A0 + to 37 + 37 - 36 -",
-      "3: A37 - A36 + A0 + to 37 + 36 - 36 -",
-      "3: A36 - A37 - F11 + to 37 - 36 + 11 -",
-      "3: A36 - A37 - F8 + to 37 - 36 + 8 -",
-      "3: A36 - A37 - F1 + to 37 - 36 + 1 -",
-      "3: A20 - E18 - A11 + to 21 - 18 - 22 -",
-      "E18 - A22 to 31 + 23",
-      "E18 - A21 to 31 + 24",
-      "A30 - E31 to 37 - 32"]
-  },
-  {
-    "type": "B",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,6",
-    "reactions": [
-    ]
-  },
-  {
-    "type": "F",
-    "state":1,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "11,7",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":37,
-    "bondsLocation": [
-      "0,-1","-1,0","1,0"
-    ],
-    "location": "11,8",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":37,
-    "bondsLocation": [
-      "0,1","-1,0","1,0"
-    ],
-    "location": "11,0",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-
-
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "1,0","0,1"
-    ],
-    "location": "10,0",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,1",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,2",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,3",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,4",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,5",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,6",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "10,7",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","1,0"
-    ],
-    "location": "10,8",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-
-
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,1","-1,0"
-    ],
-    "location": "12,0",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,1",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,2",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,3",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,4",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,5",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,6",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","0,1"
-    ],
-    "location": "12,7",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "A",
-    "state":36,
-    "bondsLocation": [
-      "0,-1","-1,0"
-    ],
-    "location": "12,8",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  
   {
     "type": "E",
     "state":10,
@@ -342,19 +17,22 @@
     "location": "1,2",
     "reactions": [
       "3: E10 - A37 + E0 + to 2 - 37 - 3 -",
-
-
       "3: X3 - X2 - Y1 + to 7 - 2 - 5 -",
-
       "X5 + X0 to 6 - 6 (cpy)",
-
       "3: X7 - Y6 - Y6 + to 2 + 2 - 3 -",
-
       "3: F3 - F2 - A37 + to 8 + 8 - 11 -",
+      "3: E13 - A37 - E13 + to 18 - 20 - 18 +",
 
-      "3: E13 - A37 - E13 + to 18 - 20 - 18 +", null, null
-	  ]
-	
+      "3: E10 - A37 + E0 + to 2 - 37 - 3 -",
+      "3: X3 - X2 - Y1 + to 7 - 2 - 5 -",
+      "X5 + X0 to 6 - 6 (cpy)",
+      "3: X7 - Y6 - Y6 + to 2 + 2 - 3 -",
+      "3: F3 - F2 - A37 + to 8 + 8 - 11 -",
+      "3: E13 - A37 - E13 + to 18 - 20 - 18 +",
+
+      null, null
+    ]
+
   },
   {
     "type": "B",
@@ -366,20 +44,27 @@
     "reactions":  [
 
       "X32 - Y17 to 41 - 32",
-
       "B41 + B0 to 42 - 43 (cpy)",
       "B43 + B43 to 44 - 44",
       "B43 + B0 to 44 - 44",
       "B42 - B44 to 45 + 50",
-
       "A41 + A36 to 45 + 36 (cpy)",
-
+      "C41 + C0 to 45 + 50 (cpy)",
       "F32 - A37 to 46 - 37",
       "X46 - Y45 to 1 - 46",
+      "3: X46 - E41 - A37 + to 1 - 10 - 37 +",
 
-      "3: B46 - E41 - A37 + to 1 - 10 - 37 +",
+      "X32 - Y17 to 41 - 32",
+      "B41 + B0 to 42 - 43 (cpy)",
+      "B43 + B43 to 44 - 44",
+      "B43 + B0 to 44 - 44",
+      "B42 - B44 to 45 + 50",
+      "A41 + A36 to 45 + 36 (cpy)",
+      "C41 + C0 to 45 + 50 (cpy)",
+      "F32 - A37 to 46 - 37",
+      "X46 - Y45 to 1 - 46",
+      "3: X46 - E41 - A37 + to 1 - 10 - 37 +",
 
-      "A17 + A37 to 17 + 37 (cpy)",
       null, null]
   },
   {
@@ -393,13 +78,17 @@
 
       "X2 - Y8 to 9 - 1 ",
       "X9 - Y9 to 8 + 8 ",
-
       "3: F1 - A11 - A36 + to 13 - 11 - 37 -",
       "E8 - A37 to 1 - 37",
+      "3: A11 - X13 - Y1 + to 11 + 17 - 13 -",
 
+      "X2 - Y8 to 9 - 1 ",
+      "X9 - Y9 to 8 + 8 ",
+      "3: F1 - A11 - A36 + to 13 - 11 - 37 -",
+      "E8 - A37 to 1 - 37",
       "3: A11 - X13 - Y1 + to 11 + 17 - 13 -",
       null, null, null, null, null
-	]
+    ]
   },
   {
     "type": "A",
@@ -413,14 +102,23 @@
 
       "3: A36 - A24 - A23 + to 36 + 25 - 23 -",
       "3: A37 - A23 - A25 + to 37 + 30 + 30 -",
-
       "3: A37 - A37 + A0 + to 37 + 37 - 36 -",
       "3: A37 - A36 + A0 + to 37 + 36 - 36 -",
       "3: A36 - A37 - F11 + to 37 - 36 + 11 -",
       "3: A36 - A37 - F8 + to 37 - 36 + 8 -",
-
       "3: A36 - A37 - F1 + to 37 - 36 + 1 -",
+      "3: A20 - E18 - A11 + to 21 - 18 - 22 -",
+      "E18 - A22 to 31 + 23",
+      "E18 - A21 to 31 + 24",
+      "A30 - E31 to 37 - 32",
 
+      "3: A36 - A24 - A23 + to 36 + 25 - 23 -",
+      "3: A37 - A23 - A25 + to 37 + 30 + 30 -",
+      "3: A37 - A37 + A0 + to 37 + 37 - 36 -",
+      "3: A37 - A36 + A0 + to 37 + 36 - 36 -",
+      "3: A36 - A37 - F11 + to 37 - 36 + 11 -",
+      "3: A36 - A37 - F8 + to 37 - 36 + 8 -",
+      "3: A36 - A37 - F1 + to 37 - 36 + 1 -",
       "3: A20 - E18 - A11 + to 21 - 18 - 22 -",
       "E18 - A22 to 31 + 23",
       "E18 - A21 to 31 + 24",
@@ -435,7 +133,7 @@
     ],
     "location": "1,6",
     "reactions": [
-     ]
+    ]
   },
   {
     "type": "F",
@@ -458,14 +156,14 @@
   {
     "type": "A",
     "state":37,
-     "bondsLocation": [
+    "bondsLocation": [
       "0,1","-1,0","1,0"
     ],
     "location": "1,0",
     "reactions": [null,null,null,null,null,null,null,null,null,null]
   },
-  
-  
+
+
   {
     "type": "A",
     "state":36,
@@ -547,8 +245,8 @@
     "location": "0,8",
     "reactions": [null,null,null,null,null,null,null,null,null,null]
   },
-  
-  
+
+
   {
     "type": "A",
     "state":36,
@@ -630,83 +328,110 @@
     "location": "2,8",
     "reactions": [null,null,null,null,null,null,null,null,null,null]
   },
-  {
-    "type": "CAUSTIC",
-    "state":0,
-    "bondsLocation": [
-      "1,1"
-    ],
-    "location": "10,10",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "CAUSTIC",
-    "state":36,
-    "bondsLocation": [
-      "-1,-1"
-    ],
-    "location": "11,11",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
 
 
 
-  {
-    "type": "CAUSTIC",
-    "state":0,
-    "bondsLocation": [
-      "1,1"
-    ],
-    "location": "12,10",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "CAUSTIC",
-    "state":36,
-    "bondsLocation": [
-      "-1,-1"
-    ],
-    "location": "13,11",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
 
 
 
-  {
-    "type": "CAUSTIC",
-    "state":0,
-    "bondsLocation": [
-      "1,1"
-    ],
-    "location": "13,10",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "CAUSTIC",
-    "state":36,
-    "bondsLocation": [
-      "-1,-1"
-    ],
-    "location": "14,11",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-
-  {
-    "type": "CAUSTIC",
-    "state":0,
-    "bondsLocation": [
-      "1,1"
-    ],
-    "location": "15,10",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  },
-  {
-    "type": "CAUSTIC",
-    "state":36,
-    "bondsLocation": [
-      "-1,-1"
-    ],
-    "location": "16,11",
-    "reactions": [null,null,null,null,null,null,null,null,null,null]
-  }
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,01","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,01","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,02","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,02","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,03","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,03","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,04","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,04","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,05","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,05","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,06","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,06","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,07","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,07","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,08","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,08","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,09","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,09","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,10","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,10","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,11","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,11","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,12","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,12","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,13","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,13","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,14","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,14","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,15","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,15","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,16","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,16","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,17","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,17","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,18","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,18","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,19","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,19","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,21","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,21","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,20","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,20","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,22","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,22","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,23","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,23","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,24","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,24","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,25","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,25","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,26","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,26","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,27","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,27","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,28","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,28","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,29","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,29","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,30","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,30","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,31","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,31","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,32","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,32","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,33","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,33","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,34","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,34","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,35","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,35","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,36","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,36","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,37","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,37","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,38","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,38","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,39","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,39","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,40","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,40","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,41","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,41","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,42","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,42","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,43","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,43","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,44","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,44","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,45","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,45","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,46","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,46","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,47","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,47","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,48","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,48","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,49","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,49","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["-1,0"],"location": "21,50","reactions": [null,null,null,null,null,null,null,null,null,null]},
+  {"type": "CAUSTIC","state":0,"bondsLocation": ["1,0"],"location": "20,50","reactions": [null,null,null,null,null,null,null,null,null,null]}
 ]

@@ -78,7 +78,7 @@ public class SquareMapPanel extends JPanel {
             int textOffsetX = (cellWidth / 2);
             int textOffsetY = (cellHeight / 2);
             if (atom.state != 0) {
-                g.drawString("" + atom.state, x * cellWidth + textOffsetX, y * cellHeight + textOffsetY);
+//                g.drawString("" + atom.state, x * cellWidth + textOffsetX, y * cellHeight + textOffsetY);
             }
 
             //Bonds
@@ -90,7 +90,6 @@ public class SquareMapPanel extends JPanel {
                 //The location of the bonded atom
                 SquareLocation bondedLocation = (SquareLocation) bondedAtom.getLocation();
 
-                //
                 int bondedX = getCenter(bondedLocation.getX(), cellWidth);
                 int bondedY = getCenter(bondedLocation.getY(), cellHeight);
 

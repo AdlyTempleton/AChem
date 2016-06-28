@@ -19,7 +19,6 @@ import adlytempleton.simulator.SimulatorConstants;
 import com.google.common.collect.HashMultimap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -57,10 +56,10 @@ public abstract class AbstractMap {
         }
     }
 
-    public void removeFronEnzymeMap(Atom atom){
+    public void removeFromEnzymeMap(Atom atom){
         for(ReactionData rxn : atom.getReactions()){
             if(rxn != null){
-                removeFronEnzymeMap(rxn, atom);
+                removeFromEnzymeMap(rxn, atom);
             }
         }
     }
@@ -73,7 +72,7 @@ public abstract class AbstractMap {
         }
     }
 
-    public void removeFronEnzymeMap(ReactionData rxn, Atom atom){
+    public void removeFromEnzymeMap(ReactionData rxn, Atom atom){
         enzymes.get(rxn.preState1).remove(rxn, atom);
         enzymes.get(rxn.preState2).remove(rxn, atom);
 

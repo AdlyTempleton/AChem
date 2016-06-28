@@ -14,6 +14,7 @@ package adlytempleton.mutation;
 
 import adlytempleton.atom.Atom;
 import adlytempleton.map.AbstractMap;
+import adlytempleton.map.Simulator;
 import adlytempleton.reaction.ReactionData;
 import adlytempleton.simulator.SimulatorConstants;
 
@@ -33,7 +34,7 @@ public class MutationManager {
         mutations.add(new PointStateMutation());
         mutations.add(new PointTypeMutation());
         mutations.add(new MergeMutation());
-        mutations.add(new InsertionMutation());
+        //mutations.add(new InsertionMutation());
 
         return mutations;
     }
@@ -41,7 +42,7 @@ public class MutationManager {
     public static void mutate(Atom atom, AbstractMap map) {
 
         Random random = new Random();
-        if (random.nextFloat() < SimulatorConstants.MUTATION_CHANCE && atom != null) {
+        if (random.nextFloat() < SimulatorConstants.MUTATION_CHANCE && atom != null && Simulator.ticks > SimulatorConstants.MUTATION_DELAY) {
             //Note that getReactions returns a shallow clone
             ReactionData[] reactions = atom.getReactions();
 

@@ -16,6 +16,7 @@ import adlytempleton.atom.Atom;
 import adlytempleton.map.*;
 import adlytempleton.monitor.EnzymeMonitor;
 import adlytempleton.reaction.ReactionData;
+import adlytempleton.reaction.ReactionDataTriple;
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -97,6 +98,7 @@ public class Serialization {
         builder.registerTypeAdapter(ILocation.class, new LocationAdapter());
         //Condensed reaction notation
         builder.registerTypeAdapter(ReactionData.class, new ReactionAdapter());
+        builder.registerTypeAdapter(ReactionDataTriple.class, new ReactionAdapter());
 
         return builder.create();
     }

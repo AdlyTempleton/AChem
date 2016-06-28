@@ -55,7 +55,7 @@ public class SquareMap extends AbstractMap {
         if (!atomMap.containsKey(newLocation)) {
             //Remove the atom from the current map
             atomMap.remove(atom.getLocation());
-            removeFronEnzymeMap(atom);
+            removeFromEnzymeMap(atom);
 
             //Update the location in the Atom object
             atom.setLocation(newLocation);
@@ -416,16 +416,12 @@ public class SquareMap extends AbstractMap {
     @Override
     public void updateEnzymes(Atom atom, ReactionData[] newReaction) {
         //First, take it out of all current enzyme mappings
-        for (ReactionData rxn : atom.getReactions()) {
-            if (rxn != null) {
-                removeFronEnzymeMap(rxn, atom);
-            }
-        }
+        removeFromEnzymeMap(atom);
 
         //Then, add the new ones
         for (ReactionData rxn : newReaction) {
             if (rxn != null) {
-                removeFronEnzymeMap(rxn, atom);
+                addToEnzymeMap(rxn, atom);
             }
         }
     }
@@ -441,11 +437,7 @@ public class SquareMap extends AbstractMap {
 
             //Add to enzyme map
             if (atom.isEnzyme()) {
-                for (ReactionData rxn : atom.getReactions()) {
-                    if (rxn != null) {
-                        removeFronEnzymeMap(rxn, atom);
-                    }
-                }
+                removeFromEnzymeMap(atom);
             }
             return;
         } else {

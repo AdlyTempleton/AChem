@@ -31,8 +31,13 @@ public class SimulatorConstants {
     //The highest state a reaction can reach
     public static int MAX_STATE = 256;
 
+    //Delay before mutations may occur
+    public static int MUTATION_DELAY = 50000;
+
+    public static int CAUSTIC_DELAY = 50000;
+
     //Chance of mutation each time an enzyme is copied
-    public static float MUTATION_CHANCE = .1F;
+    public static float MUTATION_CHANCE = .05F;
 
     public static boolean TOROIDAL_MAP = false;
 
@@ -51,11 +56,11 @@ public class SimulatorConstants {
 
 
     //Ticks before first floor
-    public static int FLOOD_DELAY = 20000;
+    public static int FLOOD_DELAY = 50000;
 
     //Frequency of flooding
     public static int FLOOD_FREQUENCY = 10000;
 
     //Radius of area affected by a floor
-    public static int FLOOD_RANGE = 25;
+    public static int FLOOD_RANGE = 20;
 }
